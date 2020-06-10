@@ -155,8 +155,7 @@
                 "policyassignmentloop",
                 "policyassignmentloop-subscription",
                 "roleassignmentloop",
-                "roleassignmentloop-subscription",
-                "builtInDelayCopy"
+                "roleassignmentloop-subscription"
 
             ],
             "location": "[deployment().location]",
@@ -480,8 +479,7 @@
             "dependsOn": [
                 "[parameters('input').Name]",                
                 "policydefinitionloop",
-                "policydefinitionloop-subscription",
-                "builtInDelayCopy"
+                "policydefinitionloop-subscription"
             ],
             "properties": {
                 "expressionEvaluationOptions": {
@@ -532,8 +530,7 @@
             "dependsOn": [
                 "[parameters('input').Name]",                
                 "policydefinitionloop",
-                "policydefinitionloop-subscription",
-                "builtInDelayCopy"
+                "policydefinitionloop-subscription"
             ],
             "properties": {
                 "expressionEvaluationOptions": {
