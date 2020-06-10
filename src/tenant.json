@@ -51,6 +51,14 @@
         "debug":{        
             "type": "bool",
             "defaultValue": false
+        },
+        "guid": {
+            "type": "string",
+            "defaultValue": "[newGuid()]",
+            "allowedValues": [
+                "[newGuid()]",
+                "[guid(deployment().name)]"
+            ]
         }
     },
     "variables": {
@@ -436,7 +444,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-07-01",
             "location": "[deployment().location]",
-            "name": "[concat(copyIndex(), 'delay', deployment().name, deployment().location)]",
+            "name": "[concat(copyIndex(), 'delay', parameters('guid'))]",
             "dependsOn": [
                 "policydefinitionloop",
                 "policydefinitionloop-subscription"
