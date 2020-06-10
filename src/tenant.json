@@ -437,6 +437,7 @@
             "apiVersion": "2019-07-01",
             "location": "[deployment().location]",
             "name": "[concat(copyIndex(), '-delay', uniqueString(deployment().name))]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('input').Name)]",
             "dependsOn": [
                 "policydefinitionloop",
                 "policydefinitionloop-subscription"
