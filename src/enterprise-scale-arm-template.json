@@ -68,8 +68,8 @@
             "hubSpokeTemplateParameters": "[uri(parameters('_artifactsLocation'), concat('e2e-landing-zone-hubspoke-orchestration.parameters.json', parameters('_artifactsLocationSasToken')))]",
             "resourceTemplate": "[uri(parameters('_artifactsLocation'), concat('template.json', parameters('_artifactsLocationSasToken')))]"
         },
-        "resolverTemplateName": "[concat('Ent', deployment().location, guid(parameters('topLevelManagementGroupPrefix')))]",
-        "enterpriseScaleTemplateName": "[concat('Ent-tenant', deployment().location, guid(parameters('setup')))]"
+        "resolverTemplateName": "[concat('EntScale', deployment().location, guid(parameters('topLevelManagementGroupPrefix')))]",
+        "enterpriseScaleTemplateName": "[concat('EntScale', deployment().location, guid(parameters('setup')))]"
     },
     "resources": [
         {

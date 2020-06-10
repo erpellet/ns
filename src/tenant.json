@@ -51,10 +51,6 @@
         "debug":{        
             "type": "bool",
             "defaultValue": false
-        },
-        "armGuid": {
-            "type": "string",
-            "defaultValue": "[newGuid()]"
         }
     },
     "variables": {
@@ -213,7 +209,7 @@
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
                             "location": "[deployment().location]",
-                            "name": "[take(concat('NorthStar-ChildMG-',variables('Children')[copyIndex()].Name),63)]",
+                            "name": "[take(concat('EntScale-ChildMG-',variables('Children')[copyIndex()].Name),63)]",
                             "dependsOn": [
                                 "[variables('Children')[copyIndex()].Name]"
                             ],
@@ -286,7 +282,7 @@
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
                             "location": "[deployment().location]",
-                            "name": "[take(concat('Northstar-subscription-',variables('Children')[copyIndex()].Name),63)]",
+                            "name": "[take(concat('EntScale-subscription-',variables('Children')[copyIndex()].Name),63)]",
                             "properties": {
                                 "expressionEvaluationOptions": {
                                     "scope": "outer"
@@ -440,7 +436,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-07-01",
             "location": "[deployment().location]",
-            "name": "[concat(copyIndex(), 'delay', parameters('armGuid'))]",
+            "name": "[concat(copyIndex(), '-delay', uniqueString(deployment().name))]",
             "dependsOn": [
                 "policydefinitionloop",
                 "policydefinitionloop-subscription"
