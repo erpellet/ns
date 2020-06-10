@@ -52,13 +52,9 @@
             "type": "bool",
             "defaultValue": false
         },
-        "guid": {
+        "armGuid": {
             "type": "string",
-            "defaultValue": "[newGuid()]",
-            "allowedValues": [
-                "[guid(deployment().name)]",
-                "[newGuid()]"
-            ]
+            "defaultValue": "[newGuid()]"
         }
     },
     "variables": {
@@ -444,7 +440,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-07-01",
             "location": "[deployment().location]",
-            "name": "[concat(copyIndex(), 'delay', parameters('guid'))]",
+            "name": "[concat(copyIndex(), 'delay', parameters('armGuid'))]",
             "dependsOn": [
                 "policydefinitionloop",
                 "policydefinitionloop-subscription"
