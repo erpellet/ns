@@ -56,8 +56,8 @@
             "type": "string",
             "defaultValue": "[newGuid()]",
             "allowedValues": [
-                "[newGuid()]",
-                "[guid(deployment().name)]"
+                "[guid(deployment().name)]",
+                "[newGuid()]"
             ]
         }
     },
