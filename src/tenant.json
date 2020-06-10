@@ -489,7 +489,9 @@
             "location": "[deployment().location]",
             "copy": {
                 "name": "policySetDefinitions",
-                "count": "[length(variables('policySetDefinitions'))]"
+                "count": "[length(variables('policySetDefinitions'))]",
+                "batchSize": 2,
+                "mode": "Serial"
             },
             "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-', variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policySetDefinitions')]",
             "dependsOn": [
