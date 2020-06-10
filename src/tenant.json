@@ -490,7 +490,7 @@
             "copy": {
                 "name": "policySetDefinitions",
                 "count": "[length(variables('policySetDefinitions'))]",
-                "batchSize": 2,
+                "batchSize": 1,
                 "mode": "Serial"
             },
             "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-', variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policySetDefinitions')]",
