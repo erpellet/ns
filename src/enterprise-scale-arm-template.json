@@ -53,7 +53,7 @@
             "type": "string",
             "allowedValues": [
                 "Foundation",
-                "VWan",
+                "VWAN",
                 "HubSpoke"
             ]
         }
