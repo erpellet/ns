@@ -160,7 +160,7 @@
                 "name": "childmove",
                 "count": "[length(variables('Children'))]"
             },
-            "name": "[if(not(empty(variables('Children'))), take(concat('NorthStar','-',parameters('input').name,'-',variables('Children')[copyIndex()].Name),63), 'na-move')]",
+            "name": "[if(not(empty(variables('Children'))), take(concat('EntScale','-',parameters('input').name,'-',variables('Children')[copyIndex()].Name),63), 'na-move')]",
             "dependsOn": [
                 "[parameters('input').Name]",
                 "policydefinitionloop",
@@ -170,7 +170,8 @@
                 "policyassignmentloop",
                 "policyassignmentloop-subscription",
                 "roleassignmentloop",
-                "roleassignmentloop-subscription"
+                "roleassignmentloop-subscription",
+                "builtInDelayCopy"
 
             ],
             "location": "[deployment().location]",
