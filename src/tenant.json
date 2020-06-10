@@ -25,7 +25,7 @@
         },
         "_artifactsLocation": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/krnese/AzureDeploy/master/ARM/ns/",
+            "defaultValue": "https://raw.githubusercontent.com/krnese/ns/master/src/",
             "metadata": {
                 "description": "This is the link to the nested template that must to be accessible to ARM to be able to use as a part of nested deployment. 
                                 Please feel free to use template hosted here or override with choice of your location.
@@ -75,7 +75,22 @@
         "roleDefinitions": "[if(and(contains(parameters('input'), 'properties'),contains(parameters('input').properties, 'roleDefinitions'),not(empty(parameters('input').properties.roleDefinitions))),parameters('input').properties.roleDefinitions,json('[]'))]",
         "policyAssignments": "[if(and(contains(parameters('input'), 'properties'),contains(parameters('input').properties, 'policyAssignments'),not(empty(parameters('input').properties.policyAssignments))),parameters('input').properties.policyAssignments,json('[]'))]",
 
-        "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}"
+        "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
+        /*
+            Determining parallelism or serialism for copy iterations
+        */
+            "iterationLoops": "[if(greater(length(variables('policyDefinitions')), 3), variables('serialCopy'), variables('parallelCopy'))]",
+            "serialCopy": {
+                "name": "policydefinitionloop-subscription",
+                "count": "[length(variables('policyDefinitions'))]",
+                "mode": "Serial",
+                "batchSize": 3
+            },
+            "parallelCopy": {
+                "name": "policydefinitionloop-subscription",
+                "count": "[length(variables('policyDefinitions'))]",
+                "mode": "Parallel"
+            }
     },  
     "resources": [
         {
@@ -417,7 +432,7 @@
                 }
             }
         },
-       /*{
+        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-07-01",
             "location": "[deployment().location]",
@@ -444,7 +459,7 @@
                     "outputs": {}
                 }
             }
-        },*/
+        },
         {   
             /*
 
@@ -479,7 +494,8 @@
             "dependsOn": [
                 "[parameters('input').Name]",                
                 "policydefinitionloop",
-                "policydefinitionloop-subscription"
+                "policydefinitionloop-subscription",
+                "builtInDelayCopy"
             ],
             "properties": {
                 "expressionEvaluationOptions": {
@@ -530,7 +546,8 @@
             "dependsOn": [
                 "[parameters('input').Name]",                
                 "policydefinitionloop",
-                "policydefinitionloop-subscription"
+                "policydefinitionloop-subscription",
+                "builtInDelayCopy"
             ],
             "properties": {
                 "expressionEvaluationOptions": {
