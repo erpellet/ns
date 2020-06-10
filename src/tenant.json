@@ -444,7 +444,7 @@
             ],
             "copy": {
                 "name": "builtInDelayCopy",
-                "count": 8,
+                "count": 15,
                 "mode": "Serial",
                 "batchSize": 1
             },
