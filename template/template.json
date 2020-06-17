@@ -8,6 +8,9 @@
         "input2": {
             "type": "object"
         },
+        "input3": {
+            "type": "bool"
+        },
         "_artifactsLocation": {
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/krnese/ns/master/template/",
@@ -49,6 +52,7 @@
         },
         "input": "[parameters('input')]",
         "input2": "[parameters('input2')]",
+        "input3":"[parameters('input3')]",
         "resourceType": "[if(
                             and(contains(parameters('input'), 'ResourceType'),not(empty(parameters('input').ResourceType))),
                             parameters('input').ResourceType,
@@ -150,7 +154,7 @@
             ],
             "identity": "[variables('identity')]",
             "location": "[variables('location')]",
-            "Properties": "[variables('inpu2').Properties]"
+            "Properties": "[variables('input2').Properties]"
         },
         {
             "condition": "[equals(toLower(variables('effectiveResourceType')),toLower('Microsoft.Authorization/roleDefinitions'))]",
@@ -163,15 +167,18 @@
         {
             "condition": "[and(variables('roleAssignmentEnabledForPolicy'),equals(toLower(variables('effectiveResourceType')),toLower('Microsoft.Authorization/policyAssignments')))]",
             "type": "Microsoft.Authorization/roleAssignments",
-            "name" : "[guid(variables('input').name)]",
+            "name" : "[guid(variables('input2').name)]",
             "apiVersion": "2019-04-01-preview",
             "location": "[deployment().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Authorization/policyAssignments/', variables('input2'))]"
+            ],
             "Properties": {
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
                 "principalId": "[ if(
                                         and(variables('roleAssignmentEnabledForPolicy'),equals(toLower(variables('effectiveResourceType')),toLower('Microsoft.Authorization/policyAssignments'))),
-                                        toLower(reference(concat('Microsoft.Authorization/policyAssignments/' , variables('input').name), '2018-05-01', 'Full').identity.principalId),
+                                        toLower(reference(concat('Microsoft.Authorization/policyAssignments/' , variables('input2').name), '2018-05-01', 'Full').identity.principalId),
                                         'na'
                                     )]"
             }
