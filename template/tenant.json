@@ -148,12 +148,8 @@
             "name": "[if(not(empty(variables('Children'))), take(concat('EntScale','-',parameters('input').name,'-',variables('Children')[copyIndex()].Name),63), 'na-move')]",
             "dependsOn": [
                 "[parameters('input').Name]",
-                "policydefinitionloop",
-                "policydefinitionloop-subscription",
-                "policySetDefinitions",
-                "policySetDefinitions-subscription",
-                "policyassignmentloop-subscription"
-            ],
+                "policydefinitionloop"
+                ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "incremental",
