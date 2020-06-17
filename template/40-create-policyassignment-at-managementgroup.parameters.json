@@ -6,11 +6,11 @@
         "value": {
           "Name": "Tailspin",
           "DisplayName": "Tailspin",
-          "ParentId": "/providers/Microsoft.Management/managementGroups/3fc1081d-6105-4e19-b60c-1ec1252cf560",
+          "ParentId": "/providers/Microsoft.Management/managementGroups/d6ad82f3-42af-4a15-ac1e-49e6c08f624e",
           "Type": "/providers/Microsoft.Management/managementGroups",
           "Children": [
             {
-              "Id": "/providers/Microsoft.Management/managementGroups/Tailspin-bu1",
+              "Id": "/providers/Microsoft.Management/managementGroups/Tailspin-bu2",
               "Name": "Tailspin-bu1",
               "DisplayName": "Tailspin-bu1",
               "Type": "/providers/Microsoft.Management/managementGroups"

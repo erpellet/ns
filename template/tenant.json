@@ -366,6 +366,35 @@
             }
         },
         {
+            "condition": "[and(not(empty(variables('policySetDefinitions'))),contains(variables('scope'),'Microsoft.Management/managementGroups'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-07-01",
+            "location": "[deployment().location]",
+            "name": "[concat(copyIndex(), '-delayPolicyMg', uniqueString(deployment().name))]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('input').Name)]",
+            "dependsOn": [
+                "policydefinitionloop",
+                "policydefinitionloop-subscription"
+            ],
+            "copy": {
+                "name": "delayPolicySetMgmtGroup",
+                "count": 15,
+                "mode": "Serial",
+                "batchSize": 1
+            },
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [],
+                    "outputs": {}
+                }
+            }
+        },
+        {
             /*
                 Intent: Upsert 'PolicyDefinition' for the Subscription. Subscription deployment is using "subscriptionId" property and not "scope".
                 
@@ -447,6 +476,7 @@
             "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-', variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policySetDefinitions')]",
             "dependsOn": [
                 "[parameters('input').Name]",
+                "delayPolicySetMgmtGroup",
                 "policydefinitionloop",
                 "policydefinitionloop-subscription"
             ],
