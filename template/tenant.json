@@ -365,7 +365,7 @@
                         "value": "[variables('policyAssignments')[copyIndex()]]"
                     },
                     "input3": {
-                        "value": "[variables('roleAssignmentEnabledForPolicy')[copyIndex()]]"
+                        "value": "[variables('roleAssignmentEnabledForPolicy')]"
                     }
                 }
             }
