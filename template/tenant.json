@@ -551,7 +551,7 @@
             "condition": "[and(
                                 not(empty(variables('policyAssignments'))),
                                 contains(variables('scope'),'Microsoft.Management/managementGroups'),
-                                equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))) 
+                                equals(toLower(variables('policyAssignments')[copyIndex(0)].Properties.scope),toLower(concat('/providers/',variables('scope')))) 
                             )]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-07-01",
