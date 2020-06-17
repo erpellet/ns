@@ -449,7 +449,6 @@
             "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-', variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policySetDefinitions')]",
             "dependsOn": [
                 "[parameters('input').Name]",
-                "delayPolicySetMgmtGroup",
                 "policydefinitionloop",
                 "policydefinitionloop-subscription"
             ],
