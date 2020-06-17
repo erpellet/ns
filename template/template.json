@@ -5,6 +5,9 @@
         "input": {
             "type": "object"
         },
+        "input2": {
+            "type": "object"
+        },
         "_artifactsLocation": {
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/krnese/ns/master/template/",
@@ -139,14 +142,14 @@
         {
             "condition": "[equals(toLower(variables('effectiveResourceType')),toLower('Microsoft.Authorization/policyAssignments'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "name": "[variables('input').name]",
+            "name": "[variables('input2').name]",
             "apiVersion": "[variables('apiversion')]",
             "dependsOn": [
                 "[concat('Microsoft.Authorization/policyDefinitions/', variables('input').name)]"
             ],
             "identity": "[variables('identity')]",
             "location": "[variables('location')]",
-            "Properties": "[variables('input').Properties]"
+            "Properties": "[variables('inpu2').Properties]"
         },
         {
             "condition": "[equals(toLower(variables('effectiveResourceType')),toLower('Microsoft.Authorization/roleDefinitions'))]",

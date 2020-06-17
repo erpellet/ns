@@ -361,39 +361,13 @@
                 "parameters": {
                     "input": {
                         "value": "[variables('policyDefinitions')[copyIndex()]]"
+                    },
+                    "input2": {
+                        "value": "[variables('policyAssignments')[copyIndex()]]"
                     }
                 }
             }
-        },
-        {
-            "condition": "[and(not(empty(variables('policySetDefinitions'))),contains(variables('scope'),'Microsoft.Management/managementGroups'))]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-07-01",
-            "location": "[deployment().location]",
-            "name": "[concat(copyIndex(), '-delayPolicyMg', uniqueString(deployment().name))]",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('input').Name)]",
-            "dependsOn": [
-                "policydefinitionloop",
-                "policydefinitionloop-subscription"
-            ],
-            "copy": {
-                "name": "delayPolicySetMgmtGroup",
-                "count": 15,
-                "mode": "Serial",
-                "batchSize": 1
-            },
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {},
-                    "variables": {},
-                    "resources": [],
-                    "outputs": {}
-                }
-            }
-        },
+        },        
         {
             /*
                 Intent: Upsert 'PolicyDefinition' for the Subscription. Subscription deployment is using "subscriptionId" property and not "scope".
@@ -543,70 +517,6 @@
                 "parameters": {
                     "input": {
                         "value": "[variables('policySetDefinitions')[copyIndex()]]"
-                    }
-                }
-            }
-        },
-        {
-            /*
-                Management Group - Policy Assignment Loop
-            */
-            "condition": "[and(
-                                not(empty(variables('policyAssignments'))),
-                                contains(variables('scope'),'Microsoft.Management/managementGroups'),
-                                equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))) 
-                            )]",
-            "scope": "[variables('scope')]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-09-01",
-            "location": "[deployment().location]",
-            "copy": {
-                "name": "policyassignmentloop",
-                "count": "[length(variables('policyAssignments'))]"
-            },
-            "dependsOn": [
-                "policydefinitionloop",
-                "delayPolicyAsMgmtGroup",
-                "policydefinitionloop-subscription",
-                "policySetDefinitions",
-                "policySetDefinitions-subscription"
-            ],
-            "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyAssignment-', variables('policyAssignments')[copyIndex()].Name), 'na-mgmt-policyassignment')]",
-            "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "outer"
-                },
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('nestedTemplatesLocation').resourceTemplate]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "input": {
-                        "value": {
-                            "name": "[variables('policyAssignments')[copyIndex()].Name]",
-                            "ExtensionResourceType": "Microsoft.Authorization/policyAssignments",
-                            "Location": "[if(contains(variables('policyAssignments')[copyIndex()],'Location'),
-                                            variables('policyAssignments')[copyIndex()].Location,
-                                            deployment().location
-                                        )]",
-                            "identity" : "[if(
-                                                and(
-                                                    not(empty(variables('policyAssignments'))),
-                                                    equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))),
-                                                    or(
-                                                        contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
-                                                        and(
-                                                            not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                            equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect), toLower('deployIfNotExists'))
-                                                        )
-                                                    )
-                                                ),
-                                                json('{\"type\":\"SystemAssigned\"}'),
-                                                json('null')
-                                            )]",
-                            "properties": "[variables('policyAssignments')[copyIndex()].Properties]"
-                        }
                     }
                 }
             }
