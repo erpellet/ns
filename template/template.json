@@ -189,6 +189,9 @@
             "name" : "[guid(variables('input').name)]",
             "apiVersion": "2019-04-01-preview",
             "location": "[deployment().location]",
+            "dependsOn": [
+                "builtInDelayCopy"
+            ],
             "Properties": {
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
