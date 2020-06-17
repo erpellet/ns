@@ -4,13 +4,13 @@
     "parameters": {
       "input": {
         "value": {
-          "Name": "Tailspin",
+          "Name": "Tailspin2",
           "DisplayName": "Tailspin",
           "ParentId": "/providers/Microsoft.Management/managementGroups/d6ad82f3-42af-4a15-ac1e-49e6c08f624e",
           "Type": "/providers/Microsoft.Management/managementGroups",
           "Children": [
             {
-              "Id": "/providers/Microsoft.Management/managementGroups/Tailspin-bu2",
+              "Id": "/providers/Microsoft.Management/managementGroups/Tailspin-bu1",
               "Name": "Tailspin-bu1",
               "DisplayName": "Tailspin-bu1",
               "Type": "/providers/Microsoft.Management/managementGroups"

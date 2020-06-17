@@ -548,6 +548,39 @@
             }
         },
         {
+            "condition": "[and(
+                                not(empty(variables('policyAssignments'))),
+                                contains(variables('scope'),'Microsoft.Management/managementGroups'),
+                                equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))) 
+                            )]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-07-01",
+            "location": "[deployment().location]",
+            "name": "[concat(copyIndex(), '-delayPolicyAsMgmtGroup', uniqueString(deployment().name))]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('input').Name)]",
+            "dependsOn": [
+                "policydefinitionloop",
+                "policydefinitionloop-subscription"
+            ],
+            "copy": {
+                "name": "delayPolicyAsMgmtGroup",
+                "count": 15,
+                "mode": "Serial",
+                "batchSize": 1
+            },
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [],
+                    "outputs": {}
+                }
+            }
+        },
+        {
             /*
                 Management Group - Policy Assignment Loop
             */
@@ -566,6 +599,7 @@
             },
             "dependsOn": [
                 "policydefinitionloop",
+                "delayPolicyAsMgmtGroup",
                 "policydefinitionloop-subscription",
                 "policySetDefinitions",
                 "policySetDefinitions-subscription"
