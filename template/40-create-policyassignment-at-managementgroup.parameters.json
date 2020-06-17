@@ -4,7 +4,7 @@
     "parameters": {
       "input": {
         "value": {
-          "Name": "Tailspin2",
+          "Name": "Tailspin3",
           "DisplayName": "Tailspin2",
           "ParentId": "/providers/Microsoft.Management/managementGroups/d6ad82f3-42af-4a15-ac1e-49e6c08f624e",
           "Type": "/providers/Microsoft.Management/managementGroups",
