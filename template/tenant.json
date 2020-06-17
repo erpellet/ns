@@ -25,7 +25,7 @@
         },
         "_artifactsLocation": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/krnese/ns/master/src/",
+            "defaultValue": "https://raw.githubusercontent.com/Azure/AzOps/main/template/",
             "metadata": {
                 "description": "This is the link to the nested template that must to be accessible to ARM to be able to use as a part of nested deployment. 
                                 Please feel free to use template hosted here or override with choice of your location.
@@ -36,19 +36,19 @@
             "type": "string",
             "defaultValue": ""
         },
-        "roleAssignmentEnabledForPolicy": {        
+        "roleAssignmentEnabledForPolicy": {
             "type": "bool",
             "defaultValue": true
         },
-        "deploymentEnabledForPolicy": {        
+        "deploymentEnabledForPolicy": {
             "type": "bool",
             "defaultValue": false
         },
-        "remediationEnabledForPolicy": {        
+        "remediationEnabledForPolicy": {
             "type": "bool",
             "defaultValue": false
         },
-        "debug":{        
+        "debug":{
             "type": "bool",
             "defaultValue": false
         }
@@ -57,7 +57,7 @@
         "debug": "[parameters('debug')]",
         "roleAssignmentEnabledForPolicy": "[parameters('roleAssignmentEnabledForPolicy')]",
         "deploymentEnabledForPolicy": "[parameters('deploymentEnabledForPolicy')]",
-        "remediationEnabledForPolicy": "[parameters('remediationEnabledForPolicy')]",        
+        "remediationEnabledForPolicy": "[parameters('remediationEnabledForPolicy')]",
         "nestedTemplatesLocation": {
             "tenantTemplate": "[uri(parameters('_artifactsLocation'), concat('tenant.json', parameters('_artifactsLocationSasToken')))]", 
             "resourceTemplate": "[uri(parameters('_artifactsLocation'), concat('template.json', parameters('_artifactsLocationSasToken')))]"
@@ -75,22 +75,7 @@
         "roleDefinitions": "[if(and(contains(parameters('input'), 'properties'),contains(parameters('input').properties, 'roleDefinitions'),not(empty(parameters('input').properties.roleDefinitions))),parameters('input').properties.roleDefinitions,json('[]'))]",
         "policyAssignments": "[if(and(contains(parameters('input'), 'properties'),contains(parameters('input').properties, 'policyAssignments'),not(empty(parameters('input').properties.policyAssignments))),parameters('input').properties.policyAssignments,json('[]'))]",
 
-        "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
-        /*
-            Determining parallelism or serialism for copy iterations
-        */
-            "iterationLoops": "[if(greater(length(variables('policyDefinitions')), 3), variables('serialCopy'), variables('parallelCopy'))]",
-            "serialCopy": {
-                "name": "policydefinitionloop-subscription",
-                "count": "[length(variables('policyDefinitions'))]",
-                "mode": "Serial",
-                "batchSize": 3
-            },
-            "parallelCopy": {
-                "name": "policydefinitionloop-subscription",
-                "count": "[length(variables('policyDefinitions'))]",
-                "mode": "Parallel"
-            }
+        "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}"
     },  
     "resources": [
         {
@@ -101,9 +86,9 @@
                 Required Parameters:
                     1. Name: Management Group Name
                     2. DisplayName: Management Group Display Name
-                    3. ParentID - To Determine Where to place Management group. It could be root or any other valid ID of the Management Group. For the top level manage
+                    3. ParentID - To determine where to place Management group. It could be root or any other valid ID of the Management Group. For the top level manage
                 
-                Scope: Tenant
+                Scope: Tenant root
                 
                 Condition: We have Parent ID available to ensure inadvertently place management group directly the root.
 
@@ -168,10 +153,7 @@
                 "policySetDefinitions",
                 "policySetDefinitions-subscription",
                 "policyassignmentloop",
-                "policyassignmentloop-subscription",
-                "roleassignmentloop",
-                "roleassignmentloop-subscription"
-
+                "policyassignmentloop-subscription"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -247,7 +229,7 @@
                                     },
                                     "_artifactsLocationSasToken": {
                                         "value": "[parameters('_artifactsLocationSasToken')]"
-                                    },                 
+                                    },
                                     "roleAssignmentEnabledForPolicy": {
                                         "value": "[variables('roleAssignmentEnabledForPolicy')]"
                                     },
@@ -344,7 +326,7 @@
                     2. ExtensionResourceType set to "Microsoft.Authorization/policyDefinitions",
                     3. Properties
                 
-                Scope: Tenant
+                Scope: Tenant root
                 
                 Condition: Non Empty policyDefinitions[] in Properties bag of Management Group.
 
@@ -385,7 +367,7 @@
         },
         {
             /*
-                Intent: Upsert 'PolicyDefinition' for the Subscription. Subscription deployment cannot be invoked with scope property unlike management group hence this is seperate resoruce that uses subscriptionId property instead in the scope.
+                Intent: Upsert 'PolicyDefinition' for the Subscription. Subscription deployment is using "subscriptionId" property and not "scope".
                 
                 Required Parameters (of PolicyDefinitions[] Object):
 
@@ -432,47 +414,19 @@
                 }
             }
         },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-07-01",
-            "location": "[deployment().location]",
-            "name": "[concat(copyIndex(), '-delay', uniqueString(deployment().name))]",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('input').Name)]",
-            "dependsOn": [
-                "policydefinitionloop",
-                "policydefinitionloop-subscription"
-            ],
-            "copy": {
-                "name": "builtInDelayCopy",
-                "count": 15,
-                "mode": "Serial",
-                "batchSize": 1
-            },
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {},
-                    "variables": {},
-                    "resources": [],
-                    "outputs": {}
-                }
-            }
-        },
         {   
             /*
 
                 Intent: Upsert 'policySetDefinitions' for the Management Group.
-                
+
                 Required Parameters (of policySetDefinitions[] Object):
 
                     1. Name
                     2. ExtensionResourceType set to "Microsoft.Authorization/policySetDefinitions",
                     3. Properties
-                
+
                 Scope: Tenant
-                
+
                 Condition: Non Empty policySetDefinitions[] in Properties bag of Management Group.
 
                 Details: Trigger Nested Deployment to create policy Definition.
@@ -481,7 +435,7 @@
                     1. Initial Definition
             */
 
-            "condition": "[and(not(empty(variables('policyDefinitions'))),contains(variables('scope'),'Microsoft.Management/managementGroups'))]",
+            "condition": "[and(not(empty(variables('policySetDefinitions'))),contains(variables('scope'),'Microsoft.Management/managementGroups'))]",
             "scope": "[variables('scope')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
@@ -492,10 +446,9 @@
             },
             "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-', variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policySetDefinitions')]",
             "dependsOn": [
-                "[parameters('input').Name]",                
+                "[parameters('input').Name]",
                 "policydefinitionloop",
-                "policydefinitionloop-subscription",
-                "builtInDelayCopy"
+                "policydefinitionloop-subscription"
             ],
             "properties": {
                 "expressionEvaluationOptions": {
@@ -515,16 +468,16 @@
         },
         {
             /*
-                Intent: Upsert 'policySetDefinitions' for the Subscription. Subscription deployment cannot be invoked with scope property unlike management group hence this is seperate resoruce that uses subscriptionId property instead in the scope.
-                
+                Intent: Upsert 'policySetDefinitions' for the Subscription. Subscription deployment is using "subscriptionId" property and not "scope".
+
                 Required Parameters (of policySetDefinitions[] Object):
 
                     1. Name
                     2. ExtensionResourceType set to "Microsoft.Authorization/policySetDefinitions",
                     3. Properties
-                
+
                 Scope: Subscription
-                
+
                 Condition: Non Empty policySetDefinitions[] in Properties bag of Management Group.
 
                 Details: Trigger Nested Deployment to create policy Definition.
@@ -544,10 +497,9 @@
             },
             "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-sub-', variables('policySetDefinitions')[copyIndex()].Name), 'na-sub-policySetDefinitions')]",
             "dependsOn": [
-                "[parameters('input').Name]",                
+                "[parameters('input').Name]",
                 "policydefinitionloop",
-                "policydefinitionloop-subscription",
-                "builtInDelayCopy"
+                "policydefinitionloop-subscription"
             ],
             "properties": {
                 "expressionEvaluationOptions": {
@@ -568,7 +520,7 @@
         {
             /*
                 Management Group - Policy Assignment Loop
-            */                         
+            */
             "condition": "[and(
                                 not(empty(variables('policyAssignments'))),
                                 contains(variables('scope'),'Microsoft.Management/managementGroups'),
@@ -602,7 +554,7 @@
                     "input": {
                         "value": {
                             "name": "[variables('policyAssignments')[copyIndex()].Name]",
-                            "ExtensionResourceType": "Microsoft.Authorization/policyAssignments",                                                            
+                            "ExtensionResourceType": "Microsoft.Authorization/policyAssignments",
                             "Location": "[if(contains(variables('policyAssignments')[copyIndex()],'Location'),
                                             variables('policyAssignments')[copyIndex()].Location,
                                             deployment().location
@@ -631,9 +583,7 @@
         {
             /*
              SUBSCRIPTION: Policy Assignment Loop
-
-             Subscription deployment cannot be invoked with scope property unlike management group.
-             This resoruce is uses subscriptionId property instead.
+             Subscription deployment is using "subscriptionId" property and not "scope".
             */
             "condition": "[and(
                                 not(empty(variables('policyAssignments'))),
@@ -696,213 +646,12 @@
             }
         },
         {
-
-            /*
-                Management Group - Role Assignment Loop for Policy Assignment (System Assigned managed identity)
-            */
-            
-            "condition": "[and(
-                                variables('roleAssignmentEnabledForPolicy'),
-                                not(empty(variables('policyAssignments'))),
-                                contains(variables('scope'),'Microsoft.Management/managementGroups'),
-                                equals(tolower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))) 
-                            )]",
-            "scope": "[variables('scope')]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "location": "[deployment().location]",
-            "copy": {
-                "name": "roleassignmentloop",
-                "count": "[length(variables('policyAssignments'))]"
-            },
-            "dependsOn": [
-                "policydefinitionloop",
-                "policydefinitionloop-subscription",
-                "policySetDefinitions",
-                "policySetDefinitions-subscription",
-                "policyassignmentloop",
-                "policyassignmentloop-subscription"
-            ],
-            "name": "[if(not(empty(variables('policyAssignments'))), concat('RoleAssignment-', variables('policyAssignments')[copyIndex()].Name), 'na-mgmt-roleAssignment')]",
-            "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "outer"
-                },
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('nestedTemplatesLocation').resourceTemplate]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "input": {
-                        "value": {
-                            "name": "[if(
-                                        and(
-                                            not(empty(variables('policyAssignments'))),
-                                            equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))),
-                                            contains(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ),'identity'),
-                                            or(
-                                                contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
-                                                and(
-                                                    not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                    equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect), toLower('deployIfNotExists'))
-                                                )
-                                            )
-                                        ),
-                                        guid(toLower(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ).identity.principalId)),
-                                        'na'
-                                    )]",
-                            "ExtensionResourceType": "[if(
-                                                            and(
-                                                                not(empty(variables('policyAssignments'))),
-                                                                equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))),
-                                                                contains(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ),'identity'),
-                                                                or(
-                                                                    contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
-                                                                    and(
-                                                                        not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                                        equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect), toLower('deployIfNotExists'))
-                                                                    )
-                                                                )
-                                                            ),
-                                                            'Microsoft.Authorization/roleAssignments',
-                                                            'na'
-                                                        )]",
-                            "properties": {
-                                "principalType": "ServicePrincipal",
-                                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                                "principalId": "[if(
-                                                    and(
-                                                        not(empty(variables('policyAssignments'))),
-                                                        equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),
-                                                        toLower(concat('/providers/',variables('scope')))),
-                                                        contains(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ),'identity'),
-                                                        or(
-                                                            contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
-                                                            and(
-                                                                not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                                equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect), toLower('deployIfNotExists'))
-                                                            )
-                                                        )
-                                                    ),
-                                                    toLower(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ).identity.principalId),
-                                                    'na'
-                                                )]"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            /*
-             SUBSCRIPTION: Role Assignment Loop for Policy Assignment (System Assigned managed identity)
-
-             Subscription deployment cannot be invoked with scope property unlike management group.
-             This resoruce is uses subscriptionId property instead.
-            */
-            "condition": "[and(
-                                variables('roleAssignmentEnabledForPolicy'),
-                                not(empty(variables('policyAssignments'))),
-                                contains(variables('scope'),'subscriptions'),
-                                equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(variables('scope')))
-                            )]",
-            "subscriptionId": "[parameters('input').Name]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "location": "[deployment().location]",
-            "copy": {
-                "name": "roleassignmentloop-subscription",
-                "count": "[length(variables('policyAssignments'))]"
-            },
-            "dependsOn": [
-                "policydefinitionloop",
-                "policydefinitionloop-subscription",
-                "policySetDefinitions",
-                "policySetDefinitions-subscription",
-                "policyassignmentloop",
-                "policyassignmentloop-subscription"
-            ],
-            "name": "[if(not(empty(variables('policyAssignments'))), concat('RoleAssignment-sub-', variables('policyAssignments')[copyIndex()].Name), 'na-sub-roleAssignment')]",
-            "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "outer"
-                },
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('nestedTemplatesLocation').resourceTemplate]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                      "input": {
-                        "value": {
-                            "name": "[if(
-                                        and(
-                                            not(empty(variables('policyAssignments'))),
-                                            equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))),
-                                            contains(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ),'identity'),
-                                            or(
-                                                contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
-                                                and(
-                                                    not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                    equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect), toLower('deployIfNotExists'))
-                                                )
-                                            )
-                                        ),
-                                        guid(toLower(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ).identity.principalId)),
-                                        'na'
-                                    )]",
-                            "ExtensionResourceType": "[if(
-                                                            and(
-                                                                not(empty(variables('policyAssignments'))),
-                                                                equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))),
-                                                                contains(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ),'identity'),
-                                                                or(
-                                                                    contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
-                                                                    and(
-                                                                        not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                                        equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect), toLower('deployIfNotExists'))
-                                                                    )
-                                                                )
-                                                            ),
-                                                            'Microsoft.Authorization/roleAssignments',
-                                                            'na'
-                                                        )]",
-                            "properties": {
-                                "principalType": "ServicePrincipal",
-                                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                                "principalId": "[if(
-                                                    and(
-                                                        not(empty(variables('policyAssignments'))),
-                                                        equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),
-                                                        toLower(concat('/providers/',variables('scope')))),
-                                                        contains(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ),'identity'),
-                                                        or(
-                                                            contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
-                                                            and(
-                                                                not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                                equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect), toLower('deployIfNotExists'))
-                                                            )
-                                                        )
-                                                    ),
-                                                    toLower(reference(concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name), '2018-05-01', 'Full' ).identity.principalId),
-                                                    'na'
-                                                )]"
-                            }
-                        }
-                    }
-                }
-            }
-        },            
-        {
             /*
              Management Group - Remediation for Policy Assignment.
              Nothing to remediate at MG scope.
-            
              SUBSCRIPTION: Remediation for Policy Assignment Loop
 
-             Subscription deployment cannot be invoked with scope property unlike management group.
-             This resoruce uses subscriptionId property instead.
+             Subscription deployment is using "subscriptionId" property and not "scope".
             */
             "condition": "[and(
                                 variables('remediationEnabledForPolicy'),
@@ -930,9 +679,7 @@
                 "policySetDefinitions",
                 "policySetDefinitions-subscription",
                 "policyassignmentloop",
-                "policyassignmentloop-subscription",
-                "roleassignmentloop",
-                "roleassignmentloop-subscription"
+                "policyassignmentloop-subscription"
             ],
             "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyRemediations-sub-', variables('policyAssignments')[copyIndex()].Name), 'na-sub-policyremediations')]",
             "properties": {
@@ -958,7 +705,7 @@
                                                         ),
                                                         'Microsoft.PolicyInsights/remediations',
                                                         json('null')
-                                                    )]",                                                                                
+                                                    )]",
                             "properties": {
                                 "policyAssignmentId": "[concat(variables('scope'),'/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignments')[copyIndex()].Name)]",
                                 "resourceDiscoveryMode": "ReEvaluateCompliance"
@@ -968,15 +715,12 @@
                 }
             }
         },
-
         {
             /*
              SUBSCRIPTION: Deployment Trigger for DINE Policy Assignment. 
-             
-             Since reference function do not work in condition, it will trigger empty deployment for policies for effects other than DINE.
 
-             Subscription deployment cannot be invoked with scope property unlike management group.
-             This resoruce is uses subscriptionId property instead.
+             Subscription deployment is using "subscriptionId" property and not "scope".
+             NOTE: Since reference() function do not work in condition, it will trigger empty deployment for policies for effects other than DINE.
             */
 
             "condition": "[and(
@@ -1005,9 +749,7 @@
                 "policySetDefinitions",
                 "policySetDefinitions-subscription",
                 "policyassignmentloop",
-                "policyassignmentloop-subscription",
-                "roleassignmentloop",
-                "roleassignmentloop-subscription"
+                "policyassignmentloop-subscription"
             ],
             "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyDeployment_', variables('policyAssignments')[copyIndex()].Name), 'PolicyDeployment_na')]",
             "properties": {
