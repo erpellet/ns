@@ -141,6 +141,9 @@
             "type": "Microsoft.Authorization/policyAssignments",
             "name": "[variables('input').name]",
             "apiVersion": "[variables('apiversion')]",
+            "dependsOn": [
+                "[concat('Microsoft.Authorization/policyDefinitions/', variables('input').name)]"
+            ],
             "identity": "[variables('identity')]",
             "location": "[variables('location')]",
             "Properties": "[variables('input').Properties]"
