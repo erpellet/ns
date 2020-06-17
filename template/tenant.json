@@ -152,7 +152,6 @@
                 "policydefinitionloop-subscription",
                 "policySetDefinitions",
                 "policySetDefinitions-subscription",
-                "policyassignmentloop",
                 "policyassignmentloop-subscription"
             ],
             "location": "[deployment().location]",
@@ -619,7 +618,6 @@
                 "policydefinitionloop-subscription",
                 "policySetDefinitions",
                 "policySetDefinitions-subscription",
-                "policyassignmentloop",
                 "policyassignmentloop-subscription"
             ],
             "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyRemediations-sub-', variables('policyAssignments')[copyIndex()].Name), 'na-sub-policyremediations')]",
@@ -689,7 +687,6 @@
                 "policydefinitionloop-subscription",
                 "policySetDefinitions",
                 "policySetDefinitions-subscription",
-                "policyassignmentloop",
                 "policyassignmentloop-subscription"
             ],
             "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyDeployment_', variables('policyAssignments')[copyIndex()].Name), 'PolicyDeployment_na')]",
