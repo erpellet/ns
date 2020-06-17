@@ -144,7 +144,7 @@
             "apiVersion": "2019-07-01",
             "location": "[deployment().location]",
             "name": "[concat(copyIndex(), '-delay', uniqueString(deployment().name))]",
-            "scope": "[[concat('Microsoft.Management/managementGroups/', 'kristine30')]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', 'kristine30')]",
             "dependsOn": [
                 "[concat('Microsoft.Authorization/policyDefinitions/', variables('input').name)]"
             ],
