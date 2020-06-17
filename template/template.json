@@ -48,6 +48,7 @@
             "resourceTemplate": "[uri(parameters('_artifactsLocation'), concat('template.json', parameters('_artifactsLocationSasToken')))]"
         },
         "input": "[parameters('input')]",
+        "input2": "[parameters('input2')]",
         "resourceType": "[if(
                             and(contains(parameters('input'), 'ResourceType'),not(empty(parameters('input').ResourceType))),
                             parameters('input').ResourceType,
