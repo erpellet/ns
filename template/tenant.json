@@ -361,9 +361,6 @@
                 "parameters": {
                     "input": {
                         "value": "[variables('policyDefinitions')[copyIndex()]]"
-                    },
-                    "scope": {
-                        "value": "[variables('scope')]"
                     }
                 }
             }
