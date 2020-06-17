@@ -33,9 +33,6 @@
         "debug":{
             "type": "bool",
             "defaultValue": true
-        },
-        "scope": {
-            "type": "string"
         }
     },
     "variables": {
