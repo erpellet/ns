@@ -79,6 +79,21 @@
     },  
     "resources": [
         {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "location": "[deployment().location]",
+            "name": "reference",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [],
+                    "outputs": {}
+                }
+            }
+        },
+        {
             /*
                 
                 Intent: Upsert Management Group
@@ -101,6 +116,9 @@
             "type": "Microsoft.Management/managementGroups",
             "apiVersion": "2020-02-01",
             "name": "[parameters('input').Name]",
+            "dependsOn": [
+                "reference"
+            ],
             "properties": {
                 "displayName": "[parameters('input').DisplayName]",                                
                 "details": "[if(
@@ -402,7 +420,7 @@
                                                         and(
                                                             not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
                                                             equals(toLower(reference(if(not(empty(
-                                                                variables('policyDefinitions'))), concat('PolicyDefinition-', variables('policyDefinitions')[copyIndex()].Name), deployment().name), '2019-09-01').outputs.policyDefinitionId.value.properties.policyRule.then.effect), toLower('deployIfNotExists'))
+                                                                variables('policyDefinitions'))), concat('PolicyDefinition-', variables('policyDefinitions')[copyIndex()].Name), 'reference'), '2019-09-01').outputs.policyDefinitionId.value.properties.policyRule.then.effect), toLower('deployIfNotExists'))
                                                         )
                                                     )
                                                 ),
