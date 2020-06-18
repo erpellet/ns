@@ -350,7 +350,7 @@
     ],
     "outputs": {
         "policyDefinitionId": {
-            "condition": "[not(empty(parameters('input').extensionresourceType))]",
+            "condition": "[equals(parameters('input').extensionresourceType, 'Microsoft.Authorization/policyDefinitions')]",
             "type": "object",
             "value": "[parameters('input')]"
         },
