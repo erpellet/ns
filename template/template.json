@@ -162,7 +162,7 @@
             "Properties": {
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "principalId": "[if(and(variables('roleAssignmentEnabledForPolicy'),equals(toLower(variables('effectiveResourceType')),toLower('Microsoft.Authorization/policyAssignments'))), toLower(reference(concat('Microsoft.Authorization/policyAssignments/' , variables('input').name), '2018-05-01', 'Full').identity.principalId),json('null'))]"
+                "principalId": "[if(and(variables('roleAssignmentEnabledForPolicy'),equals(toLower(variables('effectiveResourceType')),toLower('Microsoft.Authorization/policyAssignments'))), toLower(reference(concat('Microsoft.Authorization/policyAssignments/' , variables('input').name), '2019-09-01', 'Full').identity.principalId),json('null'))]"
             }
         },
         {
