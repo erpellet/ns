@@ -4,8 +4,8 @@
     "parameters": {
       "input": {
         "value": {
-          "Name": "kristine100",
-          "DisplayName": "kristine100",
+          "Name": "messi",
+          "DisplayName": "messi",
           "ParentId": "/providers/Microsoft.Management/managementGroups/d6ad82f3-42af-4a15-ac1e-49e6c08f624e",
           "Type": "/providers/Microsoft.Management/managementGroups",
           "Children": [
@@ -93,8 +93,8 @@
                 "ResourceType": "Microsoft.Authorization/policyAssignments",
                 "Properties": {
                   "displayName": "ADINE-KeyVault",
-                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/kristine100/providers/Microsoft.Authorization/policyDefinitions/DINE-KeyVault",
-                  "scope": "/providers/Microsoft.Management/managementGroups/kristine100",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/messi/providers/Microsoft.Authorization/policyDefinitions/DINE-KeyVault",
+                  "scope": "/providers/Microsoft.Management/managementGroups/messi",
                   "notScopes": [],
                   "parameters": {}
                 }
