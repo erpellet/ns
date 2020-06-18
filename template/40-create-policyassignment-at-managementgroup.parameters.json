@@ -4,8 +4,8 @@
     "parameters": {
       "input": {
         "value": {
-          "Name": "faang",
-          "DisplayName": "faang",
+          "Name": "victor",
+          "DisplayName": "victor",
           "ParentId": "/providers/Microsoft.Management/managementGroups/d6ad82f3-42af-4a15-ac1e-49e6c08f624e",
           "Type": "/providers/Microsoft.Management/managementGroups",
           "Children": [
@@ -19,7 +19,7 @@
           "properties": {
             "policyDefinitions": [
               {
-                "Name": "DINE-KeyVault",
+                "Name": "ADINE-KeyVault",
                 "ExtensionResourceType": "Microsoft.Authorization/policyDefinitions",
                 "Properties": {
                   "displayName": "KeyVault",
@@ -88,13 +88,13 @@
             ],
             "policyAssignments": [
               {
-                "Name": "ADINE-KeyVault",
+                "Name": "AADINE-KeyVault",
                 "Type": "Microsoft.Authorization/policyAssignments",
                 "ResourceType": "Microsoft.Authorization/policyAssignments",
                 "Properties": {
-                  "displayName": "ADINE-KeyVault",
-                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/faang/providers/Microsoft.Authorization/policyDefinitions/DINE-KeyVault",
-                  "scope": "/providers/Microsoft.Management/managementGroups/faang",
+                  "displayName": "AADINE-KeyVault",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/victor/providers/Microsoft.Authorization/policyDefinitions/ADINE-KeyVault",
+                  "scope": "/providers/Microsoft.Management/managementGroups/victor",
                   "notScopes": [],
                   "parameters": {}
                 }
