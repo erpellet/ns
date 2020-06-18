@@ -567,7 +567,7 @@
                                                         contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
                                                         and(
                                                             not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                            equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId, '2019-09-01', 'Full').properties.policyRule.then.effect), toLower('deployIfNotExists'))
+                                                            equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId, '2019-09-01').properties.policyRule.then.effect), toLower('deployIfNotExists'))
                                                         )
                                                     )
                                                 ),
