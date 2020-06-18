@@ -143,6 +143,9 @@
             "apiVersion": "[variables('apiversion')]",
             "identity": "[variables('identity')]",
             "location": "[variables('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Authorization/policyDefinitions/', variables('input').name)]"
+            ],
             "Properties": "[variables('input').Properties]"
         },
         {
@@ -159,6 +162,9 @@
             "name" : "[guid(variables('input').name)]",
             "apiVersion": "2019-04-01-preview",
             "location": "[deployment().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Authorization/policyAssignments/', variables('input').name)]"
+            ],
             "Properties": {
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
