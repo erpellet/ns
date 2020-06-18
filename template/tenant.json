@@ -402,7 +402,7 @@
                                                         and(
                                                             not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
                                                             equals(toLower(reference(if(not(empty(
-                                                                variables('policyDefinitions'))), concat('PolicyDefinition-', variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policydefinition'), '2019-09-01').outputs.policyDefinitionId.value.properties.policyRule.then.effect), toLower('deployIfNotExists'))
+                                                                variables('policyDefinitions'))), concat('PolicyDefinition-', variables('policyDefinitions')[copyIndex()].Name), deployment().name), '2019-09-01').outputs.policyDefinitionId.value.properties.policyRule.then.effect), toLower('deployIfNotExists'))
                                                         )
                                                     )
                                                 ),
