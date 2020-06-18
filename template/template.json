@@ -7,7 +7,7 @@
         },
         "_artifactsLocation": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/krnese/ns/master/template/",
+            "defaultValue": "https://raw.githubusercontent.com/Azure/AzOps/main/template/",
             "metadata": {
                 "description": "This is the link to the nested template that must to be accessible to ARM to be able to use as a part of nested deployment. 
                                 Please feel free to use template hosted here or override with choice of your location.
@@ -126,9 +126,6 @@
             "name": "[variables('input').name]",
             "apiVersion": "[variables('apiversion')]",
             "location": "[deployment().location]",
-            "dependsOn": [
-                "builtInDelayCopy"
-            ],
             "Properties": "[variables('input').Properties]"
         },
         {
@@ -140,40 +137,10 @@
             "Properties": "[variables('input').Properties]"
         },
         {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-07-01",
-            "location": "[deployment().location]",
-            "name": "[concat(copyIndex(), '-delay', uniqueString(deployment().name))]",
-            "scope": "[concat('Microsoft.Management/managementGroups/', 'kristine30')]",
-            "dependsOn": [
-
-            ],
-            "copy": {
-                "name": "builtInDelayCopy",
-                "count": 15,
-                "mode": "Serial",
-                "batchSize": 1
-            },
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {},
-                    "variables": {},
-                    "resources": [],
-                    "outputs": {}
-                }
-            }
-        },
-        {
             "condition": "[equals(toLower(variables('effectiveResourceType')),toLower('Microsoft.Authorization/policyAssignments'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "name": "[variables('input').name]",
             "apiVersion": "[variables('apiversion')]",
-            "dependsOn": [
-                "builtInDelayCopy"
-            ],
             "identity": "[variables('identity')]",
             "location": "[variables('location')]",
             "Properties": "[variables('input').Properties]"
@@ -192,9 +159,6 @@
             "name" : "[guid(variables('input').name)]",
             "apiVersion": "2019-04-01-preview",
             "location": "[deployment().location]",
-            "dependsOn": [
-                "builtInDelayCopy"
-            ],
             "Properties": {
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
