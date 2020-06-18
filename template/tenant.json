@@ -89,12 +89,7 @@
                     "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
                     "contentVersion": "1.0.0.0",
                     "resources": [],
-                    "outputs": {
-                        "policyDefinitionId": {
-                            "value": "[deployment().name]",
-                            "type": "string"
-                        }
-                    }
+                    "outputs": {}
                 }
             }
         },
@@ -425,7 +420,7 @@
                                                         and(
                                                             not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
                                                             equals(toLower(reference(if(not(empty(
-                                                                variables('policyDefinitions'))), concat('PolicyDefinition-', variables('policyDefinitions')[copyIndex()].Name), 'reference'), '2019-09-01').outputs.policyDefinitionId.value.properties.policyRule.then.effect), toLower('deployIfNotExists'))
+                                                                variables('policyDefinitions'))), concat('PolicyDefinition-', variables('policyDefinitions')[copyIndex()].Name), 'ne'), '2019-09-01').outputs.policyDefinitionId.value.properties.policyRule.then.effect), toLower('deployIfNotExists'))
                                                         )
                                                     )
                                                 ),
