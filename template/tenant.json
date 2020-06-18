@@ -91,8 +91,8 @@
                     "resources": [],
                     "outputs": {
                         "policyDefinitionId": {
-                            "type": "object",
-                            "value": "[deployment()]"
+                            "type": "string",
+                            "value": "foo"
                         }
                     }
                 }
