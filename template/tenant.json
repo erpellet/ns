@@ -149,11 +149,7 @@
             "dependsOn": [
                 "[parameters('input').Name]",
                 "policydefinitionloop",
-                "policydefinitionloop-subscription",
-                "policySetDefinitions",
-                "policySetDefinitions-subscription",
-                "policyassignmentloop",
-                "policyassignmentloop-subscription"
+                "policyassignmentloop"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -335,7 +331,6 @@
                 Change Log: 
                     1. Initial Definition
             */
-
             "condition": "[and(not(empty(variables('policyDefinitions'))),contains(variables('scope'),'Microsoft.Management/managementGroups'))]",
             "scope": "[variables('scope')]",
             "type": "Microsoft.Resources/deployments",
@@ -350,9 +345,6 @@
                 "[parameters('input').Name]"                
             ],
             "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "outer"
-                },
                 "mode": "Incremental",
                 "templateLink": {
                     "uri": "[variables('nestedTemplatesLocation').resourceTemplate]",
@@ -361,158 +353,6 @@
                 "parameters": {
                     "input": {
                         "value": "[variables('policyDefinitions')[copyIndex()]]"
-                    }
-                }
-            }
-        },
-        {
-            /*
-                Intent: Upsert 'PolicyDefinition' for the Subscription. Subscription deployment is using "subscriptionId" property and not "scope".
-                
-                Required Parameters (of PolicyDefinitions[] Object):
-
-                    1. Name
-                    2. ExtensionResourceType set to "Microsoft.Authorization/policyDefinitions",
-                    3. Properties
-                
-                Scope: Subscription
-                
-                Condition: Non Empty policyDefinitions[] in Properties bag of Management Group.
-
-                Details: Trigger Nested Deployment to create policy Definition.
-
-                Change Log: 
-                    1. Initial Definition
-            */
-
-            "condition": "[and(not(empty(variables('policyDefinitions'))),contains(variables('scope'),'subscriptions'))]",
-            "subscriptionId": "[parameters('input').Name]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "location": "[deployment().location]",
-            "copy": {
-                "name": "policydefinitionloop-subscription",
-                "count": "[length(variables('policyDefinitions'))]"
-            },
-            "name": "[if(not(empty(variables('policyDefinitions'))), concat('PolicyDefinition-sub-', variables('policyDefinitions')[copyIndex()].Name), 'na-sub-policydefinition')]",
-            "dependsOn": [
-                "[parameters('input').Name]"                
-            ],
-            "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "outer"
-                },
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('nestedTemplatesLocation').resourceTemplate]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "input": {
-                        "value": "[variables('policyDefinitions')[copyIndex()]]"
-                    }
-                }
-            }
-        },
-        {   
-            /*
-
-                Intent: Upsert 'policySetDefinitions' for the Management Group.
-
-                Required Parameters (of policySetDefinitions[] Object):
-
-                    1. Name
-                    2. ExtensionResourceType set to "Microsoft.Authorization/policySetDefinitions",
-                    3. Properties
-
-                Scope: Tenant
-
-                Condition: Non Empty policySetDefinitions[] in Properties bag of Management Group.
-
-                Details: Trigger Nested Deployment to create policy Definition.
-
-                Change Log: 
-                    1. Initial Definition
-            */
-
-            "condition": "[and(not(empty(variables('policySetDefinitions'))),contains(variables('scope'),'Microsoft.Management/managementGroups'))]",
-            "scope": "[variables('scope')]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "location": "[deployment().location]",
-            "copy": {
-                "name": "policySetDefinitions",
-                "count": "[length(variables('policySetDefinitions'))]"
-            },
-            "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-', variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policySetDefinitions')]",
-            "dependsOn": [
-                "[parameters('input').Name]",
-                "policydefinitionloop",
-                "policydefinitionloop-subscription"
-            ],
-            "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "outer"
-                },
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('nestedTemplatesLocation').resourceTemplate]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "input": {
-                        "value": "[variables('policySetDefinitions')[copyIndex()]]"
-                    }
-                }
-            }
-        },
-        {
-            /*
-                Intent: Upsert 'policySetDefinitions' for the Subscription. Subscription deployment is using "subscriptionId" property and not "scope".
-
-                Required Parameters (of policySetDefinitions[] Object):
-
-                    1. Name
-                    2. ExtensionResourceType set to "Microsoft.Authorization/policySetDefinitions",
-                    3. Properties
-
-                Scope: Subscription
-
-                Condition: Non Empty policySetDefinitions[] in Properties bag of Management Group.
-
-                Details: Trigger Nested Deployment to create policy Definition.
-
-                Change Log: 
-                    1. Initial Definition
-            */
-
-            "condition": "[and(not(empty(variables('policySetDefinitions'))),contains(variables('scope'),'subscriptions'))]",
-            "subscriptionId": "[parameters('input').Name]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "location": "[deployment().location]",
-            "copy": {
-                "name": "policySetDefinitions-subscription",
-                "count": "[length(variables('policySetDefinitions'))]"
-            },
-            "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-sub-', variables('policySetDefinitions')[copyIndex()].Name), 'na-sub-policySetDefinitions')]",
-            "dependsOn": [
-                "[parameters('input').Name]",
-                "policydefinitionloop",
-                "policydefinitionloop-subscription"
-            ],
-            "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "outer"
-                },
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('nestedTemplatesLocation').resourceTemplate]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "input": {
-                        "value": "[variables('policySetDefinitions')[copyIndex()]]"
                     }
                 }
             }
@@ -535,16 +375,10 @@
                 "count": "[length(variables('policyAssignments'))]"
             },
             "dependsOn": [
-                "policydefinitionloop",
-                "policydefinitionloop-subscription",
-                "policySetDefinitions",
-                "policySetDefinitions-subscription"
+                "policydefinitionloop"
             ],
             "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyAssignment-', variables('policyAssignments')[copyIndex()].Name), 'na-mgmt-policyassignment')]",
             "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "outer"
-                },
                 "mode": "Incremental",
                 "templateLink": {
                     "uri": "[variables('nestedTemplatesLocation').resourceTemplate]",
@@ -567,12 +401,12 @@
                                                         contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
                                                         and(
                                                             not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                            equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId, '2019-09-01').properties.policyRule.then.effect), toLower('deployIfNotExists'))
+                                                            equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect), toLower('deployIfNotExists'))
                                                         )
                                                     )
                                                 ),
                                                 json('{\"type\":\"SystemAssigned\"}'),
-                                                json('null')
+                                                '/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62'
                                             )]",
                             "properties": "[variables('policyAssignments')[copyIndex()].Properties]"
                         }

@@ -343,6 +343,10 @@
      
     ],
     "outputs": {
+        "policyDefinitionId": {
+            "type": "object",
+            "value": "[parameters('input')]"
+        },
         "hobo": {
             "condition": "[and(variables('debug'),bool('false'))]",
             "type": "object",
