@@ -632,7 +632,7 @@
                                                         contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions'),
                                                         and(
                                                             not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                                            equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId).policyRule.then.effect), toLower('deployIfNotExists'))
+                                                            equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect), toLower('deployIfNotExists'))
                                                         )
                                                     )
                                                 ),
@@ -700,8 +700,8 @@
                                                             not(empty(variables('policyAssignments'))),
                                                             not(contains(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
                                                             equals(toLower(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect),toLower('deployIfNotExists')),
-                                                            contains(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId).policyRule.then.details, 'deploymentScope'),
-                                                            equals(toLower(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId).policyRule.then.details.deploymentScope),toLower('Subscription'))                                                            
+                                                            contains(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.details, 'deploymentScope'),
+                                                            equals(toLower(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.details.deploymentScope),toLower('Subscription'))                                                            
                                                         ),
                                                         'Microsoft.PolicyInsights/remediations',
                                                         json('null')
@@ -763,8 +763,8 @@
                                     not(contains(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
                                     equals(toLower(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.effect),toLower('deployIfNotExists')),
                                     contains(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.details, 'deploymentScope'),
-                                    equals(toLower(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId).policyRule.then.details.deploymentScope),toLower('Subscription')),
-                                    equals(length(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,).parameters), length(variables('policyAssignments')[copyIndex()].Properties.parameters))
+                                    equals(toLower(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.details.deploymentScope),toLower('Subscription')),
+                                    equals(length(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').parameters), length(variables('policyAssignments')[copyIndex()].Properties.parameters))
                                 ),
                                 reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.details.deployment.properties.template,
                                 json(variables('blankTemplateEscaped'))
@@ -773,10 +773,10 @@
                                     and(
                                         not(empty(variables('policyAssignments'))),
                                         not(contains(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId,'policySetDefinitions')),
-                                        equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId).policyRule.then.effect),toLower('deployIfNotExists')),
-                                        contains(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId).policyRule.then.details, 'deploymentScope'),
-                                        equals(toLower(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId).policyRule.then.details.deploymentScope),toLower('Subscription')),
-                                        equals(length(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId).parameters), length(variables('policyAssignments')[copyIndex()].Properties.parameters))
+                                        equals(toLower(reference(variables('policyAssignments')[copyIndex()].Properties.policyDefinitionId, '2018-05-01').policyRule.then.effect),toLower('deployIfNotExists')),
+                                        contains(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.details, 'deploymentScope'),
+                                        equals(toLower(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').policyRule.then.details.deploymentScope),toLower('Subscription')),
+                                        equals(length(reference(variables('policyAssignments') [copyIndex()].Properties.policyDefinitionId,'2018-05-01').parameters), length(variables('policyAssignments')[copyIndex()].Properties.parameters))
                                     ),                                    
                                     variables('policyAssignments')[copyIndex()].Properties.parameters,
                                     json('null')
