@@ -33,7 +33,6 @@
             "condition": "[and(equals(parameters('enableResourceDeployments'), 'Yes'), not(empty(parameters('managementSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management')]",
             "name": "enableAuditing",
             "location": "[deployment().location]",
             "properties": {
