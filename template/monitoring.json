@@ -102,7 +102,7 @@
                             "properties": {
                                 "mode": "incremental",
                                 "template": "[reference(variables('policyDefinitions').deployLogAnalytics, '2019-09-01').policyRule.then.details.deployment.properties.template]",
-                                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2019-09-01').parameters]"
+                                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2018-05-01').parameters]"
                             }
                         }*/
                     ]
