@@ -84,8 +84,7 @@
             "name": "deployToMgmtSubscription",
             "location": "[deployment().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments/', guid('Deploy-Log-Analytics'))]",
-                "[variables('policyAssignmentNames').loganalytics]"
+                "[resourceId('Microsoft.Authorization/roleAssignments/', guid(parameters('managementSubscriptionId')))]"
             ],
             "subscriptionId": "[parameters('managementSubscriptionId')]",
             "properties": {
