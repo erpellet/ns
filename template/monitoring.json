@@ -75,11 +75,11 @@
                                     }
                                 }
                             }
-                        } ,
+                        },
                         {
                             "type": "Microsoft.Authorization/roleAssignments",
                             "apiVersion": "2019-04-01-preview",
-                            "name": "[guid('Deploy-Log-Analytics')]",
+                            "name": "[guid(parameters('managementSubscriptionId'))]",
                             "dependsOn": [
                                 "[variables('policyAssignmentNames').loganalytics]"
                             ],
