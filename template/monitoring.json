@@ -1,0 +1,111 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "topLevelManagementGroupPrefix": {
+            "type": "string",
+            "maxLength": 5
+        },
+        "managementSubscriptionId": {
+            "type": "string",
+            "defaultValue": "0a938bc2-0bb8-4688-bd37-9964427fe0b0",
+            "minLength": 36,
+            "maxLength": 36
+        },
+        "enableResourceDeployments": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        }
+    },
+    "variables": {
+        "policyDefinitions": {
+            "deployLogAnalytics": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Log-Analytics')]",
+            "deployLaConfig": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Auhtorization/policyDefinitons/Deploy-LA-Config')]",
+            "ascMonitoring": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
+        },
+        "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+    },
+    "resources": [
+        {
+            "condition": "[and(equals(parameters('enableResourceDeployments'), 'Yes'), not(empty(parameters('managementSubscriptionId'))))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management')]",
+            "name": "enableAuditing",
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Authorization/policyAssignments",
+                            "apiVersion": "2019-09-01",
+                            "name": "Deploy-Log-Analytics",
+                            "location": "[deployment().location]",
+                            "identity": {
+                                "type": "SystemAssigned"
+                            },
+                            "properties": {
+                                "description": "Deploy-Log-Analytics",
+                                "displayName": "Deploy-Log-Analytics",
+                                "policyDefinitionId": "[variables('policyDefinitions').deployLogAnalytics]",
+                                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management')]",
+                                "parameters": {
+                                    "workspaceName": {
+                                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-la-', parameters('managementSubscriptionId'))]"
+                                    },
+                                    "automationAccountName": {
+                                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-a-', parameters('managementSubscriptionId'))]"
+                                    },
+                                    "workspaceRegion": {
+                                        "value": "[deployment().location]"
+                                    },
+                                    "automationRegion": {
+                                        "value": "[deployment().location]"
+                                    },
+                                    "rgName": {
+                                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]"
+                                    }
+                                }
+                            }
+                        } ,
+                        {
+                            "type": "Microsoft.Authorization/roleAssignments",
+                            "apiVersion": "2019-04-01-preview",
+                            "name": "[guid('Deploy-Log-Analytics')]",
+                            "dependsOn": [
+                                "Deploy-Log-Analytics"
+                            ],
+                            "properties": {
+                                "principalType": "ServicePrincipal",
+                                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
+                                "principalId": "[toLower(reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management', '/providers/Microsoft.Authorization/policyAssignments/Deploy-Log-Analytics'), '2019-09-01', 'Full' ).identity.principalId)]"
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2019-10-01",
+                            "name": "deployToMgmtSubscription",
+                            "location": "[deployment().location]",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Authorization/roleAssignments/', guid('Deploy-Log-Analytics'))]"
+                            ],
+                            "subscriptionId": "[parameters('managementSubscriptionId')]",
+                            "properties": {
+                                "mode": "incremental",
+                                "template": "[reference(variables('policyDefinitions').deployLogAnalytics, '2019-09-01').policyRule.then.details.deployment.properties.template]",
+                                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management', '/providers/Microsoft.Authorization/policyAssignments/Deploy-Log-Analytics'), '2019-09-01').parameters]"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
