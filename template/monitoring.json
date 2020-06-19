@@ -27,7 +27,7 @@
             "ascMonitoring": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
         },
         "policyAssignmentNames": {
-            "logAnalytics": "Deploy-Log-Analytics"
+            "logAnalytics": "Assign-Log-Analytics"
         },
         "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
     },
