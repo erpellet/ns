@@ -61,39 +61,39 @@
                     },
                     "rgName": {
                         "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]"
-                            }
-                        }
-                    }
-                },
-                {
-                    "type": "Microsoft.Authorization/roleAssignments",
-                    "apiVersion": "2019-04-01-preview",
-                    "name": "[guid(parameters('managementSubscriptionId'))]",
-                    "dependsOn": [
-                        "[variables('policyAssignmentNames').loganalytics]"
-                    ],
-                    "properties": {
-                        "principalType": "ServicePrincipal",
-                        "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
-                        "principalId": "[toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2018-05-01', 'Full' ).identity.principalId)]"
                     }
                 }
-                       /* {
-                            "type": "Microsoft.Resources/deployments",
-                            "apiVersion": "2019-10-01",
-                            "name": "deployToMgmtSubscription",
-                            "location": "[deployment().location]",
-                            "dependsOn": [
-                                "[resourceId('Microsoft.Authorization/roleAssignments/', guid('Deploy-Log-Analytics'))]",
-                                "[variables('policyAssignmentNames').loganalytics]"
-                            ],
-                            "subscriptionId": "[parameters('managementSubscriptionId')]",
-                            "properties": {
-                                "mode": "incremental",
-                                "template": "[reference(variables('policyDefinitions').deployLogAnalytics, '2018-05-01').policyRule.then.details.deployment.properties.template]",
-                                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2018-05-01').parameters]"
-                            }
-                        }*/
-                    ],
-                    "outputs": {}
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[guid(parameters('managementSubscriptionId'))]",
+            "dependsOn": [
+                "[variables('policyAssignmentNames').loganalytics]"
+            ],
+            "properties": {
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
+                "principalId": "[toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2018-05-01', 'Full' ).identity.principalId)]"
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "deployToMgmtSubscription",
+            "location": "[deployment().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Authorization/roleAssignments/', guid('Deploy-Log-Analytics'))]",
+                "[variables('policyAssignmentNames').loganalytics]"
+            ],
+            "subscriptionId": "[parameters('managementSubscriptionId')]",
+            "properties": {
+                "mode": "incremental",
+                "template": "[reference(variables('policyDefinitions').deployLogAnalytics, '2018-05-01').policyRule.then.details.deployment.properties.template]",
+                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2018-05-01').parameters]"
+            }
+        }
+    ],
+    "outputs": {}
 }
