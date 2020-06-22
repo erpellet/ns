@@ -1,0 +1,141 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "enterpriseScaleCompanyPrefix": {
+            "type": "string",
+            "maxLength": 5,
+            "metadata": {
+                "description": "Provide the prefix (max 5 characters) to the management group hierarchy that will be created"
+            }
+        },
+        "setup": {
+            "type": "string",
+            "metadata": {
+                "description": "Select the type of initial deployment. Foundation will always be included and ideal for net new deployment/development in Azure without hybric connectivity requirements. If hybrid connectivity is required for migration scenarios and/or connectivy to on-premises, select eith VWan (Microsoft managed network) or HubSpoke (customer managed network) to deploy the requisite networking setup."
+            },
+            "defaultValue": "Foundation",
+            "allowedValues": [
+                "Foundation",
+                "HubSpoke",
+                "VWAN"
+            ]
+        },
+        "managementSubscriptionId": {
+            "type": "string",
+            "defaultValue": "REPLACE-ME",
+            "maxLength": 36
+        },
+        "enableResourceDeployments": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        }
+    },
+    "variables": {
+        "e2eTemplate": "[uri(deployment().properties.templateLink.uri, 'enterprise-scale-arm-template.json')]",
+        "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/monitoring.json')]",
+        "activityLog": "[uri(deployment().properties.templateLink.uri, 'auxiliary/activityLog.json')]",
+        "mainDeploymentName": "[concat('EntScale', '-', parameters('setup'), guid(parameters('enterpriseScaleCompanyPrefix')))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "location": "[deployment().location]",
+            "name": "[variables('mainDeploymentName')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('e2eTemplate')]"
+                },
+                "parameters": {
+                    "topLevelManagementGroupPrefix": {
+                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                    },
+                    "setup": {
+                        "value": "[parameters('setup')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[not(equals(parameters('managementSubscriptionId'), 'REPLACE-ME'))]",
+            "type": "Microsoft.Management/managementGroups/subscriptions",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '/', parameters('managementSubscriptionId'))]",
+            "dependsOn": [
+                "[variables('mainDeploymentName')]"
+            ],
+            "properties": {}
+        },
+        {
+            "condition": "[and(equals(parameters('enableResourceDeployments'), 'Yes'), not(empty(parameters('managementSubscriptionId'))))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management')]",
+            "name": "deployLogAnalytics",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions', parameters('enterpriseScaleCompanyPrefix'), parameters('managementSubscriptionId'))]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri":"[variables('monitoring')]"
+                },
+                "parameters": {
+                    "topLevelManagementGroupPrefix": {
+                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                    },
+                    "enableResourceDeployments": {
+                        "value": "[parameters('enableResourceDeployments')]"
+                    },
+                    "managementSubscriptionId": {
+                        "value": "[parameters('managementSubscriptionId')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[and(equals(parameters('enableResourceDeployments'), 'Yes'), not(empty(parameters('enterpriseScaleCompanyPrefix'))))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
+            "name": "deployActivityLogs",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions', parameters('enterpriseScaleCompanyPrefix'), parameters('managementSubscriptionId'))]",
+                "deployLogAnalytics"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri":"[variables('activityLog')]"
+                },
+                "parameters": {
+                    "topLevelManagementGroupPrefix": {
+                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                    },
+                    "enableResourceDeployments": {
+                        "value": "[parameters('enableResourceDeployments')]"
+                    },
+                    "managementSubscriptionId": {
+                        "value": "[parameters('managementSubscriptionId')]"
+                    }
+                }
+            }
+        }        
+    ],
+    "outputs": {
+        "deployment": {
+            "type": "string",
+            "value": "[concat(deployment().name, ' has successfully deployed. Welcome to NorthStar!')]"
+        }
+    }
+}
