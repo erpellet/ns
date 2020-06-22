@@ -44,7 +44,8 @@
         "e2eTemplate": "[uri(deployment().properties.templateLink.uri, 'enterprise-scale-arm-template.json')]",
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/monitoring.json')]",
         "activityLog": "[uri(deployment().properties.templateLink.uri, 'auxiliary/activityLog.json')]",
-        "mainDeploymentName": "[concat('EntScale', '-', parameters('setup'), guid(parameters('enterpriseScaleCompanyPrefix')))]"
+        "mainDeploymentName": "[concat('EntScale', '-', parameters('setup'), guid(parameters('enterpriseScaleCompanyPrefix')))]",
+        "subscriptionMove": "[concat('EntScale', '-', parameters('setup'), guid(parameters(deployment().name)))]"
     },
     "resources": [
         {
@@ -70,13 +71,29 @@
         },
         {
             "condition": "[not(equals(parameters('managementSubscriptionId'), 'REPLACE-ME'))]",
-            "type": "Microsoft.Management/managementGroups/subscriptions",
-            "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
-            "dependsOn": [
-                "[variables('mainDeploymentName')]"
-            ],
-            "properties": {}
+            "type": "Microsoft.Resources/deployments",
+            "name": "[variables('subscriptionMove')]",
+            "apiVersion": "2019-08-01",
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Management/managementGroups/subscriptions",
+                            "apiVersion": "2020-05-01",
+                            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
+                            "dependsOn": [
+                                "[variables('mainDeploymentName')]"
+                            ],
+                            "properties": {}
+                        }
+                    ],
+                    "outputs": {}
+                }
+            }
         },
         {
             "condition": "[and(equals(parameters('enableResourceDeployments'), 'Yes'), not(empty(parameters('managementSubscriptionId'))))]",
