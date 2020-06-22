@@ -113,7 +113,6 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
             "name": "deployActivityLogs",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions', parameters('enterpriseScaleCompanyPrefix'), parameters('managementSubscriptionId'))]",
                 "deployLogAnalytics"
             ],
             "location": "[deployment().location]",
