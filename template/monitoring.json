@@ -100,6 +100,9 @@
             "apiVersion": "2018-05-01",
             "name": "[variables('policyAssignmentNames').logAnalyticsConfig]",
             "location": "[deployment().location]",
+            "dependsOn": [
+                "[variables('policyAssignmentNames').logAnalytics]"
+            ],
             "identity": {
                 "type": "SystemAssigned"
             },
@@ -121,7 +124,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
-            "name": "[guid(parameters('managementSubscriptionId'))]",
+            "name": "[guid(parameters('topLevelManagementGroupPrefix'))]",
             "dependsOn": [
                 "[variables('policyAssignmentNames').logAnalyticsConfig]"
             ],
@@ -137,13 +140,29 @@
             "name": "deployToMgmtSubscription",
             "location": "[deployment().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments/', guid(parameters('managementSubscriptionId')))]"
+                "[resourceId('Microsoft.Authorization/roleAssignments/', guid(parameters('topLevelManagementGroupPrefix')))]"
             ],
-            "resourceGroup": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]",
+            "subscriptionId": "[parameters('managementSubscriptionId')]",
             "properties": {
-                "mode": "incremental",
-                "template": "[reference(variables('policyDefinitions').deployLaConfig, '2018-05-01').policyRule.then.details.deployment.properties.template]",
-                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').logAnalyticsConfig), '2018-05-01').parameters]"
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2019-10-01",
+                            "location": "[deployment().location]",
+                            "name": "LA-Config",
+                            "resourceGroup": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]",
+                            "properties": {
+                                "mode": "incremental",
+                                "template": "[reference(variables('policyDefinitions').deployLaConfig, '2018-05-01').policyRule.then.details.deployment.properties.template]",
+                                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').logAnalyticsConfig), '2018-05-01').parameters]"
+                            }
+                        }
+                    ]
+                }
             }
         }
     ],
