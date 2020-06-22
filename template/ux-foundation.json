@@ -70,7 +70,7 @@
         },
         {
             "condition": "[not(
-                                contains(parameters('managementSubscriptionId'), 'REPLACE-ME'))]",
+                                equals(parameters('managementSubscriptionId'), 'REPLACE-ME'))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
@@ -81,9 +81,10 @@
         },
         {
             "condition": "[and(
-                                equals(parameters('enableResourceDeployments'), 'Yes'), 
                                 not(
-                                    contains(parameters('managementSubscriptionId'), 'REPLACE-ME')))]",
+                                    equals(parameters('managementSubscriptionId'), 'REPLACE-ME')),
+                                    equals(parameters('enableResourceDeployments'), 'Yes')
+                                )]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management')]",
@@ -112,9 +113,10 @@
         },
         {
             "condition": "[and(
-                                equals(parameters('enableResourceDeployments'), 'Yes'), 
                                 not(
-                                    contains(parameters('enterpriseScaleCompanyPrefix'), 'REPLACE-ME')))]",
+                                    equals(parameters('managementSubscriptionId'), 'REPLACE-ME')),
+                                    equals(parameters('enableResourceDeployments'), 'Yes')
+                                )]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
