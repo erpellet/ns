@@ -74,7 +74,7 @@
             "name": "deployActivityLogs",
             "location": "[deployment().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames'))]"
+                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
             ],
             "subscriptionId": "[parameters('managementSubscriptionId')]",
             "properties": {
