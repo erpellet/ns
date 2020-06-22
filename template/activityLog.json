@@ -28,7 +28,10 @@
         "policyAssignmentNames": {
             "azureActivityLog": "Deploy-AzActivity-Log"
         },
-        "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+        "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+        "roleAssignmentNames": {
+            "deployAzureActivityLog": "[guid(variables('policyAssignmentNames').azureActivityLog)]"
+        }
     },
     "resources": [
         {
@@ -55,7 +58,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
-            "name": "[guid(parameters('topLevelManagementGroupPrefix'))]",
+            "name": "[variables('roleAssignmentNames').deployAzureActivityLog]",
             "dependsOn": [
                 "[variables('policyAssignmentNames').azureActivityLog]"
             ],
@@ -71,7 +74,7 @@
             "name": "deployActivityLogs",
             "location": "[deployment().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments/', guid(parameters('topLevelManagementGroupPrefix')))]"
+                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames'))]"
             ],
             "subscriptionId": "[parameters('managementSubscriptionId')]",
             "properties": {

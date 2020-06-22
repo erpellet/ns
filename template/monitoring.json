@@ -30,7 +30,10 @@
             "logAnalytics": "Deploy-Log-Analytics",
             "azureActivityLog": "Deploy-AzActivity-Log"
         },
-        "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+        "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+        "roleAssignmentNames": {
+            "deployLogAnalytics": "[guid(variables('policyAssignmentNames').logAnalytics)]"
+        }
     },
     "resources": [
         {
@@ -69,7 +72,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
-            "name": "[guid(parameters('managementSubscriptionId'))]",
+            "name": "[variables('roleAssignmentNames').deployLogAnalytics]",
             "dependsOn": [
                 "[variables('policyAssignmentNames').loganalytics]"
             ],
@@ -85,7 +88,7 @@
             "name": "deployToMgmtSubscription",
             "location": "[deployment().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments/', guid(parameters('managementSubscriptionId')))]"
+                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployLogAnalytics)]"
             ],
             "subscriptionId": "[parameters('managementSubscriptionId')]",
             "properties": {
