@@ -88,9 +88,6 @@
                             "type": "Microsoft.Management/managementGroups/subscriptions",
                             "apiVersion": "2020-05-01",
                             "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
-                            "dependsOn": [
-                                "[variables('mainDeploymentName')]"
-                            ],
                             "properties": {}
                         }
                     ],
