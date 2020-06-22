@@ -153,7 +153,7 @@
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
                             "location": "[deployment().location]",
-                            "name": "LA-Config",
+                            "name": "deployLaConfig",
                             "resourceGroup": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]",
                             "properties": {
                                 "mode": "incremental",
