@@ -69,8 +69,7 @@
             }
         },
         {
-            "condition": "[not(
-                                empty(parameters('managementSubscriptionId')))]",
+            "condition": "[not(empty(parameters('managementSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
@@ -80,11 +79,7 @@
             "properties": {}
         },
         {
-            "condition": "[and(
-                                not(
-                                    empty(parameters('managementSubscriptionId'))),
-                                    equals(parameters('enableResourceDeployments'), 'Yes')
-                                )]",
+            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableResourceDeployments'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management')]",
@@ -113,11 +108,7 @@
             }
         },
         {
-            "condition": "[and(
-                                not(
-                                    empty(parameters('managementSubscriptionId'))),
-                                    equals(parameters('enableResourceDeployments'), 'Yes')
-                                )]",
+            "condition": "[and(not(empty(parameters('managementSubscriptionId'))), equals(parameters('enableResourceDeployments'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
