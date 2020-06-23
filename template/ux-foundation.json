@@ -71,11 +71,22 @@
         },
         {
             "condition": "[not(empty(parameters('managementSubscriptionId')))]",
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management')]",
+            "dependsOn": [
+                "[variables('mainDeploymentName')]"
+            ],
+            "properties": {}
+        },
+        {
+            "condition": "[not(empty(parameters('managementSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
             "dependsOn": [
-                "[variables('mainDeploymentName')]"
+                "[variables('mainDeploymentName')]",
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'))]"
             ],
             "properties": {}
         },
