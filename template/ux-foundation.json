@@ -23,7 +23,7 @@
         },
         "managementSubscriptionId": {
             "type": "string",
-            "defaultValue": "REPLACE-ME",
+            "defaultValue": "",
             "maxLength": 36,
             "metadata": {
                 "description": "Provide the subscription id of an existing, empty subscription you want to dedicate for management. If you don't want to bring a subscription, leave this parameter value as is."
