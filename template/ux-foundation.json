@@ -70,7 +70,7 @@
         },
         {
             "condition": "[not(
-                                equals(parameters('managementSubscriptionId'), 'REPLACE-ME'))]",
+                                empty(parameters('managementSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
@@ -82,7 +82,7 @@
         {
             "condition": "[and(
                                 not(
-                                    equals(parameters('managementSubscriptionId'), 'REPLACE-ME')),
+                                    empty(parameters('managementSubscriptionId'))),
                                     equals(parameters('enableResourceDeployments'), 'Yes')
                                 )]",
             "type": "Microsoft.Resources/deployments",
@@ -114,7 +114,7 @@
         {
             "condition": "[and(
                                 not(
-                                    equals(parameters('managementSubscriptionId'), 'REPLACE-ME')),
+                                    empty(parameters('managementSubscriptionId'))),
                                     equals(parameters('enableResourceDeployments'), 'Yes')
                                 )]",
             "type": "Microsoft.Resources/deployments",
