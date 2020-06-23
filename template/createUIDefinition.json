@@ -1,0 +1,118 @@
+{
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {}
+        ],
+        "steps": [
+            {
+                "name": "lzSettings",
+                "label": "Enterprise Scale Company Prefix",
+                "subLabel": {
+                    "preValidation": "Provide a company prefix for the management group structure that will be created.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Company prefix",
+                "elements": [
+                    {
+                        "name": "esMgmtGroup",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Management Group prefix",
+                        "toolTip": "Provide prefix for management group structure.",
+                        "defaultValue": "",
+                        "constraints": {
+                            "required": true,
+                            "regex": "[a-z][a-z0-9-]{2,5}[a-z0-9]$",
+                            "validationMessage": "Must be 3-5 characters."
+                        }
+                    },
+					{
+                        "name": "esMgmtSub",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Enable management subscription",
+                        "toolTip": "Provide the subscription id of an existing, empty subscription you want to dedicate for management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
+                        "defaultValue": "",
+                        "constraints": {
+                            "required": false,
+                            "regex": "[a-z][a-z0-9-]{2,5}[a-z0-9]$",
+                            "validationMessage": "Must be 3-5 characters."
+                        }
+                    }   
+                ]
+            },
+            {
+                "name": "esGoalState",
+                "label": "Enable Resource Deployments",
+                "subLabel": {
+                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "lzGs",
+                "elements": [                                        
+                    {
+                        "name": "management",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Resource Deployments",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "esSetup",
+                "label": "Select Enterprise-Scale setup",
+                "subLabel": {
+                    "preValidation": "Select the type of initial deployment. Foundation will always be included and ideal for net new deployment/development in Azure without hybric connectivity requirements. If hybrid connectivity is required for migration scenarios and/or connectivy to on-premises, select eith VWan (Microsoft managed network) or HubSpoke (customer managed network) to deploy the requisite networking setup.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "lzSetup",
+                "elements": [                                        
+                    {
+                        "name": "setup",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Select initial Enterprise-Scale setup",
+                        "defaultValue": "Foundation",
+                        "toolTip": "Select the intial deployment",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "HubSpoke",
+                                    "value": "HubSpoke"
+                                },
+                                {
+                                    "label": "VWAN",
+                                    "value": "WVAN"
+                                },
+								{
+									"label": "Foundation",
+									"value": "Foundation"
+								}
+                            ]
+                        },
+                        "visible": true
+                    }
+                ]
+            }			
+        ],
+        "outputs": {
+            "setup": "[steps('esSetup').setup]",
+            "managementSubscriptionId": "[steps('lzSettings').esMgmtSub]",
+            "enableResourceDeployments": "[steps('esGoalState').management]",
+            "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]"
+        }
+    }
+}
