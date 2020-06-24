@@ -111,7 +111,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies that will 1) deploy a Log Analytics workspace to your management subscription, and 2) enable diagnostics of Activity Logs to be sent to the Log Analytics workspace. If 'No', it will be ignored.",
+                            "text": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies that will 1) deploy a Log Analytics workspace and an Automation Account to your management subscription, and 2) enable diagnostics of Activity Logs to be sent to the Log Analytics workspace. If 'No', it will be ignored.",
                             "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin"
                         }
                     },                                 
