@@ -24,7 +24,7 @@
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{1,5}$",
-                            "validationMessage": "Must be 1-5 characters."
+                            "validationMessage": "The prefix must be 1-5 characters."
                         }
                     },
 					{
@@ -36,7 +36,7 @@
                         "constraints": {
                             "required": false,
                             "regex": "^[a-z0-9A-Z-]{36}$",
-                            "validationMessage": "Must be 36 characters."
+                            "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
                         }
                     }   
                 ]
