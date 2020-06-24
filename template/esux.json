@@ -42,37 +42,6 @@
                 ]
             },
             {
-                "name": "esGoalState",
-                "label": "Enable Resource Deployments",
-                "subLabel": {
-                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment",
-                    "postValidation": "Done"
-                },
-                "bladeTitle": "lzGs",
-                "elements": [                                        
-                    {
-                        "name": "management",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Enable Resource Deployments",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, sending logs to the Log Analytics workspace for platform monitoring. If 'No', it will be ignored.",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    }
-                ]
-            },
-            {
                 "name": "esSetup",
                 "label": "Select Enterprise-Scale setup",
                 "subLabel": {
@@ -106,7 +75,38 @@
                         "visible": true
                     }
                 ]
-            }			
+            },
+            {
+                "name": "esGoalState",
+                "label": "Enable Resource Deployments",
+                "subLabel": {
+                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "lzGs",
+                "elements": [                                        
+                    {
+                        "name": "management",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Resource Deployments",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, sending logs to the Log Analytics workspace for platform monitoring. If 'No', it will be ignored.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    }
+                ]
+            }            			
         ],
         "outputs": {
             "setup": "[steps('esSetup').setup]",
