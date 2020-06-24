@@ -55,7 +55,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Select the initial Enterprise-Scale setup",
                         "defaultValue": "Foundation",
-                        "toolTip": "Select the intial deployment",
+                        "toolTip": "Select the type of initial deployment. Foundation will always be included and ideal for net new deployment/development in Azure without hybrid connectivity requirements. If hybrid connectivity is required for migration scenarios and/or connectivy to on-premises, select eith VWan (Microsoft managed network) or HubSpoke (customer managed network) to deploy the requisite networking setup.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -80,7 +80,7 @@
                 "name": "esGoalState",
                 "label": "Enable Resource Deployments",
                 "subLabel": {
-                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment",
+                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
                     "postValidation": "Done"
                 },
                 "bladeTitle": "lzGs",
