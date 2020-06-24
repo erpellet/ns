@@ -16,6 +16,16 @@
                 "bladeTitle": "Company prefix",
                 "elements": [
                     {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Enterprise-Scale ARM deployment requires access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
+                            "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin"
+                        }
+                    },
+                    {
                         "name": "esMgmtGroup",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Management Group prefix",
@@ -94,13 +104,23 @@
                     "postValidation": "Done"
                 },
                 "bladeTitle": "lzGs",
-                "elements": [                                        
+                "elements": [       
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies that will 1) deploy a Log Analytics workspace to your management subscription, and 2) enable diagnostics of Activity Logs to be sent to the Log Analytics workspace. If 'No', it will be ignored.",
+                            "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin"
+                        }
+                    },                                 
                     {
                         "name": "management",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Enable Resource Deployments",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies that will 1) deploy a Log Analytics workspace to your management subscription, and 2) enable diagnostics of Activity Logs to be sent to the Log Analytics workspace. If 'No', it will be ignored.",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies and do subsequent resource deployments.",
                         "constraints": {
                             "allowedValues": [
                                 {
