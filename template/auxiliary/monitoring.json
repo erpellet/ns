@@ -9,6 +9,13 @@
         "managementSubscriptionId": {
             "type": "string",
             "maxLength": 36
+        },
+        "enableResourceDeployments": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
         }
     },
     "variables": {
@@ -28,6 +35,7 @@
     },
     "resources": [
         {
+            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableResourceDeployments'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
             "name": "[variables('policyAssignmentNames').loganalytics]",
@@ -60,6 +68,7 @@
             }
         },
         {
+            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableResourceDeployments'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
             "name": "[variables('roleAssignmentNames').deployLogAnalytics]",
@@ -73,6 +82,7 @@
             }
         },
         {
+            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableResourceDeployments'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "deployToMgmtSubscription",
