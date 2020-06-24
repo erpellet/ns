@@ -23,7 +23,7 @@
                         "defaultValue": "",
                         "constraints": {
                             "required": true,
-                            "regex": "[a-z][a-z0-9-]{1,5}[a-z0-9]$",
+                            "regex": "^[a-z0-9A-Z]{1,5}$",
                             "validationMessage": "Must be 1-5 characters."
                         }
                     },
@@ -35,7 +35,7 @@
                         "defaultValue": "",
                         "constraints": {
                             "required": false,
-                            "regex": "[a-z][a-z0-9-]{0,36}[a-z0-9]$",
+                            "regex": "^[a-z0-9A-Z-]{36}$",
                             "validationMessage": "Must be 36 characters."
                         }
                     }   
