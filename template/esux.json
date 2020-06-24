@@ -41,7 +41,7 @@
                         "name": "esMgmtSub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Enable management subscription",
-                        "toolTip": "Provide the subscription id of an existing, empty subscription you want to dedicate for management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
+                        "toolTip": "Provide the subscription id of an existing, empty subscription you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
                         "defaultValue": "",
                         "constraints": {
                             "required": false,
