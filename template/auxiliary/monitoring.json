@@ -8,16 +8,7 @@
         },
         "managementSubscriptionId": {
             "type": "string",
-            "defaultValue": "0a938bc2-0bb8-4688-bd37-9964427fe0b0",
-            "minLength": 36,
             "maxLength": 36
-        },
-        "enableResourceDeployments": {
-            "type": "string",
-            "allowedValues": [
-                "Yes",
-                "No"
-            ]
         }
     },
     "variables": {
@@ -37,7 +28,6 @@
     },
     "resources": [
         {
-            "condition": "[and(equals(parameters('enableResourceDeployments'), 'Yes'), not(empty(parameters('managementSubscriptionId'))))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
             "name": "[variables('policyAssignmentNames').loganalytics]",
