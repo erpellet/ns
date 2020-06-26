@@ -76,7 +76,7 @@
         "policyAssignments": "[if(and(contains(parameters('input'), 'properties'),contains(parameters('input').properties, 'policyAssignments'),not(empty(parameters('input').properties.policyAssignments))),parameters('input').properties.policyAssignments,json('[]'))]",
 
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
-        "deploymentLocation": "[concat(deployment().location, '-')]"
+        "deploymentLocation": "[concat('-', deployment().location)]"
     },  
     "resources": [
         {
@@ -145,7 +145,7 @@
                 "name": "childmove",
                 "count": "[length(variables('Children'))]"
             },
-            "name": "[if(not(empty(variables('Children'))), take(concat('EntScale','-', variables('deploymentLocation'), parameters('input').name,'-',variables('Children')[copyIndex()].Name),63), 'na-move')]",
+            "name": "[if(not(empty(variables('Children'))), take(concat('EntScale','-', parameters('input').name,'-',variables('Children')[copyIndex()].Name, variables('deploymentLocation')),63), 'na-move')]",
             "dependsOn": [
                 "[parameters('input').Name]",
                 "policydefinitionloop",
@@ -190,7 +190,7 @@
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
                             "location": "[deployment().location]",
-                            "name": "[take(concat('EntScale-ChildMG-', variables('deploymentLocation'), variables('Children')[copyIndex()].Name),63)]",
+                            "name": "[take(concat('EntScale-ChildMG-', variables('Children')[copyIndex()].Name, variables('deploymentLocation')),63)]",
                             "dependsOn": [
                                 "[variables('Children')[copyIndex()].Name]"
                             ],
@@ -261,7 +261,7 @@
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
                             "location": "[deployment().location]",
-                            "name": "[take(concat('EntScale-subscription-', variables('deploymentLocation'), variables('Children')[copyIndex()].Name),63)]",
+                            "name": "[take(concat('EntScale-subscription-', variables('Children')[copyIndex()].Name, variables('deploymentLocation')),63)]",
                             "properties": {
                                 "expressionEvaluationOptions": {
                                     "scope": "outer"
@@ -342,7 +342,7 @@
                 "name": "policydefinitionloop",
                 "count": "[length(variables('policyDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('policyDefinitions'))), take(concat('PolicyDefinition-', variables('deploymentLocation'), variables('policyDefinitions')[copyIndex()].Name), 63), 'na-mgmt-policydefinition')]",
+            "name": "[if(not(empty(variables('policyDefinitions'))), take(concat('PolicyDefinition-', variables('policyDefinitions')[copyIndex()].Name, variables('deploymentLocation')), 63), 'na-mgmt-policydefinition')]",
             "dependsOn": [
                 "[parameters('input').Name]"
             ],
@@ -391,7 +391,7 @@
                 "name": "policydefinitionloop-subscription",
                 "count": "[length(variables('policyDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('policyDefinitions'))), take(concat('PolicyDefinition-sub-', variables('deploymentLocation'), variables('policyDefinitions')[copyIndex()].Name), 63), 'na-sub-policydefinition')]",
+            "name": "[if(not(empty(variables('policyDefinitions'))), take(concat('PolicyDefinition-sub-', variables('policyDefinitions')[copyIndex()].Name, variables('deploymentLocation')), 63), 'na-sub-policydefinition')]",
             "dependsOn": [
                 "[parameters('input').Name]"
             ],
@@ -471,7 +471,7 @@
                 "name": "policySetDefinitions",
                 "count": "[length(variables('policySetDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('policySetDefinitions'))), take(concat('PolicySetDefinitions-', variables('deploymentLocation'), variables('policyDefinitions')[copyIndex()].Name), 63), 'na-mgmt-policySetDefinitions')]",
+            "name": "[if(not(empty(variables('policySetDefinitions'))), take(concat('PolicySetDefinitions-', variables('policyDefinitions')[copyIndex()].Name, variables('deploymentLocation')), 63), 'na-mgmt-policySetDefinitions')]",
             "dependsOn": [
                 "[parameters('input').Name]",
                 "policydefinitionloop",
@@ -523,7 +523,7 @@
                 "name": "policySetDefinitions-subscription",
                 "count": "[length(variables('policySetDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('policySetDefinitions'))), take(concat('PolicySetDefinitions-sub-', variables('deploymentLocation'), variables('policySetDefinitions')[copyIndex()].Name), 63), 'na-sub-policySetDefinitions')]",
+            "name": "[if(not(empty(variables('policySetDefinitions'))), take(concat('PolicySetDefinitions-sub-', variables('policySetDefinitions')[copyIndex()].Name, variables('deploymentLocation')), 63), 'na-sub-policySetDefinitions')]",
             "dependsOn": [
                 "[parameters('input').Name]",
                 "policydefinitionloop",
@@ -568,7 +568,7 @@
                 "policySetDefinitions",
                 "policySetDefinitions-subscription"
             ],
-            "name": "[if(not(empty(variables('policyAssignments'))), take(concat('PolicyAssignment-', variables('deploymentLocation'), variables('policyAssignments')[copyIndex()].Name), 63), 'na-mgmt-policyassignment')]",
+            "name": "[if(not(empty(variables('policyAssignments'))), take(concat('PolicyAssignment-', variables('policyAssignments')[copyIndex()].Name, variables('deploymentLocation')), 63), 'na-mgmt-policyassignment')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -632,7 +632,7 @@
                 "policySetDefinitions",
                 "policySetDefinitions-subscription"
             ],
-            "name": "[if(not(empty(variables('policyAssignments'))), take(concat('PolicyAssignment-sub-', variables('deploymentLocation'), variables('policyAssignments')[copyIndex()].Name), 63), 'na-sub-policyassignment')]",
+            "name": "[if(not(empty(variables('policyAssignments'))), take(concat('PolicyAssignment-sub-', variables('policyAssignments')[copyIndex()].Name, variables('deploymentLocation')), 63), 'na-sub-policyassignment')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -709,7 +709,7 @@
                 "policyassignmentloop",
                 "policyassignmentloop-subscription"
             ],
-            "name": "[if(not(empty(variables('policyAssignments'))), take(concat('PolicyRemediations-sub-', variables('deploymentLocation'), variables('policyAssignments')[copyIndex()].Name), 63), 'na-sub-policyremediations')]",
+            "name": "[if(not(empty(variables('policyAssignments'))), take(concat('PolicyRemediations-sub-', variables('policyAssignments')[copyIndex()].Name, variables('deploymentLocation')), 63), 'na-sub-policyremediations')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -779,7 +779,7 @@
                 "policyassignmentloop",
                 "policyassignmentloop-subscription"
             ],
-            "name": "[if(not(empty(variables('policyAssignments'))), take(concat('PolicyDeployment_', variables('deploymentLocation'), variables('policyAssignments')[copyIndex()].Name), 63), 'PolicyDeployment_na')]",
+            "name": "[if(not(empty(variables('policyAssignments'))), take(concat('PolicyDeployment_', variables('policyAssignments')[copyIndex()].Name, variables('deploymentLocation')), 63), 'PolicyDeployment_na')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -829,7 +829,7 @@
                 "name": "roledef",
                 "count": "[length(variables('roleDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('roleDefinitions'))), take(concat('RoleDefinitions-', variables('deploymentLocation'), variables('roleDefinitions')[copyIndex()].Name), 63), 'na-mgmt-roleDefinitions')]",
+            "name": "[if(not(empty(variables('roleDefinitions'))), take(concat('RoleDefinitions-', variables('roleDefinitions')[copyIndex()].Name, variables('deploymentLocation')), 63), 'na-mgmt-roleDefinitions')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -866,7 +866,7 @@
                 "name": "roledef-subscription",
                 "count": "[length(variables('roleDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('roleDefinitions'))), take(concat('RoleDefinitions-sub-', variables('deploymentLocation'), variables('roleDefinitions')[copyIndex()].Name), 63), 'na-sub-roleDefinitions')]",
+            "name": "[if(not(empty(variables('roleDefinitions'))), take(concat('RoleDefinitions-sub-', variables('roleDefinitions')[copyIndex()].Name, variables('deploymentLocation')), 63), 'na-sub-roleDefinitions')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
