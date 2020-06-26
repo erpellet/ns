@@ -144,7 +144,7 @@
                 "name": "childmove",
                 "count": "[length(variables('Children'))]"
             },
-            "name": "[if(not(empty(variables('Children'))), take(concat('EntScale','-',parameters('input').name,'-',variables('Children')[copyIndex()].Name),63), 'na-move')]",
+            "name": "[if(not(empty(variables('Children'))), take(concat('EntScale','-', deployment().location, parameters('input').name,'-',variables('Children')[copyIndex()].Name),63), 'na-move')]",
             "dependsOn": [
                 "[parameters('input').Name]",
                 "policydefinitionloop",
@@ -189,7 +189,7 @@
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
                             "location": "[deployment().location]",
-                            "name": "[take(concat('EntScale-ChildMG-',variables('Children')[copyIndex()].Name),63)]",
+                            "name": "[take(concat('EntScale-ChildMG-', deployment().location, variables('Children')[copyIndex()].Name),63)]",
                             "dependsOn": [
                                 "[variables('Children')[copyIndex()].Name]"
                             ],
@@ -260,7 +260,7 @@
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
                             "location": "[deployment().location]",
-                            "name": "[take(concat('EntScale-subscription-',variables('Children')[copyIndex()].Name),63)]",
+                            "name": "[take(concat('EntScale-subscription-', deployment().location, variables('Children')[copyIndex()].Name),63)]",
                             "properties": {
                                 "expressionEvaluationOptions": {
                                     "scope": "outer"
@@ -341,7 +341,7 @@
                 "name": "policydefinitionloop",
                 "count": "[length(variables('policyDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('policyDefinitions'))), concat('PolicyDefinition-', variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policydefinition')]",
+            "name": "[if(not(empty(variables('policyDefinitions'))), concat('PolicyDefinition-', deployment().location, variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policydefinition')]",
             "dependsOn": [
                 "[parameters('input').Name]"
             ],
@@ -390,7 +390,7 @@
                 "name": "policydefinitionloop-subscription",
                 "count": "[length(variables('policyDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('policyDefinitions'))), concat('PolicyDefinition-sub-', variables('policyDefinitions')[copyIndex()].Name), 'na-sub-policydefinition')]",
+            "name": "[if(not(empty(variables('policyDefinitions'))), concat('PolicyDefinition-sub-', deployment().location, variables('policyDefinitions')[copyIndex()].Name), 'na-sub-policydefinition')]",
             "dependsOn": [
                 "[parameters('input').Name]"
             ],
@@ -470,7 +470,7 @@
                 "name": "policySetDefinitions",
                 "count": "[length(variables('policySetDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-', variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policySetDefinitions')]",
+            "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-', deployment().location, variables('policyDefinitions')[copyIndex()].Name), 'na-mgmt-policySetDefinitions')]",
             "dependsOn": [
                 "[parameters('input').Name]",
                 "policydefinitionloop",
@@ -522,7 +522,7 @@
                 "name": "policySetDefinitions-subscription",
                 "count": "[length(variables('policySetDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-sub-', variables('policySetDefinitions')[copyIndex()].Name), 'na-sub-policySetDefinitions')]",
+            "name": "[if(not(empty(variables('policySetDefinitions'))), concat('PolicySetDefinitions-sub-', deployment().location, variables('policySetDefinitions')[copyIndex()].Name), 'na-sub-policySetDefinitions')]",
             "dependsOn": [
                 "[parameters('input').Name]",
                 "policydefinitionloop",
@@ -567,7 +567,7 @@
                 "policySetDefinitions",
                 "policySetDefinitions-subscription"
             ],
-            "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyAssignment-', variables('policyAssignments')[copyIndex()].Name), 'na-mgmt-policyassignment')]",
+            "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyAssignment-', deployment().location, variables('policyAssignments')[copyIndex()].Name), 'na-mgmt-policyassignment')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -631,7 +631,7 @@
                 "policySetDefinitions",
                 "policySetDefinitions-subscription"
             ],
-            "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyAssignment-sub-', variables('policyAssignments')[copyIndex()].Name), 'na-sub-policyassignment')]",
+            "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyAssignment-sub-', deployment().location, variables('policyAssignments')[copyIndex()].Name), 'na-sub-policyassignment')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -708,7 +708,7 @@
                 "policyassignmentloop",
                 "policyassignmentloop-subscription"
             ],
-            "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyRemediations-sub-', variables('policyAssignments')[copyIndex()].Name), 'na-sub-policyremediations')]",
+            "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyRemediations-sub-', deployment().location, variables('policyAssignments')[copyIndex()].Name), 'na-sub-policyremediations')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -778,7 +778,7 @@
                 "policyassignmentloop",
                 "policyassignmentloop-subscription"
             ],
-            "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyDeployment_', variables('policyAssignments')[copyIndex()].Name), 'PolicyDeployment_na')]",
+            "name": "[if(not(empty(variables('policyAssignments'))), concat('PolicyDeployment_', deployment().location, variables('policyAssignments')[copyIndex()].Name), 'PolicyDeployment_na')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -828,7 +828,7 @@
                 "name": "roledef",
                 "count": "[length(variables('roleDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('roleDefinitions'))), concat('RoleDefinitions-', variables('roleDefinitions')[copyIndex()].Name), 'na-mgmt-roleDefinitions')]",
+            "name": "[if(not(empty(variables('roleDefinitions'))), concat('RoleDefinitions-', deployment().location, variables('roleDefinitions')[copyIndex()].Name), 'na-mgmt-roleDefinitions')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
@@ -865,7 +865,7 @@
                 "name": "roledef-subscription",
                 "count": "[length(variables('roleDefinitions'))]"
             },
-            "name": "[if(not(empty(variables('roleDefinitions'))), concat('RoleDefinitions-sub-', variables('roleDefinitions')[copyIndex()].Name), 'na-sub-roleDefinitions')]",
+            "name": "[if(not(empty(variables('roleDefinitions'))), concat('RoleDefinitions-sub-', deployment().location, variables('roleDefinitions')[copyIndex()].Name), 'na-sub-roleDefinitions')]",
             "properties": {
                 "expressionEvaluationOptions": {
                     "scope": "outer"
