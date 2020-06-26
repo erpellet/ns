@@ -8,8 +8,6 @@
         },
         "managementSubscriptionId": {
             "type": "string",
-            "defaultValue": "0a938bc2-0bb8-4688-bd37-9964427fe0b0",
-            "minLength": 36,
             "maxLength": 36
         },
         "enableResourceDeployments": {
@@ -35,7 +33,7 @@
     },
     "resources": [
         {
-            "condition": "[and(equals(parameters('enableResourceDeployments'), 'Yes'), not(empty(parameters('managementSubscriptionId'))))]",
+            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableResourceDeployments'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
             "name": "[variables('policyAssignmentNames').azureActivityLog]",
@@ -56,6 +54,7 @@
             }
         },
         {
+            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableResourceDeployments'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
             "name": "[variables('roleAssignmentNames').deployAzureActivityLog]",
@@ -69,6 +68,7 @@
             }
         },
         {
+            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableResourceDeployments'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "deployActivityLogs",
