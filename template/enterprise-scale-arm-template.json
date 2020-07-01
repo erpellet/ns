@@ -94,7 +94,8 @@
                     "variables": {
                         "topLevelManagementGroupPrefix" : "[parameters('topLevelManagementGroupPrefix')]",
                         "rootManagementGroupIdToReplace" : "[parameters('rootManagementGroupIdToReplace')]",
-                        "rootManagementGroupIdToReplaceWith" : "[parameters('rootManagementGroupIdToReplaceWith')]"
+                        "rootManagementGroupIdToReplaceWith" : "[parameters('rootManagementGroupIdToReplaceWith')]",
+                        "deploymentLocation": "[deployment().location]"
                     },
                     "resources": [
                     ],
