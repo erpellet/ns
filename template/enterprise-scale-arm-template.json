@@ -59,6 +59,7 @@
         }
     },
     "variables": {
+        "deploymentLocation": "[deployment().location]",
         "topLevelManagementGroupPrefix" : "[parameters('topLevelManagementGroupPrefix')]",
         "nestedTemplatesLocation": {
             "tenantTemplate": "[uri(parameters('_artifactsLocation'), concat('tenant.json', parameters('_artifactsLocationSasToken')))]", 
@@ -101,7 +102,7 @@
                         "deploymentJson": {
                             "condition": "[bool('true')]",
                             "type": "object",
-                            "value": "[[json(replace(replace(string(parameters('input')),'Tailspin',variables('topLevelManagementGroupPrefix')),variables('rootManagementGroupIdToReplace'),variables('rootManagementGroupIdToReplaceWith')))]"
+                            "value": "[json(replace(replace(string(parameters('input')),'Tailspin',variables('topLevelManagementGroupPrefix')),'northeurope',variables('deploymentLocation')))]"
                         }
                     }
                 },
