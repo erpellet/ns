@@ -102,7 +102,7 @@
                         "deploymentJson": {
                             "condition": "[bool('true')]",
                             "type": "object",
-                            "value": "[json(replace(replace(string(parameters('input')),'Tailspin',variables('topLevelManagementGroupPrefix')),'northeurope',variables('deploymentLocation')))]"
+                            "value": "[[json(replace(replace(string(parameters('input')),'Tailspin',variables('topLevelManagementGroupPrefix')),'northeurope',variables('deploymentLocation')))]"
                         }
                     }
                 },
