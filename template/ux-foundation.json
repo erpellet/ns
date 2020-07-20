@@ -43,8 +43,8 @@
     },
     "variables": {
         "e2eTemplate": "[uri(deployment().properties.templateLink.uri, 'enterprise-scale-arm-template.json')]",
-        "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/monitoring.json')]",
-        "activityLog": "[uri(deployment().properties.templateLink.uri, 'auxiliary/activityLog.json')]",
+        "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
+        "activityLog": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
         "mainDeploymentName": "[concat('EntScale', '-', parameters('setup'), guid(parameters('enterpriseScaleCompanyPrefix')))]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]"
