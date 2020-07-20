@@ -149,12 +149,12 @@
                     }
                 }
             }
-        }        
+        }      
     ],
     "outputs": {
         "deployment": {
             "type": "string",
-            "value": "[concat(deployment().name, ' has successfully deployed. Welcome to NorthStar!')]"
+            "value": "[concat(deployment().name, ' has successfully deployed. Welcome to Enterprise-Scale!')]"
         }
     }
 }

@@ -27,7 +27,7 @@
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/krnese/ns/master/template/",
             "metadata": {
-                "description": "This is the link to the nested template that must to be accessible to ARM to be able to use as a part of nested deployment. 
+                "description": "This is the link to the nested template that must to be accessible to ARM to be able to use as a part of nested deployment.
                                 Please feel free to use template hosted here or override with choice of your location.
                                 If you chose to do so, please ensure future bug fixes are incorporated from above location to your private location."
             }
@@ -59,9 +59,9 @@
         "deploymentEnabledForPolicy": "[parameters('deploymentEnabledForPolicy')]",
         "remediationEnabledForPolicy": "[parameters('remediationEnabledForPolicy')]",
         "nestedTemplatesLocation": {
-            "tenantTemplate": "[uri(parameters('_artifactsLocation'), concat('tenant.json', parameters('_artifactsLocationSasToken')))]", 
+            "tenantTemplate": "[uri(parameters('_artifactsLocation'), concat('tenant.json', parameters('_artifactsLocationSasToken')))]",
             "resourceTemplate": "[uri(parameters('_artifactsLocation'), concat('template.json', parameters('_artifactsLocationSasToken')))]"
-        }, 
+        },
 
 
         "input": "[union(parameters('hobo'),parameters('input'))]",
@@ -77,7 +77,7 @@
 
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
         "deploymentLocation": "[concat('-', deployment().location)]"
-    },  
+    },
     "resources": [
         {
             /*
@@ -88,9 +88,9 @@
                     1. Name: Management Group Name
                     2. DisplayName: Management Group Display Name
                     3. ParentID - To determine where to place Management Group. It could be root or any other valid ID of the Management Group. For the top level manage
-                
+
                 Scope: Tenant root
-                
+
                 Condition: We have Parent ID available to ensure inadvertently place Management Group directly the root.
 
                 Details: If ParentID do not exist, then it is a child and creation of Management Group would have happened when parent's children were iterated upon.
@@ -129,13 +129,13 @@
 
                     1. IF Child contains 'Id' with a value that contains Microsoft.Management/managementGroups
                         a. Create Child Management Group. ParentID property is not required since we can establish parent automatically.
-                        b. Trigger Nested Deployment of this same template 
+                        b. Trigger Nested Deployment of this same template
 
                     2. IF Child contains 'Id' with a value that does NOT contain Microsoft.Management/managementGroups
                         a. Move Subscription under Management Group. Currently this functionality is disabled in Template due to Platform Bug. Workaround is move Subscription manually under the right Management Group.
                         b. Trigger Nested Deployment for the Child
 
-                Change Log: 
+                Change Log:
                     1. Initial Definition
             */
             "condition": "[not(empty(variables('Children')))]",
@@ -237,14 +237,13 @@
                                     },
                                     "remediationEnabledForPolicy": {
                                         "value": "[variables('remediationEnabledForPolicy')]"
-                                    } 
+                                    }
                                 }
                             }
                         },
                         /*
-                            Ensure Subscription is under parent Management Group
-                            This is commented out until platform supports capability.
-                        /*
+                         Ensure Subscription is under parent Management Group
+                        */
                         {
                             "condition": "[not(contains(if(contains(variables('Children')[copyIndex()], 'Id'),variables('Children')[copyIndex()].Id, concat('Microsoft.Management/managementGroups/',variables('Children')[copyIndex()].Name)),'Microsoft.Management/managementGroups'))]",
                             "type": "Microsoft.Management/managementGroups/subscriptions",
@@ -329,7 +328,7 @@
 
                 Details: Trigger Nested Deployment to create policy Definition.
 
-                Change Log: 
+                Change Log:
                     1. Initial Definition
             */
 
@@ -378,7 +377,7 @@
 
                 Details: Trigger Nested Deployment to create policy Definition.
 
-                Change Log: 
+                Change Log:
                     1. Initial Definition
             */
 
@@ -412,7 +411,6 @@
             }
         },
         {
-            
             "condition": "[and(not(empty(variables('policySetDefinitions'))),contains(variables('scope'),'Microsoft.Management/managementGroups'))]",
             "scope": "[variables('scope')]",
             "type": "Microsoft.Resources/deployments",
@@ -458,7 +456,7 @@
 
                 Details: Trigger Nested Deployment to create policy Definition.
 
-                Change Log: 
+                Change Log:
                     1. Initial Definition
             */
 
@@ -510,7 +508,7 @@
 
                 Details: Trigger Nested Deployment to create policy Definition.
 
-                Change Log: 
+                Change Log:
                     1. Initial Definition
             */
 
@@ -552,7 +550,7 @@
             "condition": "[and(
                                 not(empty(variables('policyAssignments'))),
                                 contains(variables('scope'),'Microsoft.Management/managementGroups'),
-                                equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))) 
+                                equals(toLower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope'))))
                             )]",
             "scope": "[variables('scope')]",
             "type": "Microsoft.Resources/deployments",
@@ -616,7 +614,7 @@
             "condition": "[and(
                                 not(empty(variables('policyAssignments'))),
                                 contains(variables('scope'),'subscriptions'),
-                                equals(tolower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope')))) 
+                                equals(tolower(variables('policyAssignments')[copyIndex()].Properties.scope),toLower(concat('/providers/',variables('scope'))))
                             )]",
             "subscriptionId": "[parameters('input').Name]",
             "type": "Microsoft.Resources/deployments",
@@ -745,7 +743,7 @@
         },
         {
             /*
-             SUBSCRIPTION: Deployment Trigger for DINE Policy Assignment. 
+             SUBSCRIPTION: Deployment Trigger for DINE Policy Assignment.
 
              Subscription deployment is using "subscriptionId" property and not "scope".
              NOTE: Since reference() function do not work in condition, it will trigger empty deployment for policies for effects other than DINE.
