@@ -152,12 +152,10 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "description": "Deploy-ASC-Standard",
-                "displayName": "Deploy-ASC-Standard",
+                "description": "ASC-Monitoring",
+                "displayName": "ASC-Monitoring",
                 "policyDefinitionId": "[variables('policyDefinitions').ascMonitoring]",
-                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
-                "parameters": {
-                }
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]"
             }
         },         
         {
