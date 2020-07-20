@@ -36,18 +36,6 @@
                             "regex": "^[a-z0-9A-Z-]{1,5}$",
                             "validationMessage": "The prefix must be 1-5 characters."
                         }
-                    },
-					{
-                        "name": "esMgmtSub",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Enable management subscription",
-                        "toolTip": "Provide the subscription id of an existing, empty subscription you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
-                        "defaultValue": "",
-                        "constraints": {
-                            "required": false,
-                            "regex": "^[a-z0-9A-Z-]{36}$",
-                            "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
-                        }
                     }   
                 ]
             },
@@ -98,7 +86,7 @@
             },
             {
                 "name": "esGoalState",
-                "label": "Enable Resource Deployments",
+                "label": "Resource deployments and continous compliance",
                 "subLabel": {
                     "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
                     "postValidation": "Done"
@@ -111,26 +99,102 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies that will 1) deploy a Log Analytics workspace and an Automation Account to your management subscription, and 2) enable diagnostics of Activity Logs to be sent to the Log Analytics workspace. If 'No', it will be ignored.",
-                            "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin"
+                            "text": "If you provide a subscriptionId for management, you can also select the desired resource deployments to ensure monitoring, security, and auditing is enabled for you Enterprise-Scale architecture during the setup",
+                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/Deploy/ES-schema.md"
+                        }
+                    },
+					{
+                        "name": "esMgmtSub",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Enable platform management subscription",
+                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
+                        "defaultValue": "",
+                        "constraints": {
+                            "required": false,
+                            "regex": "^[a-z0-9A-Z-]{36}$",
+                            "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
                         }
                     },                                 
                     {
-                        "name": "management",
+                        "name": "management0",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Enable Resource Deployments",
+                        "label": "Deploy central Log Analytics workspace and enable platform monitoring for Azure resources",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies and do subsequent resource deployments.",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance.",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes",
+                                    "label": "Yes (recommended)",
                                     "value": "Yes"
                                 },
                                 {
                                     "label": "No",
                                     "value": "No"
                                 }
+                            ]
+                        },
+                        "visible": true
+                    },
+					{
+                        "name": "management1",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Security Center",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes, Standard Tier (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "Yes, Free Tier",
+                                    "value": "Free"
+                                },
+								{
+									"label": "No",
+									"value": "No"
+								}
+                            ]
+                        },
+                        "visible": true
+                    },
+					{
+                        "name": "management2",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deny public endpoint for PaaS services deployed into landing zones",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }							
+                            ]
+                        },
+                        "visible": true
+                    },
+					{
+                        "name": "management3",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Ensure VMs deployed into landing zones are being backed up",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will assign policies that will enable backup on VMs that are being deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }							
                             ]
                         },
                         "visible": true
