@@ -23,7 +23,7 @@ See the following [instructions](https://docs.microsoft.com/en-us/azure/role-bas
 - A scalable Management Group hiearchy aligned to core platform capabilities, allowing you to operationalize at scale using RBAC and Policy
 - Azure Policies that will audit resource copmliance
 - (Optional) An Azure Subscription dedicated for Management, which will serve as a placeholder for core platform capabilities at scale such as security, auditing, and logging
-- Landing Zone Management Group applications which doesn't require hybrid connectivity. This is where you will create your Subscriptions that will host your online workloads, that is either deployed by central team or by application team, subject to the RBAC you will be assigning.
+- Landing Zone Management Group for your applications and workloads which doesn't require hybrid connectivity. This is where you will create your Subscriptions that will host your online workloads, that is either deployed by central team or by application team, subject to the RBAC you will be assigning.
 
 ![Enterprise-Scale with audit](./media/lite.png)
 
@@ -37,4 +37,4 @@ Contoso has come across the Enterprise-Scale architecture which provides a forwa
 
 ## Next steps
 
-Once you have deployed, you can create a new subscription, or move an existing subscription to the Landing Zone management group (Online), and start deploying your workload.
+Once you have deployed, you can create a new subscription, or move an existing subscription to the Landing Zone management group (Online), and start deploying your workload, as well as requisite platform infrastructure (Log Analytics, Sentinel, ASC, Azure Automation etc.) into the management subscription. 
