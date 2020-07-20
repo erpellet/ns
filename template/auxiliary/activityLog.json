@@ -125,6 +125,27 @@
                 "policyDefinitionId": "[variables('policyDefinitions').deployAzureSecurity]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
+                    "pricingTierVms": {
+                        "value": "Standard"
+                    },
+                    "pricingTierSqlServers": {
+                        "value": "Standard"
+                    },
+                    "pricingTierAppServices": {
+                        "value": "Standard"
+                    },
+                    "pricingTierStorageAccounts": {
+                        "value": "Standard"
+                    },
+                    "pricingTierContainerRegistry": {
+                        "value": "Standard"
+                    },
+                    "pricingTierKeyVaults": {
+                        "value": "Standard"
+                    },
+                    "pricingTierKubernetesService": {
+                        "value": "Standard"
+                    }
                 }
             }
         },
