@@ -62,10 +62,8 @@
         "topLevelManagementGroupPrefix" : "[parameters('topLevelManagementGroupPrefix')]",
         "nestedTemplatesLocation": {
             "tenantTemplate": "[uri(parameters('_artifactsLocation'), concat('tenant.json', parameters('_artifactsLocationSasToken')))]",
-            "tenantHydrationParameters": "https://raw.githubusercontent.com/Azure/Enterprise-Scale/main/azopsreference/3fc1081d-6105-4e19-b60c-1ec1252cf560%20(3fc1081d-6105-4e19-b60c-1ec1252cf560)/contoso%20(contoso)/.AzState/Microsoft.Management-managementGroups_contoso.parameters.json",
-            "foundationHydrationParameters": "[uri(parameters('_artifactsLocation'), concat('e2e-landing-zone-foundation-orchestration.parameters.json', parameters('_artifactsLocationSasToken')))]",
-            "vWanHydrationParameters": "https://raw.githubusercontent.com/Azure/Enterprise-Scale/main/azopsreference/3fc1081d-6105-4e19-b60c-1ec1252cf560%20(3fc1081d-6105-4e19-b60c-1ec1252cf560)/contoso%20(contoso)/.AzState/Microsoft.Management-managementGroups_contoso.parameters.json",
-            "hubSpokeHydrationParameters": "[uri(parameters('_artifactsLocation'), concat('e2e-landing-zone-hubspoke-orchestration.parameters.json', parameters('_artifactsLocationSasToken')))]",
+            "tenantHydrationParameters": "[uri(parameters('_artifactsLocation'), concat('es-hydration.json'))]",
+            "foundationHydrationParameters": "[uri(parameters('_artifactsLocation'), concat('es-foundation-hydration.parameters.json', parameters('_artifactsLocationSasToken')))]",
             "resourceTemplate": "[uri(parameters('_artifactsLocation'), concat('template.json', parameters('_artifactsLocationSasToken')))]"
         },
         "hydrationTemplateName": "[concat('EntScale', deployment().location, guid(variables('topLevelManagementGroupPrefix')))]",

@@ -37,23 +37,9 @@
             "Children": [
               {
                 "Type": "/providers/Microsoft.Management/managementGroups",
-                "Id": "/providers/Microsoft.Management/managementGroups/corp",
-                "Name": "corp",
-                "DisplayName": "corp",
-                "Children": null
-              },
-              {
-                "Type": "/providers/Microsoft.Management/managementGroups",
                 "Id": "/providers/Microsoft.Management/managementGroups/online",
                 "Name": "online",
                 "DisplayName": "online",
-                "Children": null
-              },
-              {
-                "Type": "/providers/Microsoft.Management/managementGroups",
-                "Id": "/providers/Microsoft.Management/managementGroups/sap",
-                "Name": "sap",
-                "DisplayName": "sap",
                 "Children": null
               }
             ]
