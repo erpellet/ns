@@ -62,7 +62,7 @@
         "topLevelManagementGroupPrefix" : "[parameters('topLevelManagementGroupPrefix')]",
         "nestedTemplatesLocation": {
             "tenantTemplate": "[uri(parameters('_artifactsLocation'), concat('tenant.json', parameters('_artifactsLocationSasToken')))]",
-            "tenantHydrationParameters": "[uri(parameters('_artifactsLocation'), concat('es-hydration.json'))]",
+            "tenantHydrationParameters": "[uri(parameters('_artifactsLocation'), concat('es-hydration.parameters.json'))]",
             "foundationHydrationParameters": "[uri(parameters('_artifactsLocation'), concat('es-foundation-hydration.parameters.json', parameters('_artifactsLocationSasToken')))]",
             "resourceTemplate": "[uri(parameters('_artifactsLocation'), concat('template.json', parameters('_artifactsLocationSasToken')))]"
         },
