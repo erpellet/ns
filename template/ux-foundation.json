@@ -91,7 +91,13 @@
             "dependsOn": [
                 "[variables('mainDeploymentName')]"
             ],
-            "properties": {}
+            "properties": {
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', concat(parameters('enterpriseScaleCompanyPrefix'), '-platform'))]"
+                    }
+                }
+            }
         },
         {
             "condition": "[not(empty(parameters('managementSubscriptionId')))]",
