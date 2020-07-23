@@ -17,53 +17,75 @@
         "Children": [
           {
             "Type": "/providers/Microsoft.Management/managementGroups",
-            "Id": "/providers/Microsoft.Management/managementGroups/decomissioned",
-            "Name": "decomissioned",
-            "DisplayName": "decomissioned",
+            "Id": "/providers/Microsoft.Management/managementGroups/contoso-decomissioned",
+            "Name": "contoso-decomissioned",
+            "DisplayName": "contoso-decomissioned",
             "Children": null
           },
           {
             "Type": "/providers/Microsoft.Management/managementGroups",
-            "Id": "/providers/Microsoft.Management/managementGroups/sandboxes",
-            "Name": "sandboxes",
-            "DisplayName": "sandboxes",
+            "Id": "/providers/Microsoft.Management/managementGroups/contoso-sandboxes",
+            "Name": "contoso-sandboxes",
+            "DisplayName": "contoso-sandboxes",
             "Children": null
           },
           {
             "Type": "/providers/Microsoft.Management/managementGroups",
-            "Id": "/providers/Microsoft.Management/managementGroups/landingzones",
-            "Name": "landingzones",
-            "DisplayName": "Landing Zones",
+            "Id": "/providers/Microsoft.Management/managementGroups/contoso-landingzones",
+            "Name": "contoso-landingzones",
+            "DisplayName": "contoso-Landing Zones",
             "Children": [
               {
                 "Type": "/providers/Microsoft.Management/managementGroups",
-                "Id": "/providers/Microsoft.Management/managementGroups/corp",
-                "Name": "corp",
-                "DisplayName": "corp",
+                "Id": "/providers/Microsoft.Management/managementGroups/contoso-corp",
+                "Name": "contoso-corp",
+                "DisplayName": "contoso-corp",
                 "Children": null
               },
               {
                 "Type": "/providers/Microsoft.Management/managementGroups",
-                "Id": "/providers/Microsoft.Management/managementGroups/online",
-                "Name": "online",
-                "DisplayName": "online",
+                "Id": "/providers/Microsoft.Management/managementGroups/contoso-online",
+                "Name": "contoso-online",
+                "DisplayName": "contoso-online",
                 "Children": null
               },
               {
                 "Type": "/providers/Microsoft.Management/managementGroups",
-                "Id": "/providers/Microsoft.Management/managementGroups/sap",
-                "Name": "sap",
-                "DisplayName": "sap",
+                "Id": "/providers/Microsoft.Management/managementGroups/contoso-sap",
+                "Name": "contoso-sap",
+                "DisplayName": "contoso-sap",
                 "Children": null
               }
             ]
           },
           {
             "Type": "/providers/Microsoft.Management/managementGroups",
-            "Id": "/providers/Microsoft.Management/managementGroups/platform",
-            "Name": "platform",
-            "DisplayName": "platform",
-            "Children": null
+            "Id": "/providers/Microsoft.Management/managementGroups/contoso-platform",
+            "Name": "contoso-platform",
+            "DisplayName": "contoso-platform",
+            "Children": [
+              {
+                "Type": "/providers/Microsoft.Management/managementGroups",
+                "Id": "/providers/Microsoft.Management/managementGroups/contoso-connectivity",
+                "Name": "contoso-connectivity",
+                "DisplayName": "contoso-connectivity",
+                "Children": null
+              },
+              {
+                "Type": "/providers/Microsoft.Management/managementGroups",
+                "Id": "/providers/Microsoft.Management/managementGroups/contoso-management",
+                "Name": "contoso-management",
+                "DisplayName": "contoso-management",
+                "Children": null
+              },
+              {
+                "Type": "/providers/Microsoft.Management/managementGroups",
+                "Id": "/providers/Microsoft.Management/managementGroups/contoso-identity",
+                "Name": "contoso-identity",
+                "DisplayName": "contoso-identity",
+                "Children": null
+              }
+            ]
           }
         ],
         "properties": {
