@@ -106,7 +106,7 @@
             "name": "[if(not(empty(parameters('managementSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
             "dependsOn": [
                 "[variables('mainDeploymentName')]",
-                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), 'management'))]"
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'))]"
             ],
             "properties": {}
         },
