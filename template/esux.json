@@ -344,12 +344,12 @@
             "enableAzBackup": "[steps('esGoalState').esAzBackup]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
             "enableSqlAudit":"[steps('lzGoalState').esSqlAudit]",
-            "enableSqlEncryption": "steps('lzGoalState').esSqlEncryption]",
-            "enableVmBackup": "steps('lzGoalState').esAzBackup]",
-            "denyRdp": "steps('lzGoalState').esDenyRdp]",
-            "enableStorageHttps": "steps('lzGoalState').esHttpsStorage]",
-            "denyIpForwarding": "steps('lzGoalState').esIpForwarding",
-            "denySubnetWithoutNsg": "steps('lzGoalState').esNsg]"
+            "enableSqlEncryption": "[steps('lzGoalState').esSqlEncryption]",
+            "enableVmBackup": "[steps('lzGoalState').esAzBackup]",
+            "denyRdp": "[steps('lzGoalState').esDenyRdp]",
+            "enableStorageHttps": "[steps('lzGoalState').esHttpsStorage]",
+            "denyIpForwarding": "[steps('lzGoalState').esIpForwarding]",
+            "denySubnetWithoutNsg": "[steps('lzGoalState').esNsg]"
 
         }
     }
