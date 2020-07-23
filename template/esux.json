@@ -118,7 +118,7 @@
                     {
                         "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy central Log Analytics workspace and enable platform monitoring for Azure resources",
+                        "label": "Deploy Log Analytics workspace and enable platform monitoring for Azure resources",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance.",
                         "constraints": {
