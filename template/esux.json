@@ -116,7 +116,7 @@
                         }
                     },                                 
                     {
-                        "name": "management0",
+                        "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy central Log Analytics workspace and enable platform monitoring for Azure resources",
                         "defaultValue": "No",
@@ -136,7 +136,7 @@
                         "visible": true
                     },
 					{
-                        "name": "management1",
+                        "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Security Center",
                         "defaultValue": "No",
@@ -160,9 +160,9 @@
                         "visible": true
                     },
 					{
-                        "name": "management2",
+                        "name": "esPrivateEndpoint",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deny public endpoint for PaaS services deployed into landing zones",
+                        "label": "Enforce Priavte endpoint for PaaS services deployed into landing zones",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance.",
                         "constraints": {
@@ -180,7 +180,7 @@
                         "visible": true
                     },
 					{
-                        "name": "management3",
+                        "name": "esAzBackup",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure VMs deployed into landing zones are being backed up",
                         "defaultValue": "No",
@@ -204,8 +204,11 @@
         ],
         "outputs": {
             "setup": "[steps('esSetup').setup]",
-            "managementSubscriptionId": "[steps('lzSettings').esMgmtSub]",
-            "enableResourceDeployments": "[steps('esGoalState').management]",
+            "managementSubscriptionId": "[steps('esGoalState').esMgmtSub]",
+            "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
+            "enableAsc": "[steps('esGoalState').esAsc]",
+            "enablePrivateEndpoint": "[steps('esGoalState').esPrivateEndpoint]",
+            "enableAzBackup": "[steps('esGoalState').esAzBackup]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]"
         }
     }
