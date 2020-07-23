@@ -51,12 +51,69 @@
             "metadata": {
                 "description": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
-        }
+        },
+        "enableSqlAudit": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "enableSqlEncryption": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "enableVmBackup": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "denyRdp": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "enableStorageHttps": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "denyIpForwarding": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "denySubnetWithoutNsg": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        }        
     },
     "variables": {
         "e2eTemplate": "[uri(deployment().properties.templateLink.uri, 'enterprise-scale-arm-template.json')]",
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
-        "activityLog": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
+        "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
+        "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
         "mainDeploymentName": "[concat('EntScale', '-', parameters('setup'), guid(parameters('enterpriseScaleCompanyPrefix')))]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]"
@@ -140,6 +197,50 @@
             }
         },
         {
+            "condition": "[or(or(equals(parameters('enableVmBackup'), 'Yes'), equals(parameters('enableSqlAudit'), 'Yes')), equals(parameters('enableSqlEncryption'), equals(parameters('enableStorageHttps'), 'Yes')))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management')]",
+            "name": "deployLogAnalytics",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'), parameters('managementSubscriptionId'))]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('landingZone')]"
+                },
+                "parameters": {
+                    "topLevelManagementGroupPrefix": {
+                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                    },
+                    "enableSqlAudit": {
+                        "value": "[parameters('enableSqlAudit')]"
+                    },
+                    "enableSqlEncryption": {
+                        "value": "[parameters('enableSqlEncryption')]"
+                    },
+                    "enableVmBackup": {
+                        "value": "[parameters('enableVmBackup')]"
+                    },
+                    "denyRdp": {
+                        "value": "[parameters('denyRdp')]"
+                    },
+                    "enableStorageHttps": {
+                        "value": "[parameters('enableStorageHttps')]"
+                    },
+                    "denyIpForwarding": {
+                        "value": "[parameters('denyIpForwarding')]"
+                    },
+                    "denySubnetWithoutNsg": {
+                        "value": "[parameters('denySubnetWithoutNsg')]"
+                    }
+                }
+            }
+        },        
+        {
             "condition": "[and(not(empty(parameters('managementSubscriptionId'))), or(equals(parameters('enableLogAnalytics'), 'Yes'), and(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -153,7 +254,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('activityLog')]"
+                    "uri": "[variables('diagnosticsAndSecurity')]"
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
