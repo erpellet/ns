@@ -62,13 +62,13 @@
         "topLevelManagementGroupPrefix" : "[parameters('topLevelManagementGroupPrefix')]",
         "nestedTemplatesLocation": {
             "tenantTemplate": "[uri(parameters('_artifactsLocation'), concat('tenant.json', parameters('_artifactsLocationSasToken')))]",
-            "tenantTemplateParameters": "[uri(parameters('_artifactsLocation'), concat('e2e-landing-zone-orchestration.parameters.json', parameters('_artifactsLocationSasToken')))]",
-            "foundationTemplateParameters": "[uri(parameters('_artifactsLocation'), concat('e2e-landing-zone-foundation-orchestration.parameters.json', parameters('_artifactsLocationSasToken')))]",
-            "vWanTemplateParameters": "[uri(parameters('_artifactsLocation'), concat('e2e-landing-zone-vwan-orchestration.parameters.json', parameters('_artifactsLocationSasToken')))]",
-            "hubSpokeTemplateParameters": "[uri(parameters('_artifactsLocation'), concat('e2e-landing-zone-hubspoke-orchestration.parameters.json', parameters('_artifactsLocationSasToken')))]",
+            "tenantHydrationParameters": "https://raw.githubusercontent.com/Azure/Enterprise-Scale/main/azopsreference/3fc1081d-6105-4e19-b60c-1ec1252cf560%20(3fc1081d-6105-4e19-b60c-1ec1252cf560)/contoso%20(contoso)/.AzState/Microsoft.Management-managementGroups_contoso.parameters.json",
+            "foundationHydrationParameters": "[uri(parameters('_artifactsLocation'), concat('e2e-landing-zone-foundation-orchestration.parameters.json', parameters('_artifactsLocationSasToken')))]",
+            "vWanHydrationParameters": "https://raw.githubusercontent.com/Azure/Enterprise-Scale/main/azopsreference/3fc1081d-6105-4e19-b60c-1ec1252cf560%20(3fc1081d-6105-4e19-b60c-1ec1252cf560)/contoso%20(contoso)/.AzState/Microsoft.Management-managementGroups_contoso.parameters.json",
+            "hubSpokeHydrationParameters": "[uri(parameters('_artifactsLocation'), concat('e2e-landing-zone-hubspoke-orchestration.parameters.json', parameters('_artifactsLocationSasToken')))]",
             "resourceTemplate": "[uri(parameters('_artifactsLocation'), concat('template.json', parameters('_artifactsLocationSasToken')))]"
         },
-        "resolverTemplateName": "[concat('EntScale', deployment().location, guid(variables('topLevelManagementGroupPrefix')))]",
+        "hydrationTemplateName": "[concat('EntScale', deployment().location, guid(variables('topLevelManagementGroupPrefix')))]",
         "enterpriseScaleTemplateName": "[concat('EntScale', deployment().location, guid(parameters('setup')))]"
     },
     "resources": [
@@ -76,7 +76,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "location": "[deployment().location]",
-            "name": "[variables('resolverTemplateName')]",
+            "name": "[variables('hydrationTemplateName')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -101,12 +101,12 @@
                         "deploymentJson": {
                             "condition": "[bool('true')]",
                             "type": "object",
-                            "value": "[[json(replace(replace(string(parameters('input')),'Tailspin',variables('topLevelManagementGroupPrefix')),variables('rootManagementGroupIdToReplace'),variables('rootManagementGroupIdToReplaceWith')))]"
+                            "value": "[[json(replace(replace(string(parameters('input')),'contoso',variables('topLevelManagementGroupPrefix')),variables('rootManagementGroupIdToReplace'),variables('rootManagementGroupIdToReplaceWith')))]"
                         }
                     }
                 },
                 "parametersLink": {
-                    "uri": "[if(equals(parameters('setup'), 'Foundation'), variables('nestedTemplatesLocation').foundationTemplateParameters, variables('nestedTemplatesLocation').tenantTemplateParameters)]"
+                    "uri": "[if(equals(parameters('setup'), 'Foundation'), variables('nestedTemplatesLocation').foundationHydrationParameters, variables('nestedTemplatesLocation').tenantHydrationParameters)]"
                 }
             }
         },
@@ -123,7 +123,7 @@
                 },
                 "parameters": {
                     "input": {
-                        "value": "[reference(variables('resolverTemplateName')).outputs.deploymentJson.Value]"
+                        "value": "[reference(variables('hydrationTemplateName')).outputs.deploymentJson.Value]"
                     }
                 }
             }
@@ -133,7 +133,7 @@
         "deploymentJson": {
             "condition": "[bool('true')]",
             "type": "object",
-            "value": "[reference(variables('resolverTemplateName')).outputs.deploymentJson]"
+            "value": "[reference(variables('hydrationTemplateName')).outputs.deploymentJson]"
         }
     }
 }

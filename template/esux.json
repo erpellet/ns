@@ -67,17 +67,17 @@
                         "constraints": {
                             "allowedValues": [
                                 {
+									"label": "Foundation",
+									"value": "Foundation"
+								},
+                                {
                                     "label": "HubSpoke",
                                     "value": "HubSpoke"
                                 },
                                 {
                                     "label": "VWAN",
                                     "value": "VWAN"
-                                },
-								{
-									"label": "Foundation",
-									"value": "Foundation"
-								}
+                                }
                             ]
                         },
                         "visible": true
