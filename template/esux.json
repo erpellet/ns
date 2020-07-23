@@ -158,46 +158,6 @@
                             ]
                         },
                         "visible": true
-                    },
-					{
-                        "name": "esPrivateEndpoint",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Enforce Priavte endpoint for PaaS services deployed into landing zones",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance.",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }							
-                            ]
-                        },
-                        "visible": true
-                    },
-					{
-                        "name": "esAzBackup",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure VMs deployed into landing zones are being backed up",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will assign policies that will enable backup on VMs that are being deployed.",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }							
-                            ]
-                        },
-                        "visible": true
                     }
                 ]
             }            			
