@@ -181,7 +181,7 @@
                         }
                     },
 					{
-                        "name": "esMgmtSub",
+                        "name": "esLzSub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Enable the first landing zone subscription",
                         "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
@@ -338,6 +338,7 @@
         "outputs": {
             "setup": "[steps('esSetup').setup]",
             "managementSubscriptionId": "[steps('esGoalState').esMgmtSub]",
+            "lzSubscriptionId": "[steps('lzGoalState').esLzSub]",
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enablePrivateEndpoint": "[steps('esGoalState').esPrivateEndpoint]",

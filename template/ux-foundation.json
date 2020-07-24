@@ -29,6 +29,14 @@
                 "description": "Provide the subscription id of an existing, empty subscription you want to dedicate for management. If you don't want to bring a subscription, leave this parameter empty as is."
             }
         },
+        "lzSubscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36,
+            "metadata": {
+                "description": "Provide the subscription id fo an existing, empty subscription you want to move in as your first landing zone."
+            }
+        },
         "enableLogAnalytics": {
             "type": "string",
             "defaultValue": "No",
@@ -116,6 +124,7 @@
         "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
         "mainDeploymentName": "[concat('EntScale', '-', parameters('setup'), guid(parameters('enterpriseScaleCompanyPrefix')))]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
+        "lzMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]"
     },
     "resources": [
@@ -167,6 +176,17 @@
             ],
             "properties": {}
         },
+        {
+            "condition": "[not(empty(parameters('lzSubscriptionId')))]",
+            "type": "Microsoft.Management/managementGroups/subscriptions",
+            "apiVersion": "2020-05-01",
+            "name": "[if(not(empty(parameters('lzSubscriptionId'))), variables('lzMoveSubscription'), variables('noSubscription'))]",
+            "dependsOn": [
+                "[variables('mainDeploymentName')]",
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'))]"
+            ],
+            "properties": {}
+        },        
         {
             "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
@@ -236,6 +256,9 @@
                     },
                     "denySubnetWithoutNsg": {
                         "value": "[parameters('denySubnetWithoutNsg')]"
+                    },
+                    "lzSubscriptionId": {
+                        "value": "[parameters('lzSubscriptionId')]"
                     }
                 }
             }
