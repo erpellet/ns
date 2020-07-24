@@ -275,7 +275,7 @@
 					{
                         "name": "esSqlEncryption",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure SQL DB is enabled with transparent data encryption",
+                        "label": "Ensure Azure SQL is enabled with transparent data encryption",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
                         "constraints": {
@@ -295,7 +295,7 @@
 					{
                         "name": "esSqlAudit",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure auditing is enabled on SQL servers",
+                        "label": "Ensure auditing is enabled on Azure SQL",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
                         "constraints": {
