@@ -256,9 +256,6 @@
                     },
                     "denySubnetWithoutNsg": {
                         "value": "[parameters('denySubnetWithoutNsg')]"
-                    },
-                    "lzSubscriptionId": {
-                        "value": "[parameters('lzSubscriptionId')]"
                     }
                 }
             }
