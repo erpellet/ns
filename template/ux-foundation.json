@@ -178,15 +178,31 @@
         },
         {
             "condition": "[not(empty(parameters('lzSubscriptionId')))]",
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online')]",
+            "dependsOn": [
+                "[variables('mainDeploymentName')]"
+            ],
+            "properties": {
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', concat(parameters('enterpriseScaleCompanyPrefix'), '-landingzones'))]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[not(empty(parameters('lzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('lzSubscriptionId'))), variables('lzMoveSubscription'), variables('noSubscription'))]",
             "dependsOn": [
                 "[variables('mainDeploymentName')]",
-                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'))]"
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-online'))]"
             ],
             "properties": {}
-        },        
+        },            
         {
             "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",

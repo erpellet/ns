@@ -75,7 +75,6 @@
             "deploySqlAuditing": "/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9",
             "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
             "deployStorageAtp": "/providers/Microsoft.Authorization/policyDefinitions/361c2074-3595-4e5d-8cab-4f21dffc835c"
-
         },
         "policyAssignmentNames": {
             "deployVmBackup": "Deploy-VM-Backup",
