@@ -124,7 +124,7 @@
         "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
         "mainDeploymentName": "[concat('EntScale', '-', parameters('setup'), guid(parameters('enterpriseScaleCompanyPrefix')))]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
-        "lzMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', parameters('managementSubscriptionId'))]",
+        "lzMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', parameters('lzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]"
     },
     "resources": [
