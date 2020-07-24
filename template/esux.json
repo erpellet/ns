@@ -118,9 +118,9 @@
                     {
                         "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Log Analytics workspace and enable platform monitoring for Azure resources",
+                        "label": "Deploy Log Analytics workspace and enable monitoring for your platform and resources",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance.",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continious compliance.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -138,7 +138,7 @@
 					{
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Security Center, and enable security monitoring for your platform.",
+                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
                         "constraints": {
@@ -184,7 +184,7 @@
                         "name": "esLzSub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Enable the first landing zone subscription",
-                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
+                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to use as landing zone for your workload deployments.",
                         "defaultValue": "",
                         "constraints": {
                             "required": false,
