@@ -217,7 +217,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Prevent inbound RDP from internet",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned and prevent inbound RDP from internet",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -237,7 +237,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure subnets are associated with NSG",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned to ensure NSGs must be associated with subnets being created",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -257,7 +257,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Prevent IP forwarding",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned and prevent IP forwarding",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -297,7 +297,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure auditing is enabled on Azure SQL",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned to ensure auditing is enabled on Azure SQLs",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -317,7 +317,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure secure connections (HTTPS) to storage accounts",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned to ensure storage can only be accessed using HTTPS",
                         "constraints": {
                             "allowedValues": [
                                 {
