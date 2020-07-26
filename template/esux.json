@@ -100,13 +100,13 @@
                         "options": {
                             "icon": "Info",
                             "text": "If you provide a subscriptionId for management, you can also select the desired resource deployments to ensure monitoring, security, and auditing is enabled for you Enterprise-Scale architecture during the setup",
-                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/Deploy/ES-schema.md"
+                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
 					{
                         "name": "esMgmtSub",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Enable platform management subscription",
+                        "label": "Management subscription id",
                         "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
                         "defaultValue": "",
                         "constraints": {
@@ -176,14 +176,14 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "You can optionally provide a subscriptionId for your first landing zone, and also assign recommended policies that will ensure workloads will be secure, monitored, protected according to best practices.",
+                            "text": "You can optionally provide a subscriptionId for your first landing zone, and also assign recommended policies that will ensure workloads will be secure, monitored, and protected according to best practices.",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/Deploy/ES-schema.md"
                         }
                     },
 					{
                         "name": "esLzSub",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Enable the first landing zone subscription",
+                        "label": "Landing zone subscription id",
                         "toolTip": "Provide the subscription id of an existing, empty subscription that you want to use as landing zone for your workload deployments.",
                         "defaultValue": "",
                         "constraints": {
