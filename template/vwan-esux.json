@@ -36,7 +36,7 @@
                             "regex": "^[a-z0-9A-Z-]{1,5}$",
                             "validationMessage": "The prefix must be 1-5 characters."
                         }
-                    }   
+                    }
                 ]
             },
             {
@@ -47,7 +47,7 @@
                     "postValidation": "Done"
                 },
                 "bladeTitle": "lzGs",
-                "elements": [       
+                "elements": [
                     {
                         "name": "infoBox1",
                         "type": "Microsoft.Common.InfoBox",
@@ -58,7 +58,7 @@
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
-					{
+                    {
                         "name": "esMgmtSub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Management subscription id",
@@ -69,7 +69,7 @@
                             "regex": "^[a-z0-9A-Z-]{36}$",
                             "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
                         }
-                    },                                 
+                    },
                     {
                         "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -90,7 +90,7 @@
                         },
                         "visible": true
                     },
-					{
+                    {
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources",
@@ -106,10 +106,10 @@
                                     "label": "Yes, Free Tier",
                                     "value": "Free"
                                 },
-								{
-									"label": "No",
-									"value": "No"
-								}
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
                             ]
                         },
                         "visible": true
@@ -124,7 +124,7 @@
                     "postValidation": "Done"
                 },
                 "bladeTitle": "lzGs",
-                "elements": [       
+                "elements": [
                     {
                         "name": "infoBox1",
                         "type": "Microsoft.Common.InfoBox",
@@ -135,7 +135,7 @@
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
-					{
+                    {
                         "name": "esConnectivitySub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Connectivity subscription id",
@@ -146,7 +146,7 @@
                             "regex": "^[a-z0-9A-Z-]{36}$",
                             "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
                         }
-                    },                                 
+                    },
                     {
                         "name": "esVwan",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -168,6 +168,178 @@
                         "visible": true
                     },
                     {
+                        "name": "esAddress",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Address space (required for Virtual Hub)",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 192.168.1.0/24)",
+                        "defaultValue": "192.168.0.0/16",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                        }
+                    },
+                    {
+                        "name": "esRegions",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Region for first virtual hub",
+                        "defaultValue": "Value two",
+                        "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "East Asia",
+                                    "value": "eastasia"
+                                },
+                                {
+                                    "label": "Southeast Asia",
+                                    "value": "southeastasia"
+                                },
+                                {
+                                    "label": "Central US",
+                                    "value": "centralus"
+                                },
+                                {
+                                    "label": "East US",
+                                    "value": "eastus"
+                                },
+                                {
+                                    "label": "East US 2",
+                                    "value": "eastus2"
+                                },
+                                {
+                                    "label": "West US",
+                                    "value": "westus"
+                                },
+                                {
+                                    "label": "North Central US",
+                                    "value": "northcentralus"
+                                },
+                                {
+                                    "label": "South Central US",
+                                    "value": "southcentralus"
+                                },
+                                {
+                                    "label": "North Europe",
+                                    "value": "northeurope"
+                                },
+                                {
+                                    "label": "West Europe",
+                                    "value": "westeurope"
+                                },
+                                {
+                                    "label": "Japan West",
+                                    "value": "japanwest"
+                                },
+                                {
+                                    "label": "Japan East",
+                                    "value": "japaneast"
+                                },
+                                {
+                                    "label": "Brazil South",
+                                    "value": "brazilsouth"
+                                },
+                                {
+                                    "label": "Australia East",
+                                    "value": "australiaeast"
+                                },
+                                {
+                                    "label": "Australia Southeast",
+                                    "value": "australiasoutheast"
+                                },
+                                {
+                                    "label": "South India",
+                                    "value": "southindia"
+                                },
+                                {
+                                    "label": "Central India",
+                                    "value": "centralindia"
+                                },
+                                {
+                                    "label": "Canada East",
+                                    "value": "canadaeast"
+                                },
+                                {
+                                    "label": "UK South",
+                                    "value": "uksouth"
+                                },
+                                {
+                                    "label": "UK West",
+                                    "value": "ukwest"
+                                },
+                                {
+                                    "label": "West Central US",
+                                    "value": "westcentralus"
+                                },
+                                {
+                                    "label": "West US 2",
+                                    "value": "westus2"
+                                },
+                                {
+                                    "label": "Korea Central",
+                                    "value": "koreacentral"
+                                },
+                                {
+                                    "label": "Korea South",
+                                    "value": "koreasouth"
+                                },
+                                {
+                                    "label": "France Central",
+                                    "value": "francecentral"
+                                },
+                                {
+                                    "label": "France South",
+                                    "value": "francesouth"
+                                },
+                                {
+                                    "label": "Australia Central",
+                                    "value": "australiacentral"
+                                },
+                                {
+                                    "label": "UAE Central",
+                                    "value": "uaecentral"
+                                },
+                                {
+                                    "label": "UAE North",
+                                    "value": "uaenorth"
+                                },
+                                {
+                                    "label": "South Africa North",
+                                    "value": "southafricanorth"
+                                },
+                                {
+                                    "label": "South Africa West",
+                                    "value": "southafricawest"
+                                },
+                                {
+                                    "label": "Switzerland North",
+                                    "value": "switzerlandnorth"
+                                },
+                                {
+                                    "label": "Switzerland West",
+                                    "value": "switzerlandwest"
+                                },
+                                {
+                                    "label": "Germany North",
+                                    "value": "germanynorth"
+                                },
+                                {
+                                    "label": "Germany West Central",
+                                    "value": "germanywestcentral"
+                                },
+                                {
+                                    "label": "Norway West",
+                                    "value": "norwaywest"
+                                },
+                                {
+                                    "label": "Norway East",
+                                    "value": "norwayeast"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },                    
+                    {
                         "name": "esVpnGw",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy VPN Gateway",
@@ -176,7 +348,7 @@
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes (recommended)",
+                                    "label": "Yes",
                                     "value": "Yes"
                                 },
                                 {
@@ -190,9 +362,29 @@
                     {
                         "name": "esErGw",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Express Route Gateway",
+                        "label": "Deploy ExpressRoute Gateway",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Express Route gateway",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esAzFw",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Firewall",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Azure Firewall",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -206,201 +398,9 @@
                             ]
                         },
                         "visible": true
-                    },                                                             
-					{
-                        "name": "esAzFw",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Firewall",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Azure Firewall",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-								{
-									"label": "No",
-									"value": "No"
-								}
-                            ]
-                        },
-                        "visible": true
-                    },
-					{
-                        "name": "esAddress",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Address space (required for Virtual WAN)",
-                        "toolTip": "Provide address prefix in CIDR notation (e.g 192.168.1.0/24)",
-                        "defaultValue": "192.168.0.0/16",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
-                        }
-                    },
-{
-                "name": "esRegions",
-                "type": "Microsoft.Common.DropDown",
-                "label": "Region for first virtual hub",
-                "defaultValue": "Value two",
-                "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
-                "constraints": {
-                    "allowedValues": [
-                        {
-                            "label": "East Asia",
-                            "value": "eastasia"
-                        },
-                        {
-                            "label": "Southeast Asia",
-                            "value": "southeastasia"
-                        },
-                        {
-                            "label": "Central US",
-                            "value": "centralus"
-                        },
-                        {
-                            "label": "East US",
-                            "value": "eastus"
-                        },
-                        {
-                            "label": "East US 2",
-                            "value": "eastus2"
-                        },
-                        {
-                            "label": "West US",
-                            "value": "westus"
-                        },
-                        {
-                            "label": "North Central US",
-                            "value": "northcentralus"
-                        },
-                        {
-                            "label": "South Central US",
-                            "value": "southcentralus"
-                        },
-                        {
-                            "label": "North Europe",
-                            "value": "northeurope"
-                        },
-                        {
-                            "label": "West Europe",
-                            "value": "westeurope"
-                        },
-                        {
-                            "label": "Japan West",
-                            "value": "japanwest"
-                        },
-                        {
-                            "label": "Japan East",
-                            "value": "japaneast"
-                        },
-                        {
-                            "label": "Brazil South",
-                            "value": "brazilsouth"
-                        },
-                        {
-                            "label": "Australia East",
-                            "value": "australiaeast"
-                        },
-                        {
-                            "label": "Australia Southeast",
-                            "value": "australiasoutheast"
-                        },
-                        {
-                            "label": "South India",
-                            "value": "southindia"
-                        },
-                        {
-                            "label": "Central India",
-                            "value": "centralindia"
-                        },
-                        {
-                            "label": "Canada East",
-                            "value": "canadaeast"
-                        },
-                        {
-                            "label": "UK South",
-                            "value": "uksouth"
-                        },
-                        {
-                            "label": "UK West",
-                            "value": "ukwest"
-                        },
-                        {
-                            "label": "West Central US",
-                            "value": "westcentralus"
-                        },
-                        {
-                            "label": "West US 2",
-                            "value": "westus2"
-                        },
-                        {
-                            "label": "Korea Central",
-                            "value": "koreacentral"
-                        },
-                        {
-                            "label": "Korea South",
-                            "value": "koreasouth"
-                        },
-                        {
-                            "label": "France Central",
-                            "value": "francecentral"
-                        },
-                        {
-                            "label": "France South",
-                            "value": "francesouth"
-                        },
-                        {
-                            "label": "Australia Central",
-                            "value": "australiacentral"
-                        },
-                        {
-                            "label": "UAE Central",
-                            "value": "uaecentral"
-                        },
-                        {
-                            "label": "UAE North",
-                            "value": "uaenorth"
-                        },
-                        {
-                            "label": "South Africa North",
-                            "value": "southafricanorth"
-                        },
-                        {
-                            "label": "South Africa West",
-                            "value": "southafricawest"
-                        },
-                        {
-                            "label": "Switzerland North",
-                            "value": "switzerlandnorth"
-                        },
-                        {
-                            "label": "Switzerland West",
-                            "value": "switzerlandwest"
-                        },
-                        {
-                            "label": "Germany North",
-                            "value": "germanynorth"
-                        },
-                        {
-                            "label": "Germany West Central",
-                            "value": "germanywestcentral"
-                        },
-                        {
-                            "label": "Norway West",
-                            "value": "norwaywest"
-                        },
-                        {
-                            "label": "Norway East",
-                            "value": "norwayeast"
-                        }
-                    ],
-                    "required": true
-                },
-                "visible": true
-            }									
+                    }
                 ]
-            },  			            
+            },
             {
                 "name": "lzGoalState",
                 "label": "Landing zone configuration",
@@ -409,7 +409,7 @@
                     "postValidation": "Done"
                 },
                 "bladeTitle": "lzGs",
-                "elements": [       
+                "elements": [
                     {
                         "name": "infoBox1",
                         "type": "Microsoft.Common.InfoBox",
@@ -420,7 +420,7 @@
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/Deploy/ES-schema.md"
                         }
                     },
-					{
+                    {
                         "name": "esLzSub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Landing zone subscription id",
@@ -431,7 +431,7 @@
                             "regex": "^[a-z0-9A-Z-]{36}$",
                             "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
                         }
-                    },                                 
+                    },
                     {
                         "name": "esAzBackup",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -452,7 +452,7 @@
                         },
                         "visible": true
                     },
-					{
+                    {
                         "name": "esDenyRdp",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Prevent inbound RDP from internet",
@@ -464,15 +464,15 @@
                                     "label": "Yes (recommended)",
                                     "value": "Yes"
                                 },
-								{
-									"label": "No",
-									"value": "No"
-								}
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
                             ]
                         },
                         "visible": true
                     },
-					{
+                    {
                         "name": "esNsg",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure subnets are associated with NSG",
@@ -484,15 +484,15 @@
                                     "label": "Yes (recommended)",
                                     "value": "Yes"
                                 },
-								{
-									"label": "No",
-									"value": "No"
-								}
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
                             ]
                         },
                         "visible": true
                     },
-					{
+                    {
                         "name": "esIpForwarding",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Prevent IP forwarding",
@@ -504,15 +504,15 @@
                                     "label": "Yes (recommended)",
                                     "value": "Yes"
                                 },
-								{
-									"label": "No",
-									"value": "No"
-								}
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
                             ]
                         },
                         "visible": true
                     },
-					{
+                    {
                         "name": "esSqlEncryption",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure Azure SQL is enabled with transparent data encryption",
@@ -524,15 +524,15 @@
                                     "label": "Yes (recommended)",
                                     "value": "Yes"
                                 },
-								{
-									"label": "No",
-									"value": "No"
-								}
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
                             ]
                         },
                         "visible": true
                     },
-					{
+                    {
                         "name": "esSqlAudit",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure auditing is enabled on Azure SQL",
@@ -544,15 +544,15 @@
                                     "label": "Yes (recommended)",
                                     "value": "Yes"
                                 },
-								{
-									"label": "No",
-									"value": "No"
-								}
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
                             ]
                         },
                         "visible": true
-                    },					
-					{
+                    },
+                    {
                         "name": "esHttpsStorage",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure secure connections (HTTPS) to storage accounts",
@@ -564,23 +564,23 @@
                                     "label": "Yes (recommended)",
                                     "value": "Yes"
                                 },
-								{
-									"label": "No",
-									"value": "No"
-								}
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
                             ]
                         },
                         "visible": true
                     }
                 ]
-            }			            			
+            }
         ],
         "outputs": {
- 			"enableVwan": "[steps('esConnectivityGoalState').esVwan]",
-			"connectivitySubscriptionId": "[steps('esConnectivityGoalState').esConnectivitySub]",
-			"enableAzFw": "[steps('esConnectivityGoalState').esAzFw]",
-			"addressPrefix": "[steps('esConnectivityGoalState').esAddress]",
-			"location": "[steps('esConnectivityGoalState').esRegions]",
+            "enableVwan": "[steps('esConnectivityGoalState').esVwan]",
+            "connectivitySubscriptionId": "[steps('esConnectivityGoalState').esConnectivitySub]",
+            "enableAzFw": "[steps('esConnectivityGoalState').esAzFw]",
+            "addressPrefix": "[steps('esConnectivityGoalState').esAddress]",
+            "location": "[steps('esConnectivityGoalState').esRegions]",
             "managementSubscriptionId": "[steps('esGoalState').esMgmtSub]",
             "lzSubscriptionId": "[steps('lzGoalState').esLzSub]",
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
@@ -588,14 +588,13 @@
             "enablePrivateEndpoint": "[steps('esGoalState').esPrivateEndpoint]",
             "enableAzBackup": "[steps('esGoalState').esAzBackup]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
-            "enableSqlAudit":"[steps('lzGoalState').esSqlAudit]",
+            "enableSqlAudit": "[steps('lzGoalState').esSqlAudit]",
             "enableSqlEncryption": "[steps('lzGoalState').esSqlEncryption]",
             "enableVmBackup": "[steps('lzGoalState').esAzBackup]",
             "denyRdp": "[steps('lzGoalState').esDenyRdp]",
             "enableStorageHttps": "[steps('lzGoalState').esHttpsStorage]",
             "denyIpForwarding": "[steps('lzGoalState').esIpForwarding]",
             "denySubnetWithoutNsg": "[steps('lzGoalState').esNsg]"
-
         }
     }
 }
