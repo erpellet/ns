@@ -17,6 +17,12 @@
             },
             "vwanname": {
                 "type": "string"
+            },
+            "vhubname": {
+                "type": "string"
+            },
+            "azfwipcount": {
+                "type": "string"
             }
         },
         "variables": {
@@ -36,20 +42,25 @@
                     "Name": "AZFW_Hub",
                     "Tier": "Standard"
                 },
-               /* "hubIPAddresses": {
+               "hubIPAddresses": {
                     "publicIPs": {
                         "addresses": [],
-                        //"count": "[parameters('azfwipcount')]"
+                        "count": "[parameters('azfwipcount')]"
                     }
-                },*/
+                },
                 "virtualHub": {
                     "id": "[variables('vwanhub')]"
                 },
                 "firewallPolicy": {
                     "id": "[if(not(empty(parameters('azfwpolicyid'))),parameters('azfwpolicyid'), json('null'))]"
+                    }
                 }
             }
+        ],
+        "outputs": {
+            "azFw": {
+                "type": "object",
+                "value": "[reference(parameters('azfwname'))]"
+            }
         }
-        ]
     }
-}
