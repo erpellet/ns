@@ -22,7 +22,7 @@
                 "type": "string"
             },
             "azfwipcount": {
-                "type": "string"
+                "type": "int"
             }
         },
         "variables": {
