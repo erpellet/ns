@@ -236,8 +236,8 @@
                         "name": "esAddress",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Address space (optional)",
-                        "toolTip": "our workload deployments.",
-                        "defaultValue": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 192.168.1.0/24)",
+                        "defaultValue": "192.168.0.0/16",
                         "constraints": {
                             "required": false,
                             "validationMessage": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
