@@ -167,6 +167,46 @@
                         },
                         "visible": true
                     },
+                    {
+                        "name": "esVpnGw",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy VPN Gateway",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esErGw",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Express Route Gateway",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Express Route gateway",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },                                                             
 					{
                         "name": "esAzFw",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -190,7 +230,7 @@
 					{
                         "name": "esAddress",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Address space (optional)",
+                        "label": "Address space (required for Virtual WAN)",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 192.168.1.0/24)",
                         "defaultValue": "192.168.0.0/16",
                         "constraints": {
@@ -201,7 +241,7 @@
 {
                 "name": "esRegions",
                 "type": "Microsoft.Common.DropDown",
-                "label": "Initial region for connectivity (optional)",
+                "label": "Region for first virtual hub",
                 "defaultValue": "Value two",
                 "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
                 "constraints": {

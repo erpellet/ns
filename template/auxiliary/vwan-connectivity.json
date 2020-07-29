@@ -37,7 +37,21 @@
                 "No"
             ],
             "defaultValue": "No"
-        }   
+        },
+        "enableVpnGw": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "enableErGw": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        }
     },
     "variables": {
         "vWanName": "[concat(parameters('topLevelManagementGroupPrefix'), '-vwan-', parameters('location'))]",
@@ -101,7 +115,7 @@
                             }
                         },
                         {
-                            "condition": "[and(equals(parameters('enableVwan'), 'Yes'), not(empty(parameters('addressPrefix'))))]",
+                            "condition": "[and(equals(parameters('enableVwan'), 'Yes'), equals(parameters('enableVpnGw'), 'Yes'))]",
                             "type": "Microsoft.Network/vpnGateways",
                             "apiVersion": "2020-05-01",
                             "location": "[parameters('location')]",
@@ -120,7 +134,7 @@
                             }
                         },
                         {
-                            "condition": "[and(equals(parameters('enableVwan'), 'Yes'), not(empty(parameters('addressPrefix'))))]",
+                            "condition": "[and(equals(parameters('enableVwan'), 'Yes'), equals(parameters('enableErGw'), 'Yes'))]",
                             "type": "Microsoft.Network/expressRouteGateways",
                             "apiVersion": "2020-05-01",
                             "location": "[parameters('location')]",
