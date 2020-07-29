@@ -291,7 +291,7 @@
             "name": "deployConnectivity",
             "dependsOn": [
                 "deployLogAnalytics",
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'), parameters('managementSubscriptionId'))]"
+                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity'), parameters('connectivitySubscriptionId'))]"
             ],
             "location": "[deployment().location]",
             "properties": {
