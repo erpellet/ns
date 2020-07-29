@@ -335,7 +335,7 @@
                                     "value": "norwayeast"
                                 }
                             ],
-                            "required": true
+                            "required": false
                         },
                         "visible": true
                     },                    

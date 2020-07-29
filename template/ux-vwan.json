@@ -287,7 +287,7 @@
             "condition": "[and(not(empty(parameters('connectivitySubscriptionId'))),equals(parameters('enableVwan'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
-            "subscriptionId": "[parameters('connectivitySubscriptionId')]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-connectivity')]",
             "name": "deployConnectivity",
             "dependsOn": [
                 "deployLogAnalytics",
@@ -321,6 +321,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "connectivitySubscriptionId": {
+                        "value": "[parameters('connectivitySubscriptionId')]"
                     }
                 }
             }
