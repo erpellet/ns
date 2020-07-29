@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion":"1.0.0.0",
+        "parameters": {
+            "azfwname": {
+                "type": "string"
+            },
+            "location": {
+                "type": "string"
+            },
+            "rgName": {
+                "type": "string"
+            },
+            "azfwpolicyid": {
+                "type": "String",
+                "defaultValue": ""
+            },
+            "vwanname": {
+                "type": "string"
+            }
+        },
+        "variables": {
+        "vwanresourceid": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'),'/providers/Microsoft.Network/virtualWans/',parameters('vwanname'))]",
+        "vwanhub": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'),'/providers/Microsoft.Network/virtualHubs/',parameters('vhubname'))]",
+        "azfwname": "[if(empty(parameters('azfwname')), 'azfw', parameters('azfwname'))]"
+        },
+        "resources": [
+            {
+            "apiVersion": "2020-05-01",
+            "type": "Microsoft.Network/azureFirewalls",
+            "condition": "[not(empty(parameters('azfwname')))]",
+            "name": "[variables('azfwname')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "Name": "AZFW_Hub",
+                    "Tier": "Standard"
+                },
+               /* "hubIPAddresses": {
+                    "publicIPs": {
+                        "addresses": [],
+                        //"count": "[parameters('azfwipcount')]"
+                    }
+                },*/
+                "virtualHub": {
+                    "id": "[variables('vwanhub')]"
+                },
+                "firewallPolicy": {
+                    "id": "[if(not(empty(parameters('azfwpolicyid'))),parameters('azfwpolicyid'), json('null'))]"
+                }
+            }
+        }
+        ]
+    }
+}

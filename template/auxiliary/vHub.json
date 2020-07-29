@@ -1,0 +1,206 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vwanname": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Virtual WAN"
+            }
+        },
+        "vpngwname": {
+            "type": "String",
+            "metadata": {
+                "displayName": "vpngwname",
+                "description": "Name of the VPN Gateway"
+            },
+            "defaultValue": ""
+        },
+        "vpnGatewayScaleUnit": {
+            "type": "int",
+            "metadata": {
+                "displayName": "vpnGatewayScaleUnit",
+                "description": "Scale unit of the VPN Gateway"
+            },
+            "defaultValue": 1
+        },
+        "ergwname": {
+            "type": "String",
+            "metadata": {
+                "displayName": "ergwname",
+                "description": "Name of the ExpressRoute Gateway"
+            },
+            "defaultValue": ""
+        },
+        "erautoScaleMin": {
+            "type": "int",
+            "metadata": {
+                "displayName": "erautoScaleMin",
+                "description": "Min scale unit of the ExpressRoute Gateway"
+            },
+            "defaultValue": 1
+        },
+        "erautoScaleMax": {
+            "type": "int",
+            "metadata": {
+                "displayName": "erautoScaleMax",
+                "description": "Max scale unit of the ExpressRoute Gateway"
+            },
+            "defaultValue": 1
+        },
+        "azfwname": {
+            "type": "String",
+            "metadata": {
+                "displayName": "azfwname",
+                "description": "Name of the Azure Firewall"
+            },
+            "defaultValue": ""
+        },
+        "azfwpolicyid": {
+            "type": "String",
+            "metadata": {
+                "displayName": "azfwpolicyid",
+                "description": "ID of the Firewall Policy"
+            },
+            "defaultValue": ""
+        },
+        "azfwipcount": {
+            "type": "int",
+            "metadata": {
+                "displayName": "azfwipcount",
+                "description": "Number of IP addresses of the Azure Firewall"
+            },
+            "defaultValue": 1
+        },
+        "azfwipaddresses": {
+            "type": "array",
+            "metadata": {
+                "displayName": "azfwipaddresses",
+                "description": "IP addresses of the Azure Firewall"
+            },
+            "defaultValue": []
+        },
+        "rgName": {
+            "type": "String",
+            "metadata": {
+                "displayName": "rgName",
+                "description": "Provide name for resource group."
+            }
+        },
+        "vhubname": {
+            "type": "String",
+            "metadata": {
+                "displayName": "vHUBName",
+                "description": "Name of the vHUB"
+            }
+        },
+        "addressPrefix": {
+            "type": "String",
+            "metadata": {
+                "displayName": "addressPrefix",
+                "description": "Address prefix of the VHUB"
+            },
+            "defaultValue": ""
+        },
+        "location": {
+            "type": "String",
+            "metadata": {
+                "displayName": "location",
+                "description": "Location of the VHUB"
+            }
+        }
+    },
+    "variables": {
+        "vwanresourceid": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'),'/providers/Microsoft.Network/virtualWans/',parameters('vwanname'))]",
+        "vwanhub": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'),'/providers/Microsoft.Network/virtualHubs/',parameters('vhubname'))]",
+        "vhubsku": "Standard",
+        "vpnbgpasn": 65515,
+        "vpnGwName": "[if(empty(parameters('vpngwname')), 'vpn', parameters('vpngwname'))]",
+        "ergwname": "[if(empty(parameters('ergwname')), 'ergw', parameters('ergwname'))]",
+        "azfwname": "[if(empty(parameters('azfwname')), 'azfw', parameters('azfwname'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualHubs",
+            "apiVersion": "2020-05-01",
+            "location": "[parameters('location')]",
+            "name": "[parameters('vhubname')]",
+            "properties": {
+                "virtualWan": {
+                    "id": "[variables('vwanresourceid')]"
+                },
+                "addressPrefix": "[parameters('addressPrefix')]",
+                "sku": "[variables('vhubsku')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/vpnGateways",
+            "apiVersion": "2020-05-01",
+            "condition": "[not(empty(parameters('vpngwname')))]",
+            "location": "[parameters('location')]",
+            "name": "[variables('vpngwname')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualHubs/',parameters('vhubname'))]"
+            ],
+            "properties": {
+                "virtualHub": {
+                    "id": "[variables('vwanhub')]"
+                },
+                "bgpSettings": {
+                    "asn": "[variables('vpnbgpasn')]"
+                },
+                "vpnGatewayScaleUnit": "[int(parameters('vpnGatewayScaleUnit'))]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/expressRouteGateways",
+            "apiVersion": "2020-05-01",
+            "condition": "[not(empty(parameters('ergwname')))]",
+            "location": "[parameters('location')]",
+            "name": "[variables('ergwname')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualHubs/',parameters('vhubname'))]"
+            ],
+            "properties": {
+                "virtualHub": {
+                    "id": "[variables('vwanhub')]"
+                },
+                "autoScaleConfiguration": {
+                    "bounds": {
+                        "min": "[parameters('erautoScaleMin')]",
+                        "max": "[parameters('erautoScaleMax')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2020-05-01",
+            "type": "Microsoft.Network/azureFirewalls",
+            "condition": "[not(empty(parameters('azfwname')))]",
+            "name": "[variables('azfwname')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualHubs/',parameters('vhubname'))]"
+            ],
+            "properties": {
+                "sku": {
+                    "Name": "AZFW_Hub",
+                    "Tier": "Standard"
+                },
+               /* "hubIPAddresses": {
+                    "publicIPs": {
+                        "addresses": [],
+                        //"count": "[parameters('azfwipcount')]"
+                    }
+                },*/
+                "virtualHub": {
+                    "id": "[variables('vwanhub')]"
+                },
+                "firewallPolicy": {
+                    "id": "[if(not(empty(parameters('azfwpolicyid'))),parameters('azfwpolicyid'), json('null'))]"
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
