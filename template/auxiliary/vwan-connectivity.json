@@ -63,7 +63,7 @@
         "vpngwname": "[concat(parameters('topLevelManagementGroupPrefix'), '-vpngw-', parameters('location'))]",
         "erGwName": "[concat(parameters('topLevelManagementGroupPrefix'), '-ergw-', parameters('location'))]",
         "rgName": "[concat(parameters('topLevelManagementGroupPrefix'), '-connectivity')]",
-        "vHubName": "[concat(parameters('topLevelManagementGroupPrefix'), '-connectivity')]",
+        "vHubName": "[concat(parameters('topLevelManagementGroupPrefix'), '-vhub-', parameters('location'))]",
         "azFwName": "[concat(parameters('topLevelManagementGroupPrefix'), '-fw-', parameters('location'))]",
         "vWanSku": "Standard",
         "vwanresourceid": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/' ,variables('rgName'),'/providers/Microsoft.Network/virtualWans/', variables('vwanname'))]",
