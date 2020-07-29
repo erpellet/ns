@@ -40,51 +40,6 @@
                 ]
             },
             {
-                "name": "esSetup",
-                "label": "Select Enterprise-Scale setup",
-                "subLabel": {
-                    "preValidation": "Select the type of initial deployment. Foundation will always be included and ideal for net new deployment/development in Azure without hybrid connectivity requirements. If hybrid connectivity is required for migration scenarios and/or connectivy to on-premises, select eith VWan (Microsoft managed network) or HubSpoke (customer managed network) to deploy the requisite networking setup.",
-                    "postValidation": "Done"
-                },
-                "bladeTitle": "lzSetup",
-                "elements": [                                        
-                    {
-                        "name": "infoBox1",
-                        "type": "Microsoft.Common.InfoBox",
-                        "visible": true,
-                        "options": {
-                            "icon": "Info",
-                            "text": "Enterprise-Scale degin principles and implemantation can be adopted by all customer no matter what size and history of thier Azure estate. The customer reference implementations below is targeting the most common customer scenarios for a Enterprise-Scale adoption.",
-                            "uri": "https://github.com/Azure/Enterprise-Scale/tree/main/docs/reference"
-                        }
-                    },
-                    {
-                        "name": "setup",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Select the initial Enterprise-Scale setup",
-                        "defaultValue": "Foundation",
-                        "toolTip": "Select the type of initial deployment. Foundation will always be included and ideal for net new deployment/development in Azure without hybrid connectivity requirements. If hybrid connectivity is required for migration scenarios and/or connectivy to on-premises, select eith VWan (Microsoft managed network) or HubSpoke (customer managed network) to deploy the requisite networking setup.",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-									"label": "Foundation",
-									"value": "Foundation"
-								},
-                                {
-                                    "label": "HubSpoke",
-                                    "value": "HubSpoke"
-                                },
-                                {
-                                    "label": "VWAN",
-                                    "value": "VWAN"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    }
-                ]
-            },
-            {
                 "name": "esGoalState",
                 "label": "Platform management, security, and governance",
                 "subLabel": {
@@ -581,8 +536,7 @@
             }			            			
         ],
         "outputs": {
-            "setup": "[steps('esSetup').setup]",
-			"enableVwan": "[steps('esConnectivityGoalState').esVwan]",
+ 			"enableVwan": "[steps('esConnectivityGoalState').esVwan]",
 			"connectivitySubscriptionId": "[steps('esConnectivityGoalState').esConnectivitySub]",
 			"enableAzFw": "[steps('esConnectivityGoalState').esAzFw]",
 			"addressPrefix": "[steps('esConnectivityGoalState').esAddress]",
