@@ -95,7 +95,7 @@
                         {
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
-                            "name": "[concat(deployment().name, '-vwan')]",
+                            "name": "[take(concat(deployment().name, '-vwan'), 64)]",
                             "resourceGroup": "[variables('rgName')]",
                             "dependsOn": [
                                 "[concat('Microsoft.Resources/resourceGroups/', variables('rgName'))]"
