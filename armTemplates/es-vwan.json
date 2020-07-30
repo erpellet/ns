@@ -454,12 +454,6 @@
                     },
                     "managementSubscriptionId": {
                         "value": "[parameters('managementSubscriptionId')]"
-                    },
-                    "connectivitySubscriptionId": {
-                        "value": "[parameters('connectivitySubscriptionId')]"
-                    },
-                    "lzSubscriptionId": {
-                        "value": "[parameters('lzSubscriptionId')]"
                     }
                 }
             }
@@ -537,6 +531,12 @@
                     },
                     "managementSubscriptionId": {
                         "value": "[parameters('managementSubscriptionId')]"
+                    },
+                    "connectivitySubscriptionId": {
+                        "value": "[parameters('connectivitySubscriptionId')]"
+                    },
+                    "lzSubscriptionId": {
+                        "value": "[parameters('lzSubscriptionId')]"
                     }
                 }
             }
