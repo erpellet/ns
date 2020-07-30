@@ -69,7 +69,8 @@
         "vwanresourceid": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/' ,variables('rgName'),'/providers/Microsoft.Network/virtualWans/', variables('vwanname'))]",
         "vwanhub": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualHubs/', variables('vhubname'))]",
         "vhubsku": "Standard",
-        "vpnbgpasn": 65515
+        "vpnbgpasn": 65515,
+        "resourceDeploymentName": "[take(concat(deployment().name, '-vwan'), 64)]"
     },
     "resources": [
         {
@@ -95,7 +96,7 @@
                         {
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
-                            "name": "[take(concat(deployment().name, '-vwan'), 64)]",
+                            "name": "[variables('resourceDeploymentName')]",
                             "resourceGroup": "[variables('rgName')]",
                             "dependsOn": [
                                 "[concat('Microsoft.Resources/resourceGroups/', variables('rgName'))]"
