@@ -59,18 +59,6 @@
                         }
                     },
                     {
-                        "name": "esMgmtSub",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Management subscription id",
-                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
-                        "defaultValue": "",
-                        "constraints": {
-                            "required": false,
-                            "regex": "^[a-z0-9A-Z-]{36}$",
-                            "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
-                        }
-                    },
-                    {
                         "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Log Analytics workspace and enable monitoring for your platform and resources",
@@ -90,6 +78,19 @@
                         },
                         "visible": true
                     },
+                    {
+                        "name": "esMgmtSub",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Management subscription id",
+                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
+                        "defaultValue": "",
+						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
+                        "constraints": {
+                            "required": false,
+                            "regex": "^[a-z0-9A-Z-]{36}$",
+                            "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
+                        }
+                    },					
                     {
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -112,7 +113,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
                     }
                 ]
             },
@@ -136,18 +137,6 @@
                         }
                     },
                     {
-                        "name": "esConnectivitySub",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Connectivity subscription id",
-                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for connectivity, which will be moved into the management group for platform connectivity. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
-                        "defaultValue": "",
-                        "constraints": {
-                            "required": false,
-                            "regex": "^[a-z0-9A-Z-]{36}$",
-                            "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
-                        }
-                    },
-                    {
                         "name": "esVwan",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Virtual WAN",
@@ -168,11 +157,25 @@
                         "visible": true
                     },
                     {
+                        "name": "esConnectivitySub",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Connectivity subscription id",
+                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for connectivity, which will be moved into the management group for platform connectivity. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
+                        "defaultValue": "",
+						"visible": "[equals(steps('esConnectivityGoalState').esVwan, 'Yes')]",
+                        "constraints": {
+                            "required": false,
+                            "regex": "^[a-z0-9A-Z-]{36}$",
+                            "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
+                        }
+                    },                    
+                    {
                         "name": "esAddress",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Address space (required for Virtual Hub)",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 192.168.1.0/24)",
                         "defaultValue": "192.168.0.0/16",
+						"visible": "[equals(steps('esConnectivityGoalState').esVwan, 'Yes')]",
                         "constraints": {
                             "required": false,
                             "validationMessage": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -183,6 +186,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Region for first virtual hub",
                         "defaultValue": "Value two",
+						"visible": "[equals(steps('esConnectivityGoalState').esVwan, 'Yes')]",
                         "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
                         "constraints": {
                             "allowedValues": [
@@ -337,13 +341,14 @@
                             ],
                             "required": false
                         },
-                        "visible": true
+                        "visible": "[equals('Yes', esConnectivityGoalState.esVwan)]"
                     },                    
                     {
                         "name": "esVpnGw",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy VPN Gateway",
                         "defaultValue": "No",
+						"visible": "[equals(steps('esConnectivityGoalState').esVwan, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway",
                         "constraints": {
                             "allowedValues": [
@@ -356,14 +361,14 @@
                                     "value": "No"
                                 }
                             ]
-                        },
-                        "visible": true
+                        }
                     },
                     {
                         "name": "esErGw",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy ExpressRoute Gateway",
                         "defaultValue": "No",
+						"visible": "[equals(steps('esConnectivityGoalState').esVwan, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Express Route gateway",
                         "constraints": {
                             "allowedValues": [
@@ -376,14 +381,14 @@
                                     "value": "No"
                                 }
                             ]
-                        },
-                        "visible": true
+                        }
                     },
                     {
                         "name": "esAzFw",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Firewall",
                         "defaultValue": "No",
+						"visible": "[equals(steps('esConnectivityGoalState').esVwan, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Azure Firewall",
                         "constraints": {
                             "allowedValues": [
@@ -396,8 +401,7 @@
                                     "value": "No"
                                 }
                             ]
-                        },
-                        "visible": true
+                        }
                     }
                 ]
             },
