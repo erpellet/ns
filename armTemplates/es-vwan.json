@@ -165,11 +165,11 @@
         "noLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', 'nalz')]",
         "connectivityMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity', '/', parameters('connectivitySubscriptionId'))]",
         "noConnectivitySubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity', '/', 'naconn')]",
-        "policyDeploymentName": "[concat('EntScale-Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]",
-        "monitoringDeploymentName": "[concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]",
-        "diagAndSecDeploymentName": "[concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]",
-        "connectivityDeploymentName": "[concat('EntScale-conn', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]",
-        "lzDeploymentName": "[concat('EntScale-lz', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]"
+        "policyDeploymentName": "[take(concat('EntScale-Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "diagAndSecDeploymentName": "[take(concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "connectivityDeploymentName": "[take(concat('EntScale-conn', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "lzDeploymentName": "[take(concat('EntScale-lz', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
     },
     "resources": [
         {
