@@ -185,7 +185,7 @@
                         "name": "esRegions",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Region for first virtual hub",
-                        "defaultValue": "Value two",
+                        "defaultValue": "",
 						"visible": "[equals(steps('esConnectivityGoalState').esVwan, 'Yes')]",
                         "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
                         "constraints": {
@@ -340,8 +340,7 @@
                                 }
                             ],
                             "required": false
-                        },
-                        "visible": "[equals('Yes', esConnectivityGoalState.esVwan)]"
+                        }
                     },                    
                     {
                         "name": "esVpnGw",

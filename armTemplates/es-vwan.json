@@ -164,7 +164,12 @@
         "lzMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', parameters('lzSubscriptionId'))]",
         "noLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', 'nalz')]",
         "connectivityMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity', '/', parameters('connectivitySubscriptionId'))]",
-        "noConnectivitySubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity', '/', 'naconn')]"
+        "noConnectivitySubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity', '/', 'naconn')]",
+        "policyDeploymentName": "[concat('EntScale-Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]",
+        "monitoringDeploymentName": "[concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]",
+        "diagAndSecDeploymentName": "[concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]",
+        "connectivityDeploymentName": "[concat('EntScale-conn', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]",
+        "lzDeploymentName": "[concat('EntScale-lz', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix')))]"
     },
     "resources": [
         {
@@ -176,7 +181,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "EntScale-deployPolicies",
+            "name": "[variables('policyDeploymentName')]",
             "location": "[deployment().location]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
             "dependsOn": [
@@ -381,9 +386,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-connectivity')]",
-            "name": "EntScale-deployConnectivity",
+            "name": "[variables('connectivityDeploymentName')]",
             "dependsOn": [
-                "EntScale-deployLogAnalytics",
+                "[variables('monitoringDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity'), parameters('connectivitySubscriptionId'))]"
             ],
             "location": "[deployment().location]",
@@ -426,8 +431,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management')]",
-            "name": "EntScale-deployLogAnalytics",
+            "name": "[variables('monitoringDeploymentName')]",
             "dependsOn": [
+                "[variables('policyDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'), parameters('managementSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
@@ -455,8 +461,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-landingzones')]",
-            "name": "EntScale-deployLzPolicies",
+            "name": "[variables('lzDeploymentName')]",
             "dependsOn": [
+                "[variables('policyDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'), parameters('managementSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
@@ -499,9 +506,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
-            "name": "EntScale-deployActivityLogs",
+            "name": "[variables('diagAndSecDeploymentName')]",
             "dependsOn": [
-                "EntScale-deployLogAnalytics"
+                "[variables('monitoringDeploymentName')]"
             ],
             "location": "[deployment().location]",
             "properties": {
