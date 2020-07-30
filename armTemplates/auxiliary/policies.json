@@ -13,11 +13,6 @@
             "policyDefinitions": [
             {
               "Name": "Append-KV-SoftDelete",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete",
-              "ResourceName": "Append-KV-SoftDelete",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete",
               "Properties": {
                 "Description": "When a Key Vault is created with out soft delete enabled then this will add it.",
                 "DisplayName": "Append-KV-SoftDelete",
@@ -54,11 +49,6 @@
             },
             {
               "Name": "Deny-AppGW-Without-WAF",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF",
-              "ResourceName": "Deny-AppGW-Without-WAF",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF",
               "Properties": {
                 "Description": null,
                 "DisplayName": "Deny-AppGW-Without-WAF",
@@ -85,11 +75,6 @@
             },
             {
               "Name": "Deny-ERPeering",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-ERPeering",
-              "ResourceName": "Deny-ERPeering",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-ERPeering",
               "Properties": {
                 "Description": "Denies creation of ER Peerings under the assigned scope.",
                 "DisplayName": "Deny-ERPeering",
@@ -108,11 +93,6 @@
             },
             {
               "Name": "Deny-Private-DNS-Zones",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-Private-DNS-Zones",
-              "ResourceName": "Deny-Private-DNS-Zones",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-Private-DNS-Zones",
               "Properties": {
                 "Description": "Denies creation of Private DNS Zones under the assigned scope",
                 "DisplayName": "Deny-Private-DNS-Zones",
@@ -131,11 +111,6 @@
             },
             {
               "Name": "Deny-PublicEndpoint-Aks",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Aks",
-              "ResourceName": "Deny-PublicEndpoint-Aks",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Aks",
               "Properties": {
                 "Description": "This policy restricts creation of non-private AKS clusters",
                 "DisplayName": "Deny-PublicEndpoint-Aks",
@@ -162,11 +137,6 @@
             },
             {
               "Name": "Deny-PublicEndpoint-CosmosDB",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-CosmosDB",
-              "ResourceName": "Deny-PublicEndpoint-CosmosDB",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-CosmosDB",
               "Properties": {
                 "Description": "This policy restrict creation of cosmos db accounts with exposed public endpoints",
                 "DisplayName": "Deny-PublicEndpoint-CosmosDB",
@@ -193,11 +163,6 @@
             },
             {
               "Name": "Deny-PublicEndpoint-KeyVault",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-KeyVault",
-              "ResourceName": "Deny-PublicEndpoint-KeyVault",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-KeyVault",
               "Properties": {
                 "Description": "This policy restrict creation of Key Vaults with IP Firewall exposed to all public endpoints",
                 "DisplayName": "Deny-PublicEndpoint-KeyVault",
@@ -224,11 +189,6 @@
             },
             {
               "Name": "Deny-PublicEndpoint-MariaDB",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-MariaDB",
-              "ResourceName": "Deny-PublicEndpoint-MariaDB",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-MariaDB",
               "Properties": {
                 "Description": "This policy restrict creation of Maria DB accounts with exposed public endpoints",
                 "DisplayName": "Deny-PublicEndpoint-MariaDB",
@@ -255,11 +215,6 @@
             },
             {
               "Name": "Deny-PublicEndpoint-MySQL",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-MySQL",
-              "ResourceName": "Deny-PublicEndpoint-MySQL",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-MySQL",
               "Properties": {
                 "Description": "This policy restrict creation of MySql DB accounts with exposed public endpoints",
                 "DisplayName": "Deny-PublicEndpoint-MySQL",
@@ -286,11 +241,6 @@
             },
             {
               "Name": "Deny-PublicEndpoint-PostgreSql",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-PostgreSql",
-              "ResourceName": "Deny-PublicEndpoint-PostgreSql",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-PostgreSql",
               "Properties": {
                 "Description": "This policy restrict creation of Postgre SQL DB accounts with exposed public endpoints",
                 "DisplayName": "Deny-PublicEndpoint-PostgreSql",
@@ -317,11 +267,6 @@
             },
             {
               "Name": "Deny-PublicEndpoint-Sql",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Sql",
-              "ResourceName": "Deny-PublicEndpoint-Sql",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Sql",
               "Properties": {
                 "Description": "This policy restrict creation of Sql servers with exposed public endpoints",
                 "DisplayName": "Deny-PublicEndpoint-Sql",
@@ -348,11 +293,6 @@
             },
             {
               "Name": "Deny-PublicEndpoint-Storage",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Storage",
-              "ResourceName": "Deny-PublicEndpoint-Storage",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Storage",
               "Properties": {
                 "Description": "This policy restrict creation of storage accounts with IP Firewall exposed to all public endpoints",
                 "DisplayName": "Deny-PublicEndpoint-Storage",
@@ -379,11 +319,6 @@
             },
             {
               "Name": "Deny-PublicIP",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP",
-              "ResourceName": "Deny-PublicIP",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP",
               "Properties": {
                 "Description": "Denies creation of Public IPs under the assigned scope.",
                 "DisplayName": "Deny-PublicIP",
@@ -402,11 +337,6 @@
             },
             {
               "Name": "Deny-Subnet-Without-Nsg",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg",
-              "ResourceName": "Deny-Subnet-Without-Nsg",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg",
               "Properties": {
                 "Description": null,
                 "DisplayName": "Deny-Subnets-Without-NSG",
@@ -433,11 +363,6 @@
             },
             {
               "Name": "Deploy-ASC-Standard",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Standard",
-              "ResourceName": "Deploy-ASC-Standard",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Standard",
               "Properties": {
                 "Description": "Ensures that subscriptions have Security Center Standard enabled.",
                 "DisplayName": "Deploy-ASC-Standard",
@@ -720,11 +645,6 @@
             },
             {
               "Name": "Deploy-AzureBackup-on-VM",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-AzureBackup-on-VM",
-              "ResourceName": "Deploy-AzureBackup-on-VM",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-AzureBackup-on-VM",
               "Properties": {
                 "Description": null,
                 "DisplayName": "Deploy-AzureBackup-on-VMs",
@@ -1160,11 +1080,6 @@
             },
             {
               "Name": "Deploy-DDoSProtection",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DDoSProtection",
-              "ResourceName": "Deploy-DDoSProtection",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DDoSProtection",
               "Properties": {
                 "Description": "This policy deploys an Azure DDoS Protection Standard plan",
                 "DisplayName": "Deploy-DDoSProtection",
@@ -1289,11 +1204,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-AA",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AA",
-              "ResourceName": "Deploy-Diagnostics-AA",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AA",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Automation Accounts - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-AA",
@@ -1414,11 +1324,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-ACI",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACI",
-              "ResourceName": "Deploy-Diagnostics-ACI",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACI",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Container Instances - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-ACI",
@@ -1522,11 +1427,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-ACR",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACR",
-              "ResourceName": "Deploy-Diagnostics-ACR",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACR",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Container Registries - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-ACR",
@@ -1630,11 +1530,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-ActivityLog",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog",
-              "ResourceName": "Deploy-Diagnostics-ActivityLog",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog",
               "Properties": {
                 "Description": "Ensures that Activity Log Diagnostics settings are set to push logs into Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-ActivityLog",
@@ -1753,11 +1648,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-AKS",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AKS",
-              "ResourceName": "Deploy-Diagnostics-AKS",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AKS",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Kubernetes Service - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-AKS",
@@ -1886,11 +1776,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-AnalysisService",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AnalysisService",
-              "ResourceName": "Deploy-Diagnostics-AnalysisService",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AnalysisService",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Analysis Services - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-AnalysisService",
@@ -2007,11 +1892,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-APIMgmt",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-APIMgmt",
-              "ResourceName": "Deploy-Diagnostics-APIMgmt",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-APIMgmt",
               "Properties": {
                 "Description": "Apply diagnostic settings for API Management services - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-APIMgmt",
@@ -2142,11 +2022,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-ApplicationGateway",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ApplicationGateway",
-              "ResourceName": "Deploy-Diagnostics-ApplicationGateway",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ApplicationGateway",
               "Properties": {
                 "Description": "Apply diagnostic settings for Application Gateways - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-ApplicationGateway",
@@ -2267,11 +2142,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-Batch",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Batch",
-              "ResourceName": "Deploy-Diagnostics-Batch",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Batch",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Batch accounts - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-Batch",
@@ -2384,11 +2254,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-CDNEndpoints",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CDNEndpoints",
-              "ResourceName": "Deploy-Diagnostics-CDNEndpoints",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CDNEndpoints",
               "Properties": {
                 "Description": "Apply diagnostic settings for CDN Endpoints - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-CDNEndpoints",
@@ -2487,11 +2352,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-CognitiveServices",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CognitiveServices",
-              "ResourceName": "Deploy-Diagnostics-CognitiveServices",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CognitiveServices",
               "Properties": {
                 "Description": "Apply diagnostic settings for Cognitive Services - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-CognitiveServices",
@@ -2608,11 +2468,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-CosmosDB",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CosmosDB",
-              "ResourceName": "Deploy-Diagnostics-CosmosDB",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CosmosDB",
               "Properties": {
                 "Description": "Apply diagnostic settings for Cosmos DB - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-CosmosDB",
@@ -2733,11 +2588,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-DataFactory",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DataFactory",
-              "ResourceName": "Deploy-Diagnostics-DataFactory",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DataFactory",
               "Properties": {
                 "Description": "Apply diagnostic settings for Data Factory - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-DataFactory",
@@ -2858,11 +2708,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-DataLakeStore",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DataLakeStore",
-              "ResourceName": "Deploy-Diagnostics-DataLakeStore",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DataLakeStore",
               "Properties": {
                 "Description": "Apply diagnostic settings for Data Lake Storage - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-DataLakeStore",
@@ -2979,11 +2824,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-DLAnalytics",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DLAnalytics",
-              "ResourceName": "Deploy-Diagnostics-DLAnalytics",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DLAnalytics",
               "Properties": {
                 "Description": "Apply diagnostic settings for Data Lake Analytics - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-DLAnalytics",
@@ -3100,11 +2940,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-EventGridSub",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridSub",
-              "ResourceName": "Deploy-Diagnostics-EventGridSub",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridSub",
               "Properties": {
                 "Description": "Apply diagnostic settings for Event Grid Subscriptions - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-EventGridSub",
@@ -3208,11 +3043,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-EventGridTopic",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridTopic",
-              "ResourceName": "Deploy-Diagnostics-EventGridTopic",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridTopic",
               "Properties": {
                 "Description": "Apply diagnostic settings for Event Grid Topics - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-EventGridTopic",
@@ -3316,11 +3146,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-EventHub",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventHub",
-              "ResourceName": "Deploy-Diagnostics-EventHub",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventHub",
               "Properties": {
                 "Description": "Apply diagnostic settings for Event Hub Namespaces - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-EventHub",
@@ -3441,11 +3266,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-ExpressRoute",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ExpressRoute",
-              "ResourceName": "Deploy-Diagnostics-ExpressRoute",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ExpressRoute",
               "Properties": {
                 "Description": "Apply diagnostic settings for Express Routes Circuits - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-ExpressRoute",
@@ -3558,11 +3378,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-Firewall",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Firewall",
-              "ResourceName": "Deploy-Diagnostics-Firewall",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Firewall",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Firewalls - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-Firewall",
@@ -3679,11 +3494,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-HDInsight",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-HDInsight",
-              "ResourceName": "Deploy-Diagnostics-HDInsight",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-HDInsight",
               "Properties": {
                 "Description": "Apply diagnostic settings for HDInsight - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-HDInsight",
@@ -3787,11 +3597,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-iotHub",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-iotHub",
-              "ResourceName": "Deploy-Diagnostics-iotHub",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-iotHub",
               "Properties": {
                 "Description": "Apply diagnostic settings for IoT Hubs - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-iotHub",
@@ -3952,11 +3757,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-KeyVault",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-KeyVault",
-              "ResourceName": "Deploy-Diagnostics-KeyVault",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-KeyVault",
               "Properties": {
                 "Description": "Apply diagnostic settings for Key Vaults - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-KeyVault",
@@ -4069,11 +3869,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-LoadBalancer",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LoadBalancer",
-              "ResourceName": "Deploy-Diagnostics-LoadBalancer",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LoadBalancer",
               "Properties": {
                 "Description": "Apply diagnostic settings for Load Balancers - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-LoadBalancer",
@@ -4190,11 +3985,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-LogicAppsISE",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogicAppsISE",
-              "ResourceName": "Deploy-Diagnostics-LogicAppsISE",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogicAppsISE",
               "Properties": {
                 "Description": "Apply diagnostic settings for Logic Apps Integration Accounts - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-LogicAppsISE",
@@ -4293,11 +4083,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-LogicAppsWF",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogicAppsWF",
-              "ResourceName": "Deploy-Diagnostics-LogicAppsWF",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogicAppsWF",
               "Properties": {
                 "Description": "Apply diagnostic settings for Logic Apps workflows - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-LogicAppsWF",
@@ -4410,11 +4195,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-MlWorkspace",
-              "ResourceId": "/providers/Microsoft.Management/managementgroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-MlWorkspace",
-              "ResourceName": "Deploy-Diagnostics-MlWorkspace",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-MlWorkspace",
               "Properties": {
                 "Description": "Apply diagnostic settings for Ml Workspace - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-MlWorkspace",
@@ -4569,11 +4349,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-MySQL",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-MySQL",
-              "ResourceName": "Deploy-Diagnostics-MySQL",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-MySQL",
               "Properties": {
                 "Description": "Apply diagnostic settings for MySQL Databases - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-MySQL",
@@ -4686,11 +4461,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-NetworkSecurityGroups",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-NetworkSecurityGroups",
-              "ResourceName": "Deploy-Diagnostics-NetworkSecurityGroups",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-NetworkSecurityGroups",
               "Properties": {
                 "Description": "Apply diagnostic settings for Network Security Groups - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-NetworkSecurityGroups",
@@ -4793,11 +4563,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-NIC",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-NIC",
-              "ResourceName": "Deploy-Diagnostics-NIC",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-NIC",
               "Properties": {
                 "Description": "Apply diagnostic settings for Network Interfaces - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-NIC",
@@ -4900,11 +4665,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-PostgreSQL",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PostgreSQL",
-              "ResourceName": "Deploy-Diagnostics-PostgreSQL",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PostgreSQL",
               "Properties": {
                 "Description": "Apply diagnostic settings for PostgreSQL Databases - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-PostgreSQL",
@@ -5017,11 +4777,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-PowerBIEmbedded",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PowerBIEmbedded",
-              "ResourceName": "Deploy-Diagnostics-PowerBIEmbedded",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PowerBIEmbedded",
               "Properties": {
                 "Description": "Apply diagnostic settings for Power BI Embedded - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-PowerBIEmbedded",
@@ -5134,11 +4889,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-PublicIP",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PublicIP",
-              "ResourceName": "Deploy-Diagnostics-PublicIP",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PublicIP",
               "Properties": {
                 "Description": "Apply diagnostic settings for Public IPs - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-PublicIP",
@@ -5259,11 +5009,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-RecoveryVault",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-RecoveryVault",
-              "ResourceName": "Deploy-Diagnostics-RecoveryVault",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-RecoveryVault",
               "Properties": {
                 "Description": "Apply diagnostic settings for Recovery Vaults - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-RecoveryVault",
@@ -5407,11 +5152,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-RedisCache",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-RedisCache",
-              "ResourceName": "Deploy-Diagnostics-RedisCache",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-RedisCache",
               "Properties": {
                 "Description": "Apply diagnostic settings for Redis Cache - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-RedisCache",
@@ -5515,11 +5255,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-Relay",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Relay",
-              "ResourceName": "Deploy-Diagnostics-Relay",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Relay",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Relay - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-Relay",
@@ -5623,11 +5358,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-SearchServices",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SearchServices",
-              "ResourceName": "Deploy-Diagnostics-SearchServices",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SearchServices",
               "Properties": {
                 "Description": "Apply diagnostic settings for Search Services - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-SearchServices",
@@ -5740,11 +5470,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-ServiceBus",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ServiceBus",
-              "ResourceName": "Deploy-Diagnostics-ServiceBus",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ServiceBus",
               "Properties": {
                 "Description": "Apply diagnostic settings for Service Bus namespaces - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-ServiceBus",
@@ -5857,11 +5582,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-SignalR",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SignalR",
-              "ResourceName": "Deploy-Diagnostics-SignalR",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SignalR",
               "Properties": {
                 "Description": "Apply diagnostic settings for SignalR - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-SignalR",
@@ -5965,11 +5685,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-SQLDBs",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLDBs",
-              "ResourceName": "Deploy-Diagnostics-SQLDBs",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLDBs",
               "Properties": {
                 "Description": "Apply diagnostic settings for SQL Databases - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-SQLDBs",
@@ -6118,11 +5833,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-SQLElasticPools",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLElasticPools",
-              "ResourceName": "Deploy-Diagnostics-SQLElasticPools",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLElasticPools",
               "Properties": {
                 "Description": "Apply diagnostic settings for SQL Elastic Pools - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-SQLElasticPools",
@@ -6226,11 +5936,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-SQLMI",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLMI",
-              "ResourceName": "Deploy-Diagnostics-SQLMI",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLMI",
               "Properties": {
                 "Description": "Apply diagnostic settings for SQL Managed Instances - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-SQLMI",
@@ -6332,11 +6037,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-StreamAnalytics",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-StreamAnalytics",
-              "ResourceName": "Deploy-Diagnostics-StreamAnalytics",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-StreamAnalytics",
               "Properties": {
                 "Description": "Apply diagnostic settings for Stream Analytics - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-StreamAnalytics",
@@ -6453,11 +6153,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-TimeSeriesInsights",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-TimeSeriesInsights",
-              "ResourceName": "Deploy-Diagnostics-TimeSeriesInsights",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-TimeSeriesInsights",
               "Properties": {
                 "Description": "Apply diagnostic settings for Time Series Insights - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-TimeSeriesInsights",
@@ -6561,11 +6256,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-TrafficManager",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-TrafficManager",
-              "ResourceName": "Deploy-Diagnostics-TrafficManager",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-TrafficManager",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Traffic Manager - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-TrafficManager",
@@ -6678,11 +6368,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-VirtualNetwork",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VirtualNetwork",
-              "ResourceName": "Deploy-Diagnostics-VirtualNetwork",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VirtualNetwork",
               "Properties": {
                 "Description": "Apply diagnostic settings for Virtual Networks - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-VirtualNetwork",
@@ -6794,11 +6479,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-VM",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VM",
-              "ResourceName": "Deploy-Diagnostics-VM",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VM",
               "Properties": {
                 "Description": "Apply diagnostic settings for Virtual Machines - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-VM",
@@ -6901,11 +6581,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-VMSS",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VMSS",
-              "ResourceName": "Deploy-Diagnostics-VMSS",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VMSS",
               "Properties": {
                 "Description": "Apply diagnostic settings for Virtual Machine Scale Sets - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-VMSS",
@@ -7008,11 +6683,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-VNetGW",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VNetGW",
-              "ResourceName": "Deploy-Diagnostics-VNetGW",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VNetGW",
               "Properties": {
                 "Description": "Apply diagnostic settings for Virtual Network Gateways - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-VNetGW",
@@ -7145,11 +6815,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-WebServerFarm",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WebServerFarm",
-              "ResourceName": "Deploy-Diagnostics-WebServerFarm",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WebServerFarm",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure App Service Plans - Log Analytics",
                 "DisplayName": "Deploy-Diagnostics-WebServerFarm",
@@ -7253,11 +6918,6 @@
             },
             {
               "Name": "Deploy-Diagnostics-Website",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Website",
-              "ResourceName": "Deploy-Diagnostics-Website",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Website",
               "Properties": {
                 "Description": "Apply diagnostic settings for Azure Web Sites",
                 "DisplayName": "Deploy-Diagnostics-Website",
@@ -7361,11 +7021,6 @@
             },
             {
               "Name": "Deploy-DNSZoneGroup-For-Blob-PrivateEndpoint",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-Blob-PrivateEndpoint",
-              "ResourceName": "Deploy-DNSZoneGroup-For-Blob-PrivateEndpoint",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-Blob-PrivateEndpoint",
               "Properties": {
                 "Description": "Deploys a DNS Zone Group for Storage-Blob Private Endpoint",
                 "DisplayName": "Deploy-DNSZoneGroup-For-Blob-PrivateEndpoint",
@@ -7461,11 +7116,6 @@
             },
             {
               "Name": "Deploy-DNSZoneGroup-For-File-PrivateEndpoint",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-File-PrivateEndpoint",
-              "ResourceName": "Deploy-DNSZoneGroup-For-File-PrivateEndpoint",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-File-PrivateEndpoint",
               "Properties": {
                 "Description": "This policy deploys a DNS Zone Group for Storage-File Private Endpoint",
                 "DisplayName": "Deploy-DNSZoneGroup-For-File-PrivateEndpoint",
@@ -7561,11 +7211,6 @@
             },
             {
               "Name": "Deploy-DNSZoneGroup-For-KeyVault-PrivateEndpoint",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-KeyVault-PrivateEndpoint",
-              "ResourceName": "Deploy-DNSZoneGroup-For-KeyVault-PrivateEndpoint",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-KeyVault-PrivateEndpoint",
               "Properties": {
                 "Description": "This policy deploys a DNS Zone Group for Key Vault Private Endpoint",
                 "DisplayName": "Deploy-DNSZoneGroup-For-KeyVault-PrivateEndpoint",
@@ -7661,11 +7306,6 @@
             },
             {
               "Name": "Deploy-DNSZoneGroup-For-Queue-PrivateEndpoint",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-Queue-PrivateEndpoint",
-              "ResourceName": "Deploy-DNSZoneGroup-For-Queue-PrivateEndpoint",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-Queue-PrivateEndpoint",
               "Properties": {
                 "Description": "This policy deploys a DNS Zone Group for Storage-Queue Private Endpoint",
                 "DisplayName": "Deploy-DNSZoneGroup-For-Queue-PrivateEndpoint",
@@ -7761,11 +7401,6 @@
             },
             {
               "Name": "Deploy-DNSZoneGroup-For-Sql-PrivateEndpoint",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-Sql-PrivateEndpoint",
-              "ResourceName": "Deploy-DNSZoneGroup-For-Sql-PrivateEndpoint",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-Sql-PrivateEndpoint",
               "Properties": {
                 "Description": "This policy deploys a DNS Zone Group for SQL Private Endpoint",
                 "DisplayName": "Deploy-DNSZoneGroup-For-Sql-PrivateEndpoint",
@@ -7861,11 +7496,6 @@
             },
             {
               "Name": "Deploy-DNSZoneGroup-For-Table-PrivateEndpoint",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-Table-PrivateEndpoint",
-              "ResourceName": "Deploy-DNSZoneGroup-For-Table-PrivateEndpoint",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-Table-PrivateEndpoint",
               "Properties": {
                 "Description": "This policy deploys a DNS Zone Group for Storage-Blob Private Endpoint",
                 "DisplayName": "Deploy-DNSZoneGroup-For-Table-PrivateEndpoint",
@@ -7961,11 +7591,6 @@
             },
             {
               "Name": "Deploy-FirewallPolicy",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-FirewallPolicy",
-              "ResourceName": "Deploy-FirewallPolicy",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-FirewallPolicy",
               "Properties": {
                 "Description": "Deploys Azure Firewall Policy/Manager",
                 "DisplayName": "Deploy-FirewallPolicy",
@@ -8107,11 +7732,6 @@
             },
             {
               "Name": "Deploy-HUB",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/Contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-HUB",
-              "ResourceName": "Deploy-HUB",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/Contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-HUB",
               "Properties": {
                 "Description": "Deploys Azure VNet to be used as hub virtual network in desired regions",
                 "DisplayName": "Deploy-HUB",
@@ -8515,11 +8135,6 @@
             },
             {
               "Name": "Deploy-LA-Config",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-LA-Config",
-              "ResourceName": "Deploy-LA-Config",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-LA-Config",
               "Properties": {
                 "Description": null,
                 "DisplayName": "Deploy-LA-Config",
@@ -8911,11 +8526,6 @@
             },
             {
               "Name": "Deploy-Log-Analytics",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Log-Analytics",
-              "ResourceName": "Deploy-Log-Analytics",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Log-Analytics",
               "Properties": {
                 "Description": null,
                 "DisplayName": "Deploy-LogAnalytics",
@@ -9104,11 +8714,6 @@
             },
             {
               "Name": "Deploy-Nsg-FlowLogs",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Nsg-FlowLogs",
-              "ResourceName": "Deploy-Nsg-FlowLogs",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Nsg-FlowLogs",
               "Properties": {
                 "Description": null,
                 "DisplayName": "Deploy-Nsg-FlowLogs",
@@ -9219,11 +8824,6 @@
             },
             {
               "Name": "Deploy-Sql-AuditingSettings",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-AuditingSettings",
-              "ResourceName": "Deploy-Sql-AuditingSettings",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-AuditingSettings",
               "Properties": {
                 "Description": "Configures SQL Server",
                 "DisplayName": "Deploy-Sql-AuditingSettings",
@@ -9322,11 +8922,6 @@
             },
             {
               "Name": "Deploy-Sql-SecurityAlertPolicies",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-SecurityAlertPolicies",
-              "ResourceName": "Deploy-Sql-SecurityAlertPolicies",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-SecurityAlertPolicies",
               "Properties": {
                 "Description": "Configures SQL DataBases",
                 "DisplayName": "Deploy-Sql-SecurityAlertPolicies",
@@ -9412,11 +9007,6 @@
             },
             {
               "Name": "Deploy-Sql-Tde",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde",
-              "ResourceName": "Deploy-Sql-Tde",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde",
               "Properties": {
                 "Description": "Configures SQL DataBases",
                 "DisplayName": "Deploy-Sql-Tde",
@@ -9492,11 +9082,6 @@
             },
             {
               "Name": "Deploy-Sql-vulnerabilityAssessments",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments",
-              "ResourceName": "Deploy-Sql-vulnerabilityAssessments",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments",
               "Properties": {
                 "Description": "Configures SQL DataBases",
                 "DisplayName": "Deploy-Sql-vulnerabilityAssessments",
@@ -9611,11 +9196,6 @@
             },
             {
               "Name": "Deploy-vHUB",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-vHUB",
-              "ResourceName": "Deploy-vHUB",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-vHUB",
               "Properties": {
                 "Description": "Deploys Azure Virtual WAN vHUB in desired regions",
                 "DisplayName": "Deploy-vHUB",
@@ -9936,11 +9516,6 @@
             },
             {
               "Name": "Deploy-vNet",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-vNet",
-              "ResourceName": "Deploy-vNet",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-vNet",
               "Properties": {
                 "Description": "Deploy-vNet",
                 "DisplayName": "Deploy-vNet",
@@ -10295,11 +9870,6 @@
             },
             {
               "Name": "Deploy-vWAN",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-vWAN",
-              "ResourceName": "Deploy-vWAN",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-vWAN",
               "Properties": {
                 "Description": null,
                 "DisplayName": "Deploy-vWAN",
@@ -10431,11 +10001,6 @@
             },            
             {
               "Name": "Deploy-Windows-DomainJoin",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Windows-DomainJoin",
-              "ResourceName": "Deploy-Windows-DomainJoin",
-              "ResourceType": "Microsoft.Authorization/policyDefinitions",
-              "SubscriptionId": null,
-              "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policyDefinitions/Deploy-Windows-DomainJoin",
               "Properties": {
                 "Description": null,
                 "DisplayName": "Deploy-Windows-DomainJoin",
@@ -10680,11 +10245,6 @@
             "policySetDefinitions": [
             {
               "Name": "Deny-PublicEndpoints",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicEndpoints",
-              "ResourceName": "Deny-PublicEndpoints",
-              "ResourceType": "Microsoft.Authorization/policySetDefinitions",
-              "SubscriptionId": null,
-              "PolicySetDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicEndpoints",
               "Properties": {
                 "Description": null,
                 "DisplayName": "Deny-Public-Endpoints-for-PaaS-Services",
@@ -10692,42 +10252,34 @@
                 "PolicyDefinitionGroups": null,
                 "PolicyDefinitions": [
                   {
-                    "policyDefinitionReferenceId": "2305471075076999555",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-CosmosDB')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "9147011493650353598",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-MariaDB')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "12408670082151357639",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-MySQL')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "12661820429455827739",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-PostgreSql')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "4034941732885719677",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-KeyVault')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "3088050605787531398",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Sql')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "9863399000097702281",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Storage')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "8251035221074005943",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Aks')]",
                     "parameters": {}
                   }
@@ -10736,11 +10288,6 @@
             },
             {
               "Name": "Deploy-Diag-LogAnalytics",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diag-LogAnalytics",
-              "ResourceName": "Deploy-Diag-LogAnalytics",
-              "ResourceType": "Microsoft.Authorization/policySetDefinitions",
-              "SubscriptionId": null,
-              "PolicySetDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diag-LogAnalytics",
               "Properties": {
                 "Description": "This initiative configures application Azure resources to forward diagnostic logs and metrics to an Azure Log Analytics workspace.",
                 "DisplayName": "Deploy-Diag-LogAnalytics",
@@ -10754,10 +10301,8 @@
                     }
                   }
                 },
-                "PolicyDefinitionGroups": null,
                 "PolicyDefinitions": [
                   {
-                    "policyDefinitionReferenceId": "7236125568528343678",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-NIC')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10766,7 +10311,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "16237567380538299695",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AA')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10775,7 +10319,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "12685756144414362153",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PublicIP')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10784,7 +10327,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "2557958870151738256",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LoadBalancer')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10793,7 +10335,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "4538039732467449756",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-NetworkSecurityGroups')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10802,7 +10343,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "5161149613138249385",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-KeyVault')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10811,7 +10351,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "16623885990575636691",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CognitiveServices')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10820,7 +10359,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "14165180690437289514",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DLAnalytics')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10829,7 +10367,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "13371143819958730506",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DataLakeStore')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10838,7 +10375,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "2071678625413859115",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventHub')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10847,7 +10383,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "16343927162737995596",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-iotHub')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10856,7 +10391,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "5158551526259161161",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogicAppsWF')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10865,7 +10399,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "3565767401079350483",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogicAppsISE')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10874,7 +10407,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "8137866490937856070",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-RecoveryVault')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10883,7 +10415,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "12916195990937786417",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SearchServices')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10892,7 +10423,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "9087684938078686846",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ServiceBus')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10901,7 +10431,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "1436434173336656375",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLDBs')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10910,7 +10439,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "5057222585536622942",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLElasticPools')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10919,7 +10447,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "1432091505729419124",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-APIMgmt')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10928,7 +10455,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "18134267480412652992",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ApplicationGateway')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10937,7 +10463,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "8388389559870572478",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Batch')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10946,7 +10471,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "11192323136602097727",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-MySQL')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10955,7 +10479,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "7568623331654212445",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PostgreSQL')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10964,7 +10487,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "17748756007148882262",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CDNEndpoints')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10973,7 +10495,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "17566721830488803368",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CosmosDB')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10982,7 +10503,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "15931864125238299472",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DataFactory')]",
                     "parameters": {
                       "logAnalytics": {
@@ -10991,7 +10511,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "2952564532567566124",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Firewall')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11000,7 +10519,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "12523335183303523469",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PowerBIEmbedded')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11009,7 +10527,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "17060547101037299375",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-StreamAnalytics')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11018,7 +10535,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "6702667909971191151",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ExpressRoute')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11027,7 +10543,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "17715931723533988224",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACI')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11036,7 +10551,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "524463144292725949",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACR')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11045,7 +10559,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "10130212469996596913",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VirtualNetwork')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11054,7 +10567,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "17249814480476613114",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VM')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11063,7 +10575,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "16803376314801817083",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VMSS')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11072,7 +10583,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "2031506689370542266",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VNetGW')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11081,7 +10591,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "15407192821715569861",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AKS')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11090,7 +10599,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "17213255122979381246",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Website')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11099,7 +10607,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "17165387524202107114",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AnalysisService')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11108,7 +10615,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "13426869199552741022",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridTopic')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11117,7 +10623,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "105879099833677357",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridSub')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11126,7 +10631,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "9850618825532501923",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-HDInsight')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11135,7 +10639,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "5865748922408110407",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-RedisCache')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11144,7 +10647,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "3593019545976924523",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Relay')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11153,7 +10655,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "13856581306682461017",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SignalR')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11162,7 +10663,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "12212520351949118745",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-TrafficManager')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11171,7 +10671,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "14904583669671807849",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WebServerFarm')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11180,7 +10679,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "8550486177634190353",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLMI')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11189,7 +10687,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "11982436241091362267",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-TimeSeriesInsights')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11198,7 +10695,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "17989626042683077847",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-MlWorkspace')]",
                     "parameters": {
                       "logAnalytics": {
@@ -11211,11 +10707,6 @@
             },
             {
               "Name": "Deploy-Sql-Security",
-              "ResourceId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Sql-Security",
-              "ResourceName": "Deploy-Sql-Security",
-              "ResourceType": "Microsoft.Authorization/policySetDefinitions",
-              "SubscriptionId": null,
-              "PolicySetDefinitionId": "/providers/Microsoft.Management/managementGroups/contoso/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Sql-Security",
               "Properties": {
                 "Description": "Recommended built-in security policies for the North Star architecture",
                 "DisplayName": "Deploy-Sql-Security",
@@ -11238,22 +10729,18 @@
                 "PolicyDefinitionGroups": null,
                 "PolicyDefinitions": [
                   {
-                    "policyDefinitionReferenceId": "Deploy-Sql-Tde",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "Deploy-Sql-SecurityAlertPolicies",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-SecurityAlertPolicies')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "Deploy-Sql-AuditingSettings",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-AuditingSettings')]",
                     "parameters": {}
                   },
                   {
-                    "policyDefinitionReferenceId": "Deploy-Sql-vulnerabilityAssessments",
                     "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments')]",
                     "parameters": {
                       "vulnerabilityAssessmentsEmail": {
