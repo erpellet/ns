@@ -54,7 +54,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "If you provide a subscriptionId for management, you can also select the desired resource deployments to ensure monitoring, security, and auditing is enabled for you Enterprise-Scale architecture during the setup",
+                            "text": "If you want to deploy Log Analytics and platform monitoring and requisite settings, you must also provide a subscriptionId that will be dedicated for management, which will be placed into the platform management management group",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
@@ -82,7 +82,7 @@
                         "name": "esMgmtSub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Management subscription id",
-                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
+                        "toolTip": "Deployment of Log Analytics and platform monitoring requires you to provide the subscriptionId of an existing, empty subscription that you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
                         "defaultValue": "",
 						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
                         "constraints": {
@@ -132,7 +132,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "If you provide a subscriptionId for connectivity, you can also select the desired resource deployments to ensure core networking setup for Virtual WAN is deployed as part of the setup.",
+                            "text": "If you want to deploy Virtual WAN and requisite settings, you must also provide a subscriptionId that will be dedicated for connectivity, which will be placed into the connectivity management group",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
@@ -427,7 +427,7 @@
                     {
                         "name": "esLzSub",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Landing zone subscription id",
+                        "label": "Landing zone subscription id (optional)",
                         "toolTip": "Provide the subscription id of an existing, empty subscription that you want to use as landing zone for your workload deployments.",
                         "defaultValue": "",
                         "constraints": {
