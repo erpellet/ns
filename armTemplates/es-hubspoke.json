@@ -112,7 +112,7 @@
             ],
             "defaultValue": "No"
         },
-        "enableVwan": {
+        "enableHub": {
             "type": "string",
             "allowedValues": [
                 "Yes",
@@ -128,36 +128,56 @@
             ],
             "defaultValue": "No"
         },
-        "addressPrefix": {
-            "type": "string",
-            "defaultValue": ""
-        },
         "enableVpnGw": {
             "type": "string",
-            "defaultValue": "No",
             "allowedValues": [
                 "Yes",
                 "No"
-            ]
+            ],
+            "defaultValue": "No"
         },
         "enableErGw": {
             "type": "string",
-            "defaultValue": "No",
             "allowedValues": [
                 "Yes",
                 "No"
-            ]
+            ],
+            "defaultValue": "No"
+        },
+        "vpnGwType": {
+            "type": "string",
+            "allowedValues": [
+                "PolicyBased",
+                "RouteBased"
+            ],
+            "defaultValue": "RouteBased"
+        },
+        "subnetMaskForAzFw": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subnetMaskForGw": {
+            "type": "string",
+            "defaultValue": ""
         },
         "location": {
             "type": "string",
             "defaultValue": "[deployment().location]"
-        }
+        },
+        "addressPrefix": {
+            "type": "string",
+            "metadata": {
+                "displayName": "addressPrefix",
+                "description": "Address prefix of the HUB"
+            },
+            "defaultValue": "192.168.0.0/24"
+        }        
     },
     "variables": {
         "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policies.json')]",
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
         "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
-        "connectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/vwan-connectivity.json')]",
+        "connectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubspoke-connectivity.json')]",
         "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]",
@@ -382,7 +402,7 @@
             "properties": {}
         },
         {
-            "condition": "[and(not(empty(parameters('connectivitySubscriptionId'))),equals(parameters('enableVwan'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('connectivitySubscriptionId'))),equals(parameters('enableHub'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-connectivity')]",
@@ -402,8 +422,8 @@
                     "topLevelManagementGroupPrefix": {
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
-                    "enableVwan": {
-                        "value": "[parameters('enableVwan')]"
+                    "enableHub": {
+                        "value": "[parameters('enableHub')]"
                     },
                     "enableAzFw": {
                         "value": "[parameters('enableAzFw')]"
@@ -422,6 +442,15 @@
                     },
                     "connectivitySubscriptionId": {
                         "value": "[parameters('connectivitySubscriptionId')]"
+                    },
+                    "vpnGwType": {
+                        "value": "[parameters('vpnGwType')]"
+                    },
+                    "subnetMaskForAzFw": {
+                        "value": "[parameters('subnetMaskForAzFw')]"
+                    },
+                    "subnetMaskForGw": {
+                        "value": "[parameters('subnetMaskForGw')]"
                     }
                 }
             }
