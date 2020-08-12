@@ -81,12 +81,12 @@
                     {
                         "name": "esMgmtSub",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Management subscription id",
+                        "label": "Management subscription id (required for platform monitoring)",
                         "toolTip": "Deployment of Log Analytics and platform monitoring requires you to provide the subscriptionId of an existing, empty subscription that you want to dedicate for management, which will be moved into the management group for platform management. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
                         "defaultValue": "",
 						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "^[a-z0-9A-Z-]{36}$",
                             "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
                         }
@@ -139,7 +139,7 @@
                     {
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Hub",
+                        "label": "Deploy virtual hub",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy virtual network for hub",
                         "constraints": {
@@ -164,9 +164,9 @@
                         "defaultValue": "",
 						"visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "^[a-z0-9A-Z-]{36}$",
-                            "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, leave the parameter completely empty."
+                            "validationMessage": "A valid subscription id must contain 36 characters. If you don't want to bring a subscription at this point, select 'No' on 'Deploy virtual hub'"
                         }
                     },                    
                     {
@@ -177,7 +177,7 @@
                         "defaultValue": "10.100.0.0/16",
 						"visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "validationMessage": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
                         }
                     },
@@ -366,7 +366,7 @@
                         "name": "esVpnGwType",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Select VPN type",
-                        "defaultValue": "No",
+                        "defaultValue": "Route Based",
 						"visible": "[equals(steps('esConnectivityGoalState').esVpnGw, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway. Select whether it should be policy or route based.",
                         "constraints": {
@@ -390,7 +390,7 @@
                         "defaultValue": "10.100.1.0/24",
 						"visible": "[or(equals(steps('esConnectivityGoalState').esErGw, 'Yes'), equals(steps('esConnectivityGoalState').esVpnGw, 'Yes'))]",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
                         }
                     },                    
@@ -442,7 +442,7 @@
                         "defaultValue": "10.100.0.0/24",
 						"visible": "[equals(steps('esConnectivityGoalState').esAzFw, 'Yes')]",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
                         }
                     }                    
@@ -631,14 +631,12 @@
             "enableHub": "[steps('esConnectivityGoalState').esHub]",
             "connectivitySubscriptionId": "[steps('esConnectivityGoalState').esConnectivitySub]",
             "enableAzFw": "[steps('esConnectivityGoalState').esAzFw]",
-            "addressPrefix": "[steps('esConnectivityGoalState').esAddress]",
+            "addressPrefix": "[steps('esConnectivityGoalState').esAddressHub]",
             "location": "[steps('esConnectivityGoalState').esRegions]",
             "managementSubscriptionId": "[steps('esGoalState').esMgmtSub]",
             "lzSubscriptionId": "[steps('lzGoalState').esLzSub]",
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
-            "enablePrivateEndpoint": "[steps('esGoalState').esPrivateEndpoint]",
-            "enableAzBackup": "[steps('esGoalState').esAzBackup]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
             "enableSqlAudit": "[steps('lzGoalState').esSqlAudit]",
             "enableSqlEncryption": "[steps('lzGoalState').esSqlEncryption]",
