@@ -173,8 +173,8 @@
                         "name": "esAddressHub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Address space (required for virtual network hub)",
-                        "toolTip": "Provide address prefix in CIDR notation (e.g 192.168.1.0/24)",
-                        "defaultValue": "192.168.0.0/16",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
+                        "defaultValue": "10.100.0.0/16",
 						"visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
                         "constraints": {
                             "required": false,
@@ -386,8 +386,8 @@
                         "name": "esAddressVpnOrEr",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Subnet for VPN/Express route",
-                        "toolTip": "Provide address prefix in CIDR notation (e.g 192.168.1.0/24)",
-                        "defaultValue": "192.168.1.0/24",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.1.0/24)",
+                        "defaultValue": "10.100.1.0/24",
 						"visible": "[or(equals(steps('esConnectivityGoalState').esErGw, 'Yes'), equals(steps('esConnectivityGoalState').esVpnGw, 'Yes'))]",
                         "constraints": {
                             "required": false,
@@ -438,8 +438,8 @@
                         "name": "esAddressFw",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Subnet for Azure Firewall",
-                        "toolTip": "Provide address prefix in CIDR notation (e.g 192.168.2.0/24)",
-                        "defaultValue": "192.168.2.0/24",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
+                        "defaultValue": "10.100.0.0/24",
 						"visible": "[equals(steps('esConnectivityGoalState').esAzFw, 'Yes')]",
                         "constraints": {
                             "required": false,
