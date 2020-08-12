@@ -160,7 +160,7 @@
                         "name": "esConnectivitySub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Connectivity subscription id (required for virtual network hub)",
-                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for connectivity, which will be moved into the management group for platform connectivity. If you don't want to bring a subscription at this time, leave this parameter empty as is.",
+                        "toolTip": "Provide the subscription id of an existing, empty subscription that you want to dedicate for connectivity, which will be moved into the management group for platform connectivity, required for the virtual network hub.",
                         "defaultValue": "",
 						"visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
                         "constraints": {
