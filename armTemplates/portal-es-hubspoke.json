@@ -54,7 +54,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "If you want to deploy Log Analytics and platform monitoring and requisite settings, you must also provide a subscriptionId that will be dedicated for management, which will be placed into the platform management management group",
+                            "text": "If you want to deploy Log Analytics and platform monitoring and requisite settings, you must also provide a subscription that will be dedicated for management, which will be placed into the platform management management group",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
@@ -143,7 +143,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "If you want to deploy the first hub and requisite settings, you must also provide a subscriptionId that will be dedicated for connectivity, which will be placed into the connectivity management group",
+                            "text": "If you want to deploy the first hub and requisite settings, you must also provide a subscription that will be dedicated for connectivity, which will be placed into the connectivity management group",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
@@ -485,7 +485,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "You can optionally provide a subscriptionId for your first landing zone, and also assign recommended policies that will ensure workloads will be secure, monitored, and protected according to best practices.",
+                            "text": "You can optionally provide a subscription for your first landing zone, and also assign recommended policies that will ensure workloads will be secure, monitored, and protected according to best practices.",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/Deploy/ES-schema.md"
                         }
                     },
@@ -502,7 +502,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Landing zone subscription (optional)",
                         "toolTip": "",
-                        "multiselect": false,
+                        "multiselect": true,
                         "selectAll": true,
                         "filter": true,
                         "filterPlaceholder": "Filter items ...",

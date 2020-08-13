@@ -26,12 +26,20 @@
             }
         },
         "lzSubscriptionId": {
-            "type": "string",
-            "defaultValue": "",
+            "type": "array",
+            "defaultValue": [],
             "maxLength": 36,
             "metadata": {
                 "description": "Provide the subscription id fo an existing, empty subscription you want to move in as your first landing zone."
             }
+        },
+        "targetLzMg": {
+            "type": "string",
+            "defaultValue": "-online",
+            "allowedValues": [
+                "-online",
+                "-corp"
+            ]
         },
         "enableLogAnalytics": {
             "type": "string",
@@ -384,11 +392,14 @@
             "condition": "[not(empty(parameters('lzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
-            "name": "[if(not(empty(parameters('lzSubscriptionId'))), variables('lzMoveSubscription'), variables('noLzSubscription'))]",
+            "name": "[parameters('lzSubscriptionId')[copyIndex()]]",
             "dependsOn": [
-
-                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-online'))]"
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), parameters('targetLzMg')))]"
             ],
+            "copy": {
+                "name": "lzCopy",
+                "count": "[length(parameters('lzSubscriptionId'))]"
+            },
             "properties": {}
         },
         {
