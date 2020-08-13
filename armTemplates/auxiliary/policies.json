@@ -9770,7 +9770,7 @@
                                               "value": "[[concat(subscription().id,'/resourceGroups/',variables('vNetRgName'), '/providers/','Microsoft.Network/virtualNetworks/', concat(subscription().displayName, '-vnet'))]"
                                             },
                                             "vWanVhubName": {
-                                              "value": "[[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),split(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.vWanVhubResourceId,'/')[8],json('null'))]"
+                                              "value": "[[[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),split(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.vWanVhubResourceId,'/')[8],json('null'))]"
                                             },
                                             "allowHubToRemoteVnetTransit": {
                                               "value": "[[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.properties.allowHubToRemoteVnetTransit,json('null'))]"
