@@ -392,7 +392,7 @@
             "condition": "[not(empty(parameters('lzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
-            "name": "[parameters('lzSubscriptionId')[copyIndex()]]",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), parameters('targetLzMg'), '/', parameters('enterpriseScaleCompanyPrefix')[copyIndex()])]",
             "dependsOn": [
                 "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), parameters('targetLzMg')))]"
             ],
