@@ -352,50 +352,6 @@
                     }
                 }
             }
-        },
-        {
-            "condition": "[or(or(equals(parameters('enableVmBackup'), 'Yes'), equals(parameters('enableSqlAudit'), 'Yes')), equals(parameters('enableSqlEncryption'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes'))]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-05-01",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-landingzones')]",
-            "name": "[variables('lzDeploymentName')]",
-            "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'), parameters('managementSubscriptionId'))]"
-            ],
-            "location": "[deployment().location]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "contentVersion": "1.0.0.0",
-                    "uri": "[variables('landingZone')]"
-                },
-                "parameters": {
-                    "topLevelManagementGroupPrefix": {
-                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
-                    },
-                    "enableSqlAudit": {
-                        "value": "[parameters('enableSqlAudit')]"
-                    },
-                    "enableSqlEncryption": {
-                        "value": "[parameters('enableSqlEncryption')]"
-                    },
-                    "enableVmBackup": {
-                        "value": "[parameters('enableVmBackup')]"
-                    },
-                    "denyRdp": {
-                        "value": "[parameters('denyRdp')]"
-                    },
-                    "enableStorageHttps": {
-                        "value": "[parameters('enableStorageHttps')]"
-                    },
-                    "denyIpForwarding": {
-                        "value": "[parameters('denyIpForwarding')]"
-                    },
-                    "denySubnetWithoutNsg": {
-                        "value": "[parameters('denySubnetWithoutNsg')]"
-                    }
-                }
-            }
         }
     ],
     "outputs": {
