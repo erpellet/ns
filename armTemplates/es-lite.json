@@ -116,7 +116,6 @@
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
         "security": "[uri(deployment().properties.templateLink.uri, 'auxiliary/security.json')]",
         "connectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubspoke-connectivity.json')]",
-        //"landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]",
         "lzMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', parameters('lzSubscriptionId'))]",
@@ -126,7 +125,6 @@
         "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "secDeploymentName": "[take(concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "connectivityDeploymentName": "[take(concat('EntScale-conn', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-        //"lzDeploymentName": "[take(concat('EntScale-lz', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
     },
     "resources": [
         {
