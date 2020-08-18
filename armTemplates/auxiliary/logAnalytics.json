@@ -35,8 +35,8 @@
             "condition": "[equals(parameters('enableLogAnalytics'), 'Yes')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "subscriptionId": "[parameters('managementSubscriptionId')]",
             "location": "[deployment().location]",
+            "subscriptionId": "[parameters('managementSubscriptionId')]",
             "name": "[variables('resourceDeploymentName')]",
             "properties": {
                 "mode": "Incremental",
