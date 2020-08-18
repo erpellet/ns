@@ -23,80 +23,98 @@
         }
     },
     "variables": {
-        "policyDefinitions": {
-            "deployLogAnalytics": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Log-Analytics')]"
-        },
-        "policyAssignmentNames": {
-            "logAnalytics": "Deploy-Log-Analytics"
-        },
-        "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
-        "roleAssignmentNames": {
-            "deployLogAnalytics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').logAnalytics))]"
-        },
-        "resourceDeploymentName": "[take(concat('mgmt', deployment().location, deployment().name), 64)]"
+        "workspaceName": "[concat(parameters('topLevelManagementGroupPrefix'), '-la-', parameters('managementSubscriptionId'))]",
+        "workspaceRegion": "[deployment().location]",
+        "automationAccountName": "[concat(parameters('topLevelManagementGroupPrefix'), '-a-', parameters('managementSubscriptionId'))]",
+        "automationRegion": "[deployment().location]",
+        "rgName": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]",
+        "resourceDeploymentName": "[take(concat('EntScale-mgmt', deployment().location, deployment().name), 64)]"
     },
     "resources": [
         {
-            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
-            "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
-            "name": "[variables('policyAssignmentNames').loganalytics]",
-            "location": "[deployment().location]",
-            "identity": {
-                "type": "SystemAssigned"
-            },
-            "properties": {
-                "description": "Deploy-Log-Analytics",
-                "displayName": "Deploy-Log-Analytics",
-                "policyDefinitionId": "[variables('policyDefinitions').deployLogAnalytics]",
-                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management')]",
-                "parameters": {
-                    "workspaceName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-la-', parameters('managementSubscriptionId'))]"
-                    },
-                    "automationAccountName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-a-', parameters('managementSubscriptionId'))]"
-                    },
-                    "workspaceRegion": {
-                        "value": "[deployment().location]"
-                    },
-                    "automationRegion": {
-                        "value": "[deployment().location]"
-                    },
-                    "rgName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
-            "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
-            "name": "[variables('roleAssignmentNames').deployLogAnalytics]",
-            "dependsOn": [
-                "[variables('policyAssignmentNames').loganalytics]"
-            ],
-            "properties": {
-                "principalType": "ServicePrincipal",
-                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
-                "principalId": "[toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2018-05-01', 'Full' ).identity.principalId)]"
-            }
-        },
-        {
-            "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
+            "condition": "[equals(parameters('enableLogAnalytics'), 'Yes')]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "[variables('resourceDeploymentName')]",
-            "location": "[deployment().location]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployLogAnalytics)]"
-            ],
+            "apiVersion": "2019-08-01",
             "subscriptionId": "[parameters('managementSubscriptionId')]",
+            "location": "[deployment().location]",
+            "name": "[variables('resourceDeploymentName')]",
             "properties": {
-                "mode": "incremental",
-                "template": "[reference(variables('policyDefinitions').deployLogAnalytics, '2018-05-01').policyRule.then.details.deployment.properties.template]",
-                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2018-05-01').parameters]"
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "http://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                    },
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Resources/resourceGroups",
+                            "apiVersion": "2018-05-01",
+                            "name": "[variables('rgName')]",
+                            "location": "[deployment().location]",
+                            "properties": {}
+                        },
+                        {
+                            "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2018-05-01",
+                            "name": "log-analytics",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Resources/resourceGroups/', variables('rgName'))]"
+                            ],
+                            "properties": {
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+                                    "contentVersion": "1.0.0.0",
+                                    "parameters": {},
+                                    "variables": {},
+                                    "resources": [
+                                        {
+                                            "apiversion": "2015-10-31",
+                                            "location": "[variables('automationRegion')]",
+                                            "name": "[variables('automationAccountName')]",
+                                            "type": "Microsoft.Automation/automationAccounts",
+                                            "comments": "Automation account for ",
+                                            "properties": {
+                                                "sku": {
+                                                    "name": "OMS"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "apiVersion": "2017-03-15-preview",
+                                            "location": "[variables('workspaceRegion')]",
+                                            "name": "[variables('workspaceName')]",
+                                            "type": "Microsoft.OperationalInsights/workspaces",
+                                            "properties": {
+                                                "sku": {
+                                                    "name": "pernode"
+                                                },
+                                                "enableLogAccessUsingOnlyResourcePermissions": true
+                                            },
+                                            "resources": [
+                                                {
+                                                    "name": "Automation",
+                                                    "type": "linkedServices",
+                                                    "apiVersion": "2015-11-01-preview",
+                                                    "dependsOn": [
+                                                        "[resourceId('Microsoft.OperationalInsights/workspaces/', variables('workspaceName'))]",
+                                                        "[resourceId('Microsoft.Automation/automationAccounts/', variables('AutomationAccountName'))]"
+                                                    ],
+                                                    "properties": {
+                                                        "resourceId": "[concat(subscription().id, '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Automation/automationAccounts/', variables('AutomationAccountName'))]"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "outputs": {}
+                                }
+                            }
+                        }
+                    ],
+                    "outputs": {}
+                }
             }
         }
     ],
