@@ -41,7 +41,7 @@
             },
             {
                 "name": "esGoalState",
-                "label": "Platform management, security, and governance",
+                "label": "Platform configuration",
                 "subLabel": {
                     "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
                     "postValidation": "Done"
@@ -54,7 +54,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "If you want to deploy Log Analytics and platform monitoring and requisite settings, you must also provide a subscription that will be dedicated for management, which will be placed into the platform management management group",
+                            "text": "To setup the platform resources, you must allocate a management Subscription. Please note, this Subscription will be moved to the platform Management Group, and ARM will deploy resources and requisite settings. We recommend using a new Subscription with no existing resources.",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
@@ -89,14 +89,14 @@
                     {
                         "name": "esMgmtSub",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Management subscription (required)",
+                        "label": "Platform subscription (required)",
                         "toolTip": "",
                         "multiselect": false,
                         "selectAll": true,
                         "filter": true,
                         "filterPlaceholder": "Filter items ...",
                         "multiLine": true,
-                        "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
+                        "visible": "[or(equals(steps('esGoalState').esLogAnalytics, 'Yes'), equals(steps('esGoalState').esHub, 'Yes'))]",
                         "constraints": {
                             "allowedValues": "[map(steps('esGoalState').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                             "required": true
@@ -105,18 +105,14 @@
                     {
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources",
+                        "label": "Enable Azure Security Monitoring for your platform and resources",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy Azure policy to enable ASC monitoring",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes, Standard Tier (recommended)",
-                                    "value": "Standard"
-                                },
-                                {
-                                    "label": "Yes, Free Tier",
-                                    "value": "Free"
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
                                 },
                                 {
                                     "label": "No",
@@ -124,28 +120,7 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
-                    }
-                ]
-            },
-            {
-                "name": "esConnectivityGoalState",
-                "label": "Connectivity (Hub & Spoke)",
-                "subLabel": {
-                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
-                    "postValidation": "Done"
-                },
-                "bladeTitle": "lzGs",
-                "elements": [
-                    {
-                        "name": "infoBox1",
-                        "type": "Microsoft.Common.InfoBox",
-                        "visible": true,
-                        "options": {
-                            "icon": "Info",
-                            "text": "If you want to deploy the first hub and requisite settings, you must also provide a subscription that will be dedicated for connectivity, which will be placed into the connectivity management group",
-                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
-                        }
+                        "visible": true
                     },
                     {
                         "name": "esHub",
@@ -168,36 +143,12 @@
                         "visible": true
                     },
                     {
-                        "name": "nwSubsApi",
-                        "type": "Microsoft.Solutions.ArmApiControl",
-                        "request": {
-                            "method": "GET",
-                            "path": "subscriptions?api-version=2020-01-01"
-                        }
-                    },
-                    {
-                        "name": "esConnectivitySub",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Connectivity subscription (required)",
-                        "toolTip": "",
-                        "multiselect": false,
-                        "selectAll": true,
-                        "filter": true,
-                        "filterPlaceholder": "Filter items ...",
-                        "multiLine": true,
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
-                        "constraints": {
-                            "allowedValues": "[map(steps('esConnectivityGoalState').nwSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
-                            "required": true
-                        }
-                    },
-                    {
                         "name": "esAddressHub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Address space (required for virtual network hub)",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
                         "defaultValue": "10.100.0.0/16",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -208,7 +159,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Region for first virtual network hub",
                         "defaultValue": "",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
                         "constraints": {
                             "allowedValues": [
@@ -369,7 +320,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy VPN Gateway",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway",
                         "constraints": {
                             "allowedValues": [
@@ -389,7 +340,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Select VPN type",
                         "defaultValue": "Route Based",
-                        "visible": "[equals(steps('esConnectivityGoalState').esVpnGw, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esVpnGw, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway. Select whether it should be policy or route based.",
                         "constraints": {
                             "allowedValues": [
@@ -410,7 +361,7 @@
                         "label": "Subnet for VPN/Express route",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.1.0/24)",
                         "defaultValue": "10.100.1.0/24",
-                        "visible": "[or(equals(steps('esConnectivityGoalState').esErGw, 'Yes'), equals(steps('esConnectivityGoalState').esVpnGw, 'Yes'))]",
+                        "visible": "[or(equals(steps('esGoalState').esErGw, 'Yes'), equals(steps('esGoalState').esVpnGw, 'Yes'))]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -421,7 +372,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy ExpressRoute Gateway",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Express Route gateway",
                         "constraints": {
                             "allowedValues": [
@@ -441,7 +392,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Firewall",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Azure Firewall",
                         "constraints": {
                             "allowedValues": [
@@ -462,7 +413,7 @@
                         "label": "Subnet for Azure Firewall",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.100.0.0/24",
-                        "visible": "[equals(steps('esConnectivityGoalState').esAzFw, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esAzFw, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -502,7 +453,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Landing zone subscription (optional)",
                         "toolTip": "",
-                        "multiselect": true,
+                        "multiselect": false,
                         "selectAll": true,
                         "filter": true,
                         "filterPlaceholder": "Filter items ...",
@@ -514,171 +465,88 @@
                         }
                     },
                     {
-                        "name": "esAzBackup",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure VMs are enabled for backup",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned and enable Azure Backup on all VMs in the landing zones.",
+                        "name": "lzMg",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Management group for landing zone subscription",
+                        "placeholder": "",
+                        "defaultValue": "Online",
+                        "toolTip": "",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
+                                    "label": "Online",
+                                    "value": "online"
                                 },
                                 {
-                                    "label": "No",
-                                    "value": "No"
+                                    "label": "Corp",
+                                    "value": "corp"
+                                },
+                                {
+                                    "label": "Create new...",
+                                    "value": "new"
                                 }
-                            ]
+                            ],
+                            "required": true
                         },
-                        "visible": true
+                        "visible": "[not(empty(steps('lzGoalState').esLzSub))]"
                     },
                     {
-                        "name": "esDenyRdp",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Prevent inbound RDP from internet",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned and prevent inbound RDP from internet",
+                        "name": "lzNewLz",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Management group name",
+                        "placeholder": "",
+                        "defaultValue": "",
+                        "toolTip": "Use only allowed characters",
                         "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z]{1,30}$",
+                            "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
                         },
-                        "visible": true
+                        "visible": "[equals(steps('lzGoalState').lzMg, 'new')]"
+                    },                    
+                    {
+                        "name": "lzPolicyApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "/providers/Microsoft.Authorization/policySetDefinitions?api-version=2019-09-01"
+                        }
                     },
                     {
-                        "name": "esNsg",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure subnets are associated with NSG",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned to ensure NSGs must be associated with subnets being created",
+                        "name": "esLzPolicy",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Assign built-in policy initiatives for your first landing zone",
+                        "toolTip": "",
+                        "multiselect": false,
+                        "selectAll": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "visible": "[not(empty(steps('lzGoalState').esLzSub))]",
                         "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "esIpForwarding",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Prevent IP forwarding",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned and prevent IP forwarding",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "esSqlEncryption",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure Azure SQL is enabled with transparent data encryption",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "esSqlAudit",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure auditing is enabled on Azure SQL",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned to ensure auditing is enabled on Azure SQLs",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "esHttpsStorage",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure secure connections (HTTPS) to storage accounts",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned to ensure storage can only be accessed using HTTPS",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-                        "visible": true
+                            "allowedValues": "[map(steps('lzGoalState').lzPolicyApi.value, (policy) => parse(concat('{\"label\":\"', policy.properties.displayName, '\",\"description\":\"', policy.description, '\",\"value\":\"', toLower(policy.properties.displayName), '\"}')) )]",
+                            "required": false
+                        }
                     }
                 ]
             }
         ],
         "outputs": {
-            "vpnGwType": "[steps('esConnectivityGoalState').esVpnGwType]",
-            "subnetMaskForGw": "[steps('esConnectivityGoalState').esAddressVpnOrEr]",
-            "subnetMaskForAzFw": "[steps('esConnectivityGoalState').esAddressFw]",
-            "enableErGw": "[steps('esConnectivityGoalState').esErGw]",
-            "enableVpnGw": "[steps('esConnectivityGoalState').esVpnGw]",
-            "enableHub": "[steps('esConnectivityGoalState').esHub]",
-            "connectivitySubscriptionId": "[steps('esConnectivityGoalState').esConnectivitySub]",
-            "enableAzFw": "[steps('esConnectivityGoalState').esAzFw]",
-            "addressPrefix": "[steps('esConnectivityGoalState').esAddressHub]",
-            "location": "[steps('esConnectivityGoalState').esRegions]",
+            "vpnGwType": "[steps('esGoalState').esVpnGwType]",
+            "subnetMaskForGw": "[steps('esGoalState').esAddressVpnOrEr]",
+            "subnetMaskForAzFw": "[steps('esGoalState').esAddressFw]",
+            "enableErGw": "[steps('esGoalState').esErGw]",
+            "enableVpnGw": "[steps('esGoalState').esVpnGw]",
+            "enableHub": "[steps('esGoalState').esHub]",
+            "enableAzFw": "[steps('esGoalState').esAzFw]",
+            "addressPrefix": "[steps('esGoalState').esAddressHub]",
+            "location": "[steps('esGoalState').esRegions]",
             "managementSubscriptionId": "[steps('esGoalState').esMgmtSub]",
             "lzSubscriptionId": "[steps('lzGoalState').esLzSub]",
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
-            "enableSqlAudit": "[steps('lzGoalState').esSqlAudit]",
-            "enableSqlEncryption": "[steps('lzGoalState').esSqlEncryption]",
-            "enableVmBackup": "[steps('lzGoalState').esAzBackup]",
-            "denyRdp": "[steps('lzGoalState').esDenyRdp]",
-            "enableStorageHttps": "[steps('lzGoalState').esHttpsStorage]",
-            "denyIpForwarding": "[steps('lzGoalState').esIpForwarding]",
-            "denySubnetWithoutNsg": "[steps('lzGoalState').esNsg]"
+            "newLzMgmtGroup": "[steps('lzGoalState').lzNewLz]"
         }
     }
 }
