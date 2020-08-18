@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "topLevelManagementGroupPrefix": {
@@ -28,35 +28,36 @@
         "automationAccountName": "[concat(parameters('topLevelManagementGroupPrefix'), '-a-', parameters('managementSubscriptionId'))]",
         "automationRegion": "[deployment().location]",
         "rgName": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]",
-        "resourceDeploymentName": "[take(concat('EntScale-mgmt', deployment().location, deployment().name), 64)]"
+        "resourceDeploymentName": "[take(concat('EntScale-mgmt', deployment().name), 64)]"
     },
     "resources": [
         {
             "condition": "[equals(parameters('enableLogAnalytics'), 'Yes')]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "location": "[deployment().location]",
-            "subscriptionId": "[parameters('managementSubscriptionId')]",
+            "apiVersion": "2019-05-10",
             "name": "[variables('resourceDeploymentName')]",
+            "location": "eastus",
+            "subscriptionId": "[parameters('managementSubscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
                     "$schema": "http://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json",
                     "contentVersion": "1.0.0.0",
                     "parameters": {
-                    },
+                        },
                     "variables": {},
                     "resources": [
                         {
                             "type": "Microsoft.Resources/resourceGroups",
-                            "apiVersion": "2018-05-01",
+                            "apiVersion": "2019-10-01",
                             "name": "[variables('rgName')]",
                             "location": "[deployment().location]",
                             "properties": {}
                         },
                         {
                             "type": "Microsoft.Resources/deployments",
-                            "apiVersion": "2018-05-01",
+                            "apiVersion": "2019-10-01",
+                            "resourceGroup": "[variables('rgName')]",
                             "name": "log-analytics",
                             "dependsOn": [
                                 "[resourceId('Microsoft.Resources/resourceGroups/', variables('rgName'))]"
@@ -64,7 +65,7 @@
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
-                                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+                                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
                                     "contentVersion": "1.0.0.0",
                                     "parameters": {},
                                     "variables": {},
