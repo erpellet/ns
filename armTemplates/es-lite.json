@@ -261,9 +261,6 @@
                     },
                     "enableAsc": {
                         "value": "[parameters('enableAsc')]"
-                    },
-                    "managementSubscriptionId": {
-                        "value": "[parameters('managementSubscriptionId')]"
                     }
                 }
             }
