@@ -34,7 +34,7 @@
         {
             "condition": "[equals(parameters('enableLogAnalytics'), 'Yes')]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-08-01",
+            "apiVersion": "2019-10-01",
             "subscriptionId": "[parameters('managementSubscriptionId')]",
             "location": "[deployment().location]",
             "name": "[variables('resourceDeploymentName')]",
