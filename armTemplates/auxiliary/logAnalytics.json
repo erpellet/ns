@@ -102,7 +102,7 @@
                                                         "[resourceId('Microsoft.Automation/automationAccounts/', variables('AutomationAccountName'))]"
                                                     ],
                                                     "properties": {
-                                                        "resourceId": "[concat(subscription().id, '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Automation/automationAccounts/', variables('AutomationAccountName'))]"
+                                                        "resourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Automation/automationAccounts/', variables('AutomationAccountName'))]"
                                                     }
                                                 }
                                             ]

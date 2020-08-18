@@ -123,7 +123,7 @@
         "lzNewMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-', parameters('newLzMgmtGroup'), '/', parameters('lzSubscriptionId'))]",
         "noNewLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-', parameters('newLzMgmtGroup'), '/', 'nalz')]",
         "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-        "secDeploymentName": "[take(concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "secDeploymentName": "[take(concat('EntScale-Sec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "connectivityDeploymentName": "[take(concat('EntScale-conn', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
     },
     "resources": [
