@@ -668,7 +668,7 @@
             "addressPrefix": "[steps('esConnectivityGoalState').esAddressHub]",
             "location": "[steps('esConnectivityGoalState').esRegions]",
             "managementSubscriptionId": "[steps('esGoalState').esMgmtSub]",
-            "lzSubscriptionId": "[if(not(equals(steps('lzGoalState').esLzSub, steps('esGoalState').esMgmtSub)), steps('lzGoalState').esLzSub, '')]",
+            "lzSubscriptionId": "[if(or(not(equals(steps('lzGoalState').esLzSub, steps('esGoalState').esMgmtSub)), not(equals(steps('lzGoalState').esLzSub, steps('esConnectivityGoalState').esConnectivitySub))), steps('lzGoalState').esLzSub, '')]",
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
