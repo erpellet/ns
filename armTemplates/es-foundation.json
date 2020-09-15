@@ -178,7 +178,7 @@
         }
     },
     "variables": {
-        "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policies.json')]",
+        "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/mkPolicies.json')]",
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
         "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalyticsSolutions.json')]",
         "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
