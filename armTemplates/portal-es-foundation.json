@@ -66,7 +66,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "To enable platform monitoring, you must allocate a management Subscription. Please note, this Subscription will be moved to the platform Management Group, and ARM will deploy a Log Analytics workspace and requisite settings. We recommend using a new Subscription with no existing resources.",
+                            "text": "To enable platform monitoring, management, and security, you must allocate a management Subscription. Please note, this Subscription will be moved to the platform Management Group, and ARM will deploy a Log Analytics workspace and requisite settings. We recommend using a new Subscription with no existing resources.",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
@@ -91,6 +91,21 @@
                         "visible": true
                     },
                     {
+                        "name": "esLogRetention",
+                        "type": "Microsoft.Common.Slider",
+                        "min": 30,
+                        "max": 730,
+                        "label": "Log Analytics Data Retention (days)",
+                        "subLabel": "Days",
+                        "defaultValue": 30,
+                        "showStepMarkers": false,
+                        "toolTip": "Select retention days for Azure logs. Default is 30 days.",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
+                    },           
+                    {
                         "name": "mgmtSubsApi",
                         "type": "Microsoft.Solutions.ArmApiControl",
                         "request": {
@@ -113,7 +128,7 @@
                             "allowedValues": "[map(steps('esGoalState').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                             "required": true
                         }
-                    },					
+                    },     			
                     {
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -137,23 +152,11 @@
                             ]
                         },
 						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
-                    },
-                    {
-                        "name": "textBlock1",
-                        "type": "Microsoft.Common.TextBlock",
-                        "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
-                        "options": {
-                            "text": "Select which Azure Monitor solutions you will enable for your Log Analytics workspace",
-                            "link": {
-                                "label": "Learn more",
-                                "uri": "https://docs.microsoft.com/azure/azure-monitor/insights/solutions"
-                            }
-                        }
-                    },
+                    },                 
                     {
                         "name": "esSecuritySolution",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Security solution",
+                        "label": "Deploy Azure Sentinel",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
                         "constraints": {
@@ -169,6 +172,18 @@
                             ]
                         },
 						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "textBlock1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
+                        "options": {
+                            "text": "Select which Azure Monitor solutions you will enable for your Log Analytics workspace",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://docs.microsoft.com/azure/azure-monitor/insights/solutions"
+                            }
+                        }
                     },
                     {
                         "name": "esAgentSolution",
