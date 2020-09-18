@@ -231,7 +231,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('policyDefinitions')]"
+                    "uri": "[variables('deploymentUris').policyDefinitions]"
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
@@ -256,7 +256,7 @@
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('lzSubscriptionId'))), variables('lzMoveSubscription'), variables('noLzSubscription'))]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Resources/deployments/', variables('deploymentNames').mgmtGroupDeploymentName)]"
+                "[variables('deploymentNames').mgmtGroupDeploymentName]"
             ],
             "properties": {}
         },
@@ -265,7 +265,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management')]",
-            "name": "[variables('monitoringDeploymentName')]",
+            "name": "[variables('deploymentName').monitoringDeploymentName]",
             "dependsOn": [
                 "[variables('deploymentNames').policyDeploymentName]",
             ],
@@ -294,7 +294,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "subscriptionId": "[parameters('managementSubscriptionId')]",
-            "name": "[variables('monitoringSolutionsDeploymentName')]",
+            "name": "[variables('deploymentNames').monitoringSolutionsDeploymentName]",
             "dependsOn": [
                 "[variables('deploymentNames').monitoringDeploymentName]"
             ],
@@ -392,7 +392,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
-            "name": "[variables('diagAndSecDeploymentName')]",
+            "name": "[variables('deploymentNames').diagAndSecDeploymentName]",
             "dependsOn": [
                 "[variables('deploymentNames').monitoringDeploymentName]"
             ],
