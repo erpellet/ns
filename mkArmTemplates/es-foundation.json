@@ -178,54 +178,36 @@
         }
     },
     "variables": {
-        "deploymentUris": {
-            "managementGroups": "[uri(deployment().properties.templateLink.uri, 'auxiliary/mgmtGroups.json')]",
-            "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policies.json')]",
-            "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
-            "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalyticsSolutions.json')]",
-            "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
-            "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
-        },
+        "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/mkPolicies.json')]",
+        "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
+        "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalyticsSolutions.json')]",
+        "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
+        "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]",
         "lzMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', parameters('lzSubscriptionId'))]",
         "noLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', 'nalz')]",
-        "deploymentNames": {
-            "mgmtGroupDeploymentName": "[take(concat('EntScale-Mgs', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-            "policyDeploymentName": "[take(concat('EntScale-Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-            "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-            "monitoringSolutionsDeploymentName": "[take(concat('EntScale-Solutions', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-            "diagAndSecDeploymentName": "[take(concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-            "lzDeploymentName": "[take(concat('EntScale-lz', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
-        }
+        "policyDeploymentName": "[take(concat('EntScale-Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "monitoringSolutionsDeploymentName": "[take(concat('EntScale-Solutions', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "diagAndSecDeploymentName": "[take(concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "lzDeploymentName": "[take(concat('EntScale-lz', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
     },
     "resources": [
         {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "[variables('deploymentNames').mgmtGroupDeploymentName]",
-            "location": "[deployment().location]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').managementGroups]"
-                },
-                "parameters": {
-                    "topLevelManagementGroupPrefix": {
-                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
-                    }
-                }
-            }
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('enterpriseScaleCompanyPrefix')]",
+            "properties": {}
         },
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('deploymentNames').policyDeploymentName]",
+            "name": "[variables('policyDeploymentName')]",
             "location": "[deployment().location]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
             "dependsOn": [
-                "[variables('deploymentNames').mgmtGroupDeploymentName]"
+                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('enterpriseScaleCompanyPrefix'))]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -241,12 +223,102 @@
             }
         },
         {
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-platform')]",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('enterpriseScaleCompanyPrefix'))]"
+            ],
+            "properties": {
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management')]",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-platform'))]"
+            ],
+            "properties": {
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', concat(parameters('enterpriseScaleCompanyPrefix'), '-platform'))]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-decomissioned')]",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('enterpriseScaleCompanyPrefix'))]"
+            ],
+            "properties": {
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-sandboxes')]",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('enterpriseScaleCompanyPrefix'))]"
+            ],
+            "properties": {
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-landingzones')]",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('enterpriseScaleCompanyPrefix'))]"
+            ],
+            "properties": {
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online')]",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-landingzones'))]"
+            ],
+            "properties": {
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', concat(parameters('enterpriseScaleCompanyPrefix'), '-landingzones'))]"
+                    }
+                }
+            }
+        },
+        {
             "condition": "[not(empty(parameters('managementSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('managementSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
             "dependsOn": [
-                "[variables('deploymentNames').mgmtGroupDeploymentName]"
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'))]"
             ],
             "properties": {}
         },
@@ -256,7 +328,8 @@
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('lzSubscriptionId'))), variables('lzMoveSubscription'), variables('noLzSubscription'))]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Resources/deployments/', variables('deploymentNames').mgmtGroupDeploymentName)]"
+
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-online'))]"
             ],
             "properties": {}
         },
@@ -267,14 +340,16 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management')]",
             "name": "[variables('monitoringDeploymentName')]",
             "dependsOn": [
-                "[variables('deploymentNames').policyDeploymentName]",
+                "[variables('policyDeploymentName')]",
+                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'), parameters('managementSubscriptionId'))]",
+                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-online'), parameters('lzSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').monitoring]"
+                    "uri": "[variables('monitoring')]"
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
@@ -296,14 +371,14 @@
             "subscriptionId": "[parameters('managementSubscriptionId')]",
             "name": "[variables('monitoringSolutionsDeploymentName')]",
             "dependsOn": [
-                "[variables('deploymentNames').monitoringDeploymentName]"
+                "[variables('monitoringDeploymentName')]"
             ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').monitoringSolutions]"
+                    "uri": "[variables('monitoringSolutions')]"
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
@@ -347,9 +422,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-landingzones')]",
-            "name": "[variables('deploymentNames').lzDeploymentName]",
+            "name": "[variables('lzDeploymentName')]",
             "dependsOn": [
-                "[variables('deploymentNames').policyDeploymentName]",
+                "[variables('policyDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'), parameters('managementSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
@@ -357,7 +432,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').landingZone]"
+                    "uri": "[variables('landingZone')]"
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
@@ -394,14 +469,14 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
             "name": "[variables('diagAndSecDeploymentName')]",
             "dependsOn": [
-                "[variables('deploymentNames').monitoringDeploymentName]"
+                "[variables('monitoringDeploymentName')]"
             ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').diagnosticsAndSecurity]"
+                    "uri": "[variables('diagnosticsAndSecurity')]"
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
