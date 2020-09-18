@@ -349,8 +349,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-landingzones')]",
             "name": "[variables('deploymentNames').lzDeploymentName]",
             "dependsOn": [
-                "[variables('deploymentNames').policyDeploymentName]",
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-management'), parameters('managementSubscriptionId'))]"
+                "[variables('deploymentNames').policyDeploymentName]"
             ],
             "location": "[deployment().location]",
             "properties": {
