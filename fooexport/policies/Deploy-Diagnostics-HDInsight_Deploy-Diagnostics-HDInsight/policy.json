@@ -1,0 +1,112 @@
+{
+ "properties": {
+  "displayName": "Deploy-Diagnostics-HDInsight",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Apply diagnostic settings for HDInsight - Log Analytics",
+  "metadata": {
+   "createdBy": "8414a158-d79d-4682-a0d3-b036663e76af",
+   "createdOn": "2020-09-20T15:11:24.6859244Z",
+   "updatedBy": "8414a158-d79d-4682-a0d3-b036663e76af",
+   "updatedOn": "2020-09-20T15:32:30.0011993Z"
+  },
+  "parameters": {
+   "logAnalytics": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Log Analytics workspace",
+     "description": "Select the Log Analytics workspace from dropdown list",
+     "strongType": "omsWorkspace"
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "field": "type",
+    "equals": "Microsoft.HDInsight/clusters"
+   },
+   "then": {
+    "effect": "deployIfNotExists",
+    "details": {
+     "type": "Microsoft.Insights/diagnosticSettings",
+     "name": "setByPolicy",
+     "existenceCondition": {
+      "allOf": [
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
+        "equals": "true"
+       },
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+        "equals": "[parameters('logAnalytics')]"
+       }
+      ]
+     },
+     "roleDefinitionIds": [
+      "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+     ],
+     "deployment": {
+      "properties": {
+       "mode": "incremental",
+       "template": {
+        "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+        "contentVersion": "1.0.0.0",
+        "parameters": {
+         "resourceName": {
+          "type": "string"
+         },
+         "logAnalytics": {
+          "type": "string"
+         },
+         "location": {
+          "type": "string"
+         }
+        },
+        "variables": {},
+        "resources": [
+         {
+          "type": "Microsoft.HDInsight/clusters/providers/diagnosticSettings",
+          "apiVersion": "2017-05-01-preview",
+          "name": "[concat(parameters('resourceName'), '/', 'Microsoft.Insights/setByPolicy')]",
+          "location": "[parameters('location')]",
+          "dependsOn": [],
+          "properties": {
+           "workspaceId": "[parameters('logAnalytics')]",
+           "metrics": [
+            {
+             "category": "AllMetrics",
+             "enabled": true,
+             "retentionPolicy": {
+              "days": 0,
+              "enabled": false
+             },
+             "timeGrain": null
+            }
+           ],
+           "logs": []
+          }
+         }
+        ],
+        "outputs": {}
+       },
+       "parameters": {
+        "logAnalytics": {
+         "value": "[parameters('logAnalytics')]"
+        },
+        "location": {
+         "value": "[field('location')]"
+        },
+        "resourceName": {
+         "value": "[field('name')]"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/ig1/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-HDInsight",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "Deploy-Diagnostics-HDInsight"
+}

@@ -1,0 +1,25 @@
+name: manage-azure-policy-f3cbc76e
+on:
+  push:
+    paths:
+      - 'fooexport/policies/Deploy-Diagnostics-Firewall_Deploy-Diagnostics-Firewall/**'
+      - 'fooexport/policies/Deploy-Diagnostics-HDInsight_Deploy-Diagnostics-HDInsight/**'
+      - 'fooexport/policies/External_accounts_with_owner_permissions_should_be_removed_from_your_subscription_f8456c1c-aa66-4dfb-861a-25d127b775c9/**'
+      - .github/workflows/manage-azure-policy-f3cbc76e.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_f3cbc76e}}
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          fooexport/policies/Deploy-Diagnostics-Firewall_Deploy-Diagnostics-Firewall/**
+          fooexport/policies/Deploy-Diagnostics-HDInsight_Deploy-Diagnostics-HDInsight/**
+          fooexport/policies/External_accounts_with_owner_permissions_should_be_removed_from_your_subscription_f8456c1c-aa66-4dfb-861a-25d127b775c9/**
