@@ -130,50 +130,6 @@
                         }
                     },     			
                     {
-                        "name": "esAsc",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes, Standard Tier (recommended)",
-                                    "value": "Standard"
-                                },
-                                {
-                                    "label": "Yes, Free Tier",
-                                    "value": "Free"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
-                    },                 
-                    {
-                        "name": "esSecuritySolution",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Sentinel",
-                        "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes (recommended)",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
-                    },
-                    {
                         "name": "textBlock1",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
@@ -344,7 +300,63 @@
                             ]
                         },
 						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
-                    }
+                    },
+                    {
+                        "name": "textBlock0",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
+                        "options": {
+                            "text": "Select which Azure Security solutions you will enable.",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://docs.microsoft.com/azure/security/fundamentals/overview"
+                            }
+                        }
+                    },					
+                    {
+                        "name": "esAsc",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes, Standard Tier (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "Yes, Free Tier",
+                                    "value": "Free"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
+                    },                 
+                    {
+                        "name": "esSecuritySolution",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Sentinel",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
+                    }					
                 ]
             },
             {
@@ -566,7 +578,8 @@
             "denyRdp": "[steps('lzGoalState').esDenyRdp]",
             "enableStorageHttps": "[steps('lzGoalState').esHttpsStorage]",
             "denyIpForwarding": "[steps('lzGoalState').esIpForwarding]",
-            "denySubnetWithoutNsg": "[steps('lzGoalState').esNsg]"
+            "denySubnetWithoutNsg": "[steps('lzGoalState').esNsg]",
+			"retentionInDays": "[steps('esGoalState').esLogRetention]"
         }
     }
 }

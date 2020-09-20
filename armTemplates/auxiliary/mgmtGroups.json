@@ -14,7 +14,7 @@
                 "management"
             ],
             "metadata": {
-                "description": "This is one or more management groups for platform specific purposes, such as management, networking, identity etc."
+                "description": "Management groups for platform specific purposes, such as management, networking, identity etc."
             }
         },
         "landingZoneMgs": {
@@ -23,7 +23,7 @@
                 "online"
             ],
             "metadata": {
-                "description": "This is the landing zone management groups."
+                "description": "These are the landing zone management groups."
             }
         }
     },
