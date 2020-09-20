@@ -1,0 +1,81 @@
+{
+                            "$schema": "http://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json",
+                            "contentVersion": "1.0.0.0",
+                            "parameters": {
+                              "rgName": {
+                                "type": "string"
+                              },
+                              "workspaceName": {
+                                "type": "string"
+                              },
+                              "workspaceRegion": {
+                                "type": "string"
+                              },
+                              "automationAccountName": {
+                                "type": "string"
+                              },
+                              "automationRegion": {
+                                "type": "string"
+                              },
+                              "retentionInDays": {
+                                "type": "int"
+                              }
+                            },
+                            "variables": {},
+                            "resources": [
+                              {
+                                "type": "Microsoft.Resources/resourceGroups",
+                                "apiVersion": "2018-05-01",
+                                "name": "[parameters('rgName')]",
+                                "location": "[deployment().location]",
+                                "properties": {}
+                              },
+                              {
+                                "type": "Microsoft.Resources/deployments",
+                                "apiVersion": "2018-05-01",
+                                "name": "log-analytics",
+                                "resourceGroup": "[parameters('rgName')]",
+                                "dependsOn": [
+                                  "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+                                ],
+                                "properties": {
+                                  "mode": "Incremental",
+                                  "template": {
+                                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+                                    "contentVersion": "1.0.0.0",
+                                    "parameters": {},
+                                    "variables": {},
+                                    "resources": [
+                                      {
+                                        "apiversion": "2015-10-31",
+                                        "location": "[parameters('AutomationRegion')]",
+                                        "name": "[parameters('AutomationAccountName')]",
+                                        "type": "Microsoft.Automation/automationAccounts",
+                                        "comments": "Automation account for ",
+                                        "properties": {
+                                          "sku": {
+                                            "name": "OMS"
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "apiVersion": "2017-03-15-preview",
+                                        "location": "[parameters('workspaceRegion')]",
+                                        "name": "[parameters('workspaceName')]",
+                                        "type": "Microsoft.OperationalInsights/workspaces",
+                                        "properties": {
+                                          "sku": {
+                                            "name": "pernode"
+                                          },
+                                          "enableLogAccessUsingOnlyResourcePermissions": true,
+                                          "retentionInDays": "[parameters('retentionInDays')]"
+                                        }
+                                      }
+                                    ],
+                                    "outputs": {}
+                                  }
+                                }
+                              }
+                            ],
+                            "outputs": {}
+                          }

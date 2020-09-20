@@ -8694,7 +8694,7 @@
                                             "name": "pernode"
                                           },
                                           "enableLogAccessUsingOnlyResourcePermissions": true,
-                                          "retentionInDays": "[[parameters('retentionInDays')]"
+                                          "retentionInDays": "[[int(parameters('retentionInDays'))]"
                                         },
                                         "resources": [
                                           {
