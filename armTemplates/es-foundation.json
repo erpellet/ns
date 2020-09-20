@@ -37,8 +37,8 @@
             }
         },
         "retentionInDays": {
-            "type": "int",
-            "defaultValue": 30
+            "type": "string",
+            "defaultValue": ""
         },
         "enableAsc": {
             "type": "string",

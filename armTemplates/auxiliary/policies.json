@@ -8560,7 +8560,7 @@
                     }
                   },
                   "retentionInDays": {
-                    "type": "int",
+                    "type": "string",
                     "metadata": {
                       "displayName": "Data retention",
                       "description": "Select data retention (days) for Log Analytics."
@@ -8644,7 +8644,7 @@
                                 "type": "string"
                               },
                               "retentionInDays": {
-                                "type": "int"
+                                "type": "string"
                               }
                             },
                             "variables": {},

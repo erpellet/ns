@@ -579,7 +579,7 @@
             "enableStorageHttps": "[steps('lzGoalState').esHttpsStorage]",
             "denyIpForwarding": "[steps('lzGoalState').esIpForwarding]",
             "denySubnetWithoutNsg": "[steps('lzGoalState').esNsg]",
-			"retentionInDays": "[steps('esGoalState').esLogRetention]"
+			"retentionInDays": "[string(steps('esGoalState').esLogRetention)]"
         }
     }
 }
