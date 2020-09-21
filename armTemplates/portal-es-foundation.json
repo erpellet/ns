@@ -437,7 +437,7 @@
                     {
                         "name": "esVmssMonitoring",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure Azure virtual machine scale sets (Windows & Linux) are being monitored",
+                        "label": "Ensure Azure VMSS (Windows & Linux) are being monitored",
                         "defaultValue": "Yes (recommended)",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
                         "constraints": {
@@ -477,7 +477,7 @@
                     {
                         "name": "esAzBackup",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure VMs (Windows & Linux) are enabled for Azure Backup",
+                        "label": "Ensure Azure VMs (Windows & Linux) are enabled for Azure Backup",
                         "defaultValue": "Yes (recommended)",
                         "toolTip": "If 'Yes' is selected, Azure Policy will be assigned and enable Azure Backup on all VMs in the landing zones.",
                         "constraints": {
