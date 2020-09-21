@@ -287,9 +287,9 @@
             "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'), equals(parameters('enableArcMonitoring'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
-            "name": "[variables('roleAssignmentNames').deployWindowsArcMonitoring]",
+            "name": "[variables('roleAssignmentNames').deployLinuxArcMonitoring]",
             "dependsOn": [
-                "[variables('policyAssignmentNames').windowsArcMonitoring]"
+                "[variables('policyAssignmentNames').linuxArcMonitoring]"
             ],
             "properties": {
                 "principalType": "ServicePrincipal",
