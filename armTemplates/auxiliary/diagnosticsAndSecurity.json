@@ -88,7 +88,7 @@
             "azureActivityLog": "Deploy-AzActivity-Log",
             "vmMonitoring": "Deploy-VM-Monitoring",
             "windowsArcMonitoring": "Deploy-WS-Arc-Monitoring",
-            "linuxArcMonitoring": "Deploy-Linux-Arc-Monitoring",
+            "linuxArcMonitoring": "Deploy-LX-Arc-Monitoring",
             "vmssMonitoring": "Deploy-VMSS-Monitoring",
             "resourceDiagnostics": "Deploy-Resource-Diag",
             "azureSecurity": "Deploy-ASC-Security",
