@@ -140,6 +140,39 @@
                 "No"
             ]
         },
+        "enableArcMonitoring": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected, policy will be assigned to enforce Arc monitoring."
+            }
+        },
+        "enableVmMonitoring": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected, policy will be assigned to enforce VM monitoring."
+            }
+        },
+        "enableVmssMonitoring": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected, policy will be assigned to enforce VMSS monitoring."
+            }
+        },
         "enableVmBackup": {
             "type": "string",
             "defaultValue": "No",
@@ -429,6 +462,15 @@
                     },
                     "lzSubscriptionId": {
                         "value": "[parameters('lzSubscriptionId')]"
+                    },
+                    "enableVmMonitoring": {
+                        "value": "[parameters('enableVmMonitoring')]"
+                    },
+                    "enableVmssMonitoring": {
+                        "value": "[parameters('enableVmssMonitoring')]"
+                    },
+                    "enableArcMonitoring": {
+                        "value": "[parameters('enableArcMonitoring')]"
                     }
                 }
             }

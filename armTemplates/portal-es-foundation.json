@@ -415,9 +415,69 @@
                         }
                     },
                     {
+                        "name": "esVmMonitoring",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Ensure Azure VMs (Windows & Linux) are being monitored",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esVmssMonitoring",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Ensure Azure virtual machine scale sets (Windows & Linux) are being monitored",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esArcVmMonitoring",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Ensure Azure Arc VMs (Windows & Linux) are being monitored",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
+                    },
+                    {
                         "name": "esAzBackup",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Ensure VMs are enabled for backup",
+                        "label": "Ensure VMs (Windows & Linux) are enabled for Azure Backup",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, Azure Policy will be assigned and enable Azure Backup on all VMs in the landing zones.",
                         "constraints": {
@@ -579,7 +639,10 @@
             "enableStorageHttps": "[steps('lzGoalState').esHttpsStorage]",
             "denyIpForwarding": "[steps('lzGoalState').esIpForwarding]",
             "denySubnetWithoutNsg": "[steps('lzGoalState').esNsg]",
-			"retentionInDays": "[string(steps('esGoalState').esLogRetention)]"
+            "retentionInDays": "[string(steps('esGoalState').esLogRetention)]",
+            "enableVmMonitoring": "[steps('lzGoalState').esVmMonitoring]",
+            "enableVmssMonitoring": "[steps('lzGoalState').esVmssMonitoring]",
+            "enableArcMonitoring": "[steps('lzGoalState').esArcVmMonitoring]"
         }
     }
 }
