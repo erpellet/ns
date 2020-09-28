@@ -21,7 +21,7 @@
         },
         "deploymentObject1": {
             "value": "[concat(uri(deployment().properties.templateLink.uri, variables('azEnvPolicy')))]",
-            "type": "object"
+            "type": "string"
         }
     }
 }
