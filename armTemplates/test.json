@@ -20,7 +20,7 @@
             "type": "string"
         },
         "deploymentObject1": {
-            "value": "[uri(deployment().properties.templateLink.uri, variables('azEnvPolicy'))]",
+            "value": "[concat(uri(deployment().properties.templateLink.uri, variables('azEnvPolicy')))]",
             "type": "object"
         }
     }
