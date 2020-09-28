@@ -19,11 +19,11 @@
             "value": "[variables('azEnvPolicy')]",
             "type": "string"
         },
-        "deploymentObject1": {
+        "deploymentString1": {
             "value": "[concat(uri(deployment().properties.templateLink.uri, variables('azEnvPolicy')))]",
             "type": "string"
         },
-        "deploymentObject": {
+        "deploymentString2": {
             "value": "[uri(deployment().properties.templateLink.uri, variables('azEnvPolicy'))]",
             "type": "string"
         }
