@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-07-1/tenantDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {
+        "azPolicyEnvMapping": {
+            "https://management.azure.com/": "auxiliary/policies.json",
+            "https://management.chinacloudapi.cn": "auxiliary/mkPolicies.json"
+        },
+        "azEnvPolicy": "[variables('azPolicyEnvMapping')[environment().resourceManager]]",
+        "deploymentUris": {
+            "managementGroups": "[uri(deployment().properties.templateLink.uri, 'auxiliary/mgmtGroups.json')]",
+            "policyDefinitions": "[concat(uri(deployment().properties.templateLink.uri, variables('azEnvPolicy')))]"
+    }
+    },
+    "resources": [],
+    "outputs": {
+        "uriString": {
+            "value": "[variables('azEnvPolicy')]",
+            "type": "string"
+        },
+        "deploymentObject1": {
+            "value": "[uri(deployment().properties.templateLink.uri, variables('azEnvPolicy'))]",
+            "type": "object"
+        }
+    }
+}
