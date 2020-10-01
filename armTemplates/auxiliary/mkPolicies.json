@@ -404,18 +404,6 @@
                     ],
                     "defaultValue": "Standard"
                   },
-                  "pricingTierStorageAccounts": {
-                    "type": "String",
-                    "metadata": {
-                      "displayName": "pricingTierStorageAccounts",
-                      "description": null
-                    },
-                    "allowedValues": [
-                      "Standard",
-                      "Free"
-                    ],
-                    "defaultValue": "Standard"
-                  },
                   "pricingTierContainerRegistry": {
                     "type": "String",
                     "metadata": {
@@ -497,9 +485,6 @@
                             "pricingTierAppServices": {
                               "value": "[[parameters('pricingTierAppServices')]"
                             },
-                            "pricingTierStorageAccounts": {
-                              "value": "[[parameters('pricingTierStorageAccounts')]"
-                            },
                             "pricingTierContainerRegistry": {
                               "value": "[[parameters('pricingTierContainerRegistry')]"
                             },
@@ -530,12 +515,6 @@
                                 "type": "string",
                                 "metadata": {
                                   "description": "pricingTierAppServices"
-                                }
-                              },
-                              "pricingTierStorageAccounts": {
-                                "type": "string",
-                                "metadata": {
-                                  "description": "pricingTierStorageAccounts"
                                 }
                               },
                               "pricingTierContainerRegistry": {
@@ -570,20 +549,9 @@
                               {
                                 "type": "Microsoft.Security/pricings",
                                 "apiVersion": "2018-06-01",
-                                "name": "StorageAccounts",
-                                "dependsOn": [
-                                  "[[concat('Microsoft.Security/pricings/VirtualMachines')]"
-                                ],
-                                "properties": {
-                                  "pricingTier": "[[parameters('pricingTierStorageAccounts')]"
-                                }
-                              },
-                              {
-                                "type": "Microsoft.Security/pricings",
-                                "apiVersion": "2018-06-01",
                                 "name": "AppServices",
                                 "dependsOn": [
-                                  "[[concat('Microsoft.Security/pricings/StorageAccounts')]"
+                                  "[[concat('Microsoft.Security/pricings/VirtualMachines')]"
                                 ],
                                 "properties": {
                                   "pricingTier": "[[parameters('pricingTierAppServices')]"
