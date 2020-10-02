@@ -563,7 +563,7 @@
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('connectivitySubscriptionId'))), variables('connectivityMoveSubscription'), variables('noConnectivitySubscription'))]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity'))]"
+                "DeploymentDelay"
             ],
             "properties": {}
         },
