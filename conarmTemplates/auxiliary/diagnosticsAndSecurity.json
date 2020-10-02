@@ -71,6 +71,11 @@
             "type": "string",
             "maxLength": 36,
             "defaultValue": ""
+        },
+        "connectivitySubscriptionId": {
+            "type": "string",
+            "maxLength": 36,
+            "defaultValue": ""
         }
     },
     "variables": {
