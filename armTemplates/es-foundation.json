@@ -368,7 +368,6 @@
             "condition": "[and(not(empty(parameters('managementSubscriptionId'))), or(or(or(or(or(equals(parameters('enableSecuritySolution'), 'Yes'), equals(parameters('enableAgentHealth'), 'Yes')), equals(parameters('enableChangeTracking'), 'Yes')), equals(parameters('enableUpdateMgmt'), 'Yes'), equals(parameters('enableActivityLog'), 'Yes')), equals(parameters('enableAntiMalware'), 'Yes'), equals(parameters('enableVmInsights'), 'Yes')), equals(parameters('enableServiceMap'), 'Yes'), equals(parameters('enableSqlAssessment'), 'Yes')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
-            "subscriptionId": "[parameters('managementSubscriptionId')]",
             "name": "[variables('deploymentNames').monitoringSolutionsDeploymentName]",
             "dependsOn": [
                 "[variables('deploymentNames').monitoringDeploymentName]"
