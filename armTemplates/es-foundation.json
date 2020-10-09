@@ -255,7 +255,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('deploymentNames').mgmtGroupDeploymentName]",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
+            "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[parameters('enterpriseScaleCompanyPrefix')]"
