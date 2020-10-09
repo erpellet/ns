@@ -246,7 +246,6 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "subscriptionId": "[subscription().subscriptionId]",
             "name": "[variables('deploymentNames').mgmtGroupDeploymentName]",
             "location": "[deployment().location]",
             "properties": {
