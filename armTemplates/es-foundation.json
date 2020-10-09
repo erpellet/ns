@@ -244,11 +244,22 @@
     },
     "resources": [
         {
+            // Create top level management group under tenant root
+            "type": "Microsoft.Management/managementGroups",
+            "scope": "/",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('enterpriseScaleCompanyPrefix')]",
+            "properties": {}
+        },
+        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('deploymentNames').mgmtGroupDeploymentName]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
             "location": "[deployment().location]",
+            "dependsOn": [
+                "[parameters('enterpriseScaleCompanyPrefix')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -369,7 +380,6 @@
             "condition": "[and(not(empty(parameters('managementSubscriptionId'))), or(or(or(or(or(equals(parameters('enableSecuritySolution'), 'Yes'), equals(parameters('enableAgentHealth'), 'Yes')), equals(parameters('enableChangeTracking'), 'Yes')), equals(parameters('enableUpdateMgmt'), 'Yes'), equals(parameters('enableActivityLog'), 'Yes')), equals(parameters('enableAntiMalware'), 'Yes'), equals(parameters('enableVmInsights'), 'Yes')), equals(parameters('enableServiceMap'), 'Yes'), equals(parameters('enableSqlAssessment'), 'Yes')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
-            "subscriptionId": "[parameters('managementSubscriptionId')]",
             "name": "[variables('deploymentNames').monitoringSolutionsDeploymentName]",
             "dependsOn": [
                 "[variables('deploymentNames').monitoringDeploymentName]"
