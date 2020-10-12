@@ -36,7 +36,7 @@
                         }
                     },
                     {
-                        "name": "mgDropdown",
+                        "name": "esMg",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Select target management group",
                         "toolTip": "",
@@ -118,7 +118,7 @@
             }
         ],
         "outputs": {
-            "targetManagementGroupId": "[steps('lzSettings').mgDropDown]",
+            "targetManagementGroupId": "[steps('lzSettings').esMg]",
             "billingScope": "[steps('lzSettings').esEa]"
         }
     }
