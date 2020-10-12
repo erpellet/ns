@@ -1,0 +1,43 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionAliasName": {
+            "type": "string",
+            "defaultValue": "lz100"
+        },
+        "targetManagementGroupId": {
+            "type": "string",
+            "metadata": {
+                "details": "Select targeted management group that the subscription will land into"
+            }
+        },
+        "billingAccount": {
+            "type": "string",
+            "defaultValue": "/providers/Microsoft.Billing/billingAccounts/8608480/enrollmentAccounts/242561"
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            // Routing the request to the tenant root to PUT subscriptions
+            "scope": "/", //commenting out this property as it is not available in all regions yet. Once available, you can deploy this as management group deployment instead of tenant deployment
+            "name": "[parameters('subscriptionAliasName')]",
+            "type": "Microsoft.Subscription/aliases",
+            "apiVersion": "2020-09-01",
+            "properties": {
+                "workLoad": "Production",
+                "displayName": "[parameters('subscriptionAliasName')]",
+                "billingScope": "[parameters('billingAccount')]",
+                "managementGroupId": "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('targetManagementGroupId'))]"
+            }
+        }
+    ],
+    "outputs": {
+        "subscriptionId": {
+            "type": "string",
+            "value": "[reference(parameters('subscriptionAliasName')).subscriptionId]"
+        }
+    }
+}
