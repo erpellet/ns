@@ -46,7 +46,7 @@
                         "filterPlaceholder": "Filter items ...",
                         "multiLine": true,
                         "constraints": {
-                            "allowedValues": "[map(steps('lzSettings').mgApi.value, (mg) => parse(concat('{\"label\":\"', mg.name, '\",\"description\":\"', mg.id, '\",\"value\":\"', toLower(mg.id), '\"}')) )]",
+                            "allowedValues": "[map(steps('lzSettings').mgApi.value, (mg) => parse(concat('{\"label\":\"', mg.name, '\",\"description\":\"', mg.id, '\",\"value\":\"', toLower(mg.name), '\"}')) )]",
                             "required": true
                         },
                         "visible": true
@@ -118,7 +118,7 @@
             }
         ],
         "outputs": {
-            "targetManagementGroupId": "[steps('lzZettings').mgApi]",
+            "targetManagementGroupId": "[steps('lzZettings').mgDropDown]",
             "billingScope": "[steps('lzSettings').esEa]"
         }
     }
