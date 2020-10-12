@@ -118,7 +118,7 @@
             }
         ],
         "outputs": {
-            "targetManagementGroupId": "[steps('lzZettings').mgDropDown]",
+            "targetManagementGroupId": "[steps('lzSettings').mgDropDown]",
             "billingScope": "[steps('lzSettings').esEa]"
         }
     }
