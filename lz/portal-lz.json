@@ -9,10 +9,6 @@
             {
                 "name": "lzSettings",
                 "label": "Create Azure landing zones",
-                "subLabel": {
-                    "preValidation": "Provide a company prefix for the management group structure that will be created.",
-                    "postValidation": "Done"
-                },
                 "bladeTitle": "Company prefix",
                 "elements": [
                     {
@@ -20,7 +16,7 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
-                            "text": "Create Azure landing zones into your designated management groups created by Enterprise-Scale",
+                            "text": "Create Azure landing zones and place them into management groups.",
                             "link": {
                                 "label": "Learn more",
                                 "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
@@ -38,7 +34,7 @@
                     {
                         "name": "esMg",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Select target management group",
+                        "label": "Management Group",
                         "toolTip": "",
                         "multiselect": false,
                         "selectAll": true,
@@ -62,7 +58,7 @@
                     {
                         "name": "esBillingAccount",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Select billing account to create new subscription (required)",
+                        "label": "Billing Account",
                         "toolTip": "",
                         "multiselect": false,
                         "selectAll": true,
@@ -86,7 +82,7 @@
                     {
                         "name": "esEa",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Select Enrollment account to create new subscription (required)",
+                        "label": "Enrollment Account",
                         "toolTip": "",
                         "multiselect": false,
                         "selectAll": true,
@@ -100,7 +96,7 @@
                         }
                     },
                     {
-                        "name": "subscriptions",
+                        "name": "Subscriptions",
                         "type": "Microsoft.Common.Slider",
                         "min": 1,
                         "max": 50,
