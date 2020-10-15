@@ -3,25 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "subscriptions": {
-            "type": "array",
-            "defaultValue": [
-                {
-                    "esMgSelection": "online",
-                    "esSubName": "retail01"
-                },
-                {
-                    "esMgSelection": "sandboxes",
-                    "esSubName": "playground"
-                },
-                {
-                    "esMgSelection": "corp",
-                    "esSubName": "lob-01"
-                }
-            ]
+            "type": "array"
         },
         "billingAccount": {
-            "type": "string",
-            "defaultValue": "/providers/Microsoft.Billing/billingAccounts/8608480/enrollmentAccounts/242561"
+            "type": "string"
         }
     },
     "variables": {
