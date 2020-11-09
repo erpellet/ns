@@ -1,0 +1,38 @@
+{
+  "properties": {
+    "Description": "This policy denies the creation of vNet Peerings under the assigned scope.",
+    "DisplayName": "Deny vNet peering ",
+    "Mode": "Indexed",
+    "Parameters": {
+      "effect": {
+        "type": "String",
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        }
+      }
+    },
+    "PolicyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings"
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    },
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Network"
+    }
+  },
+  "id": "/providers/Microsoft.Authorization/policyDefinitions/Deny-ERPeering",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "Deny-ERPeering"
+}
