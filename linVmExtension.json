@@ -1,0 +1,49 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "logAnalytics": {
+            "type": "string",
+            "defaultValue": "/subscriptions/ec106991-f4bd-4a59-a64f-9744a3b75e64/resourcegroups/rg-eval-la/providers/microsoft.operationalinsights/workspaces/la-eval"
+        }
+    },
+    "variables": {
+        "vmExtensionName": "OMSAgentForLinux",
+        "vmExtensionPublisher": "Microsoft.EnterpriseCloud.Monitoring",
+        "vmExtensionType": "OmsAgentForLinux",
+        "vmExtensionTypeHandlerVersion": "1.13"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('vmName'), '/', variables('vmExtensionName'))]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "location": "[parameters('location')]",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "publisher": "[variables('vmExtensionPublisher')]",
+                "type": "[variables('vmExtensionType')]",
+                "typeHandlerVersion": "[variables('vmExtensionTypeHandlerVersion')]",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "workspaceId": "[reference(parameters('logAnalytics'), '2015-03-20').customerId]",
+                    "stopOnMultipleConnections": "true"
+                },
+                "protectedSettings": {
+                    "workspaceKey": "[listKeys(parameters('logAnalytics'), '2015-03-20').primarySharedKey]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "policy": {
+            "type": "string",
+            "value": "[concat('Enabled extension for VM', ': ', parameters('vmName'))]"
+        }
+    }
+}

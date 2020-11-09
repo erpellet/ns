@@ -16,6 +16,10 @@
             "type": "string",
             "defaultValue": "[deployment().location]"
         },
+        "rgName": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]"
+        },
         "enableSecuritySolution": {
             "type": "string",
             "allowedValues": [
@@ -90,7 +94,6 @@
         }
     },
     "variables": {
-        "laResourceId": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-mgmt', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-la-', parameters('managementSubscriptionId')))]",
         "solutions": {
             "security": {
                 "name": "[concat('Security', '(', parameters('workspaceName'), ')')]",
@@ -139,7 +142,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "[take(concat('EntScale-', 'solutions-', guid(deployment().name)), 63)]",
-            "resourceGroup": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]",
+            "resourceGroup": "[parameters('rgName')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -155,7 +158,7 @@
                             "name": "[variables('solutions').agentHealth.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').agentHealth.name]",
@@ -171,7 +174,7 @@
                             "name": "[variables('solutions').antiMalware.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').antiMalware.name]",
@@ -187,7 +190,7 @@
                             "name": "[variables('solutions').azureActivity.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').azureActivity.name]",
@@ -203,7 +206,7 @@
                             "name": "[variables('solutions').changeTracking.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').changeTracking.name]",
@@ -219,7 +222,7 @@
                             "name": "[variables('solutions').vmInsights.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').vmInsights.name]",
@@ -235,7 +238,7 @@
                             "name": "[variables('solutions').security.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').security.name]",
@@ -251,7 +254,7 @@
                             "name": "[variables('solutions').securityInsights.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').securityInsights.name]",
@@ -267,7 +270,7 @@
                             "name": "[variables('solutions').serviceMap.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').serviceMap.name]",
@@ -283,7 +286,7 @@
                             "name": "[variables('solutions').sqlAssessment.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').sqlAssessment.name]",
@@ -299,7 +302,7 @@
                             "name": "[variables('solutions').updateMgmt.name]",
                             "location": "[parameters('workspaceRegion')]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').updateMgmt.name]",

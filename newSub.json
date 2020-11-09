@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aliasName": {
+            "type": "string",
+            "defaultValue": "magicapplz"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Subscription/aliases",
+            "scope": "/",
+            "apiVersion": "2020-09-01",
+            "name": "[parameters('aliasName')]",
+            "properties": {
+                "displayName": "[parameters('aliasName')]",
+                "billingScope": "/providers/Microsoft.Billing/billingAccounts/8608480/enrollmentAccounts/242561",
+                "workload": "Production",
+                "managementGroupId": "/providers/Microsoft.Management/managementGroups/online"
+            }
+        }
+    ]
+}

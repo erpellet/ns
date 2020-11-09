@@ -1,0 +1,46 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vaultName": {
+            "type": "string",
+            "defaultValue": "knkey100"
+        },
+        "logAnalyticsId": {
+            "type": "string",
+            "defaultValue": "/subscriptions/0a938bc2-0bb8-4688-bd37-9964427fe0b0/resourceGroups/logs/providers/Microsoft.OperationalInsights/workspaces/knlogs100"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "westeurope"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults/providers/diagnosticSettings",
+            "apiVersion": "2017-05-01-preview",
+            "name": "[concat(parameters('vaultName'), '/', 'Microsoft.Insights/setByPolicy')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "workspaceId": "[parameters('logAnalyticsId')]",
+                "metrics": [
+                    {
+                        "category": "AllMetrics",
+                        "enabled": true,
+                        "retentionPolicy": {
+                            "enabled": false,
+                            "days": 0
+                        }
+                    }
+                ],
+                "logs": [
+                    {
+                        "category": "AuditEvent",
+                        "enabled": true
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}
