@@ -130,6 +130,15 @@
                 "parameters": {
                     "logAnalytics": {
                         "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-mgmt', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-la-', parameters('managementSubscriptionId')))]"
+                    },
+                    "profileName": {
+                        "value": "setbypolicy"
+                    },
+                    "logsEnabled": {
+                        "value": "True"
+                    },
+                    "effect": {
+                        "value": "deployIfNotExists"
                     }
                 }
             }

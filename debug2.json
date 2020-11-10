@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "policyDefinitionId": {
+            "type": "string",
+            "defaultValue": "/providers/Microsoft.Management/managementGroups/eslz3/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog"
+        },
+        "policyAssignmentId": {
+            "type": "string",
+            "defaultValue": "/providers/Microsoft.Management/managementGroups/eslz3/providers/Microsoft.Authorization/policyAssignments/Deploy-AzActivity-Log"
+        }
+    },
+    "resources": [
+    ],
+    "outputs": {
+        "policyAss": {
+            "type": "object",
+            "value": "[reference(parameters('policyAssignmentId'), '2018-05-01').parameters]"
+        },
+        "policyDef": {
+            "type": "object",
+            "value": "[reference(parameters('policyDefinitionId'), '2018-05-01').policyRule.then.details.deployment.properties.template]"
+        }
+    }
+}
