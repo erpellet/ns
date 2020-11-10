@@ -82,7 +82,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableActivityLog": {
             "type": "string",
@@ -90,7 +90,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableAntiMalware": {
             "type": "string",
@@ -98,7 +98,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableVmInsights": {
             "type": "string",
@@ -106,7 +106,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableServiceMap": {
             "type": "string",
@@ -114,7 +114,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableSqlAssessment": {
             "type": "string",
@@ -122,7 +122,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableSqlAudit": {
             "type": "string",
@@ -244,22 +244,10 @@
     },
     "resources": [
         {
-            // Create top level management group under tenant root
-            "type": "Microsoft.Management/managementGroups",
-            "scope": "/",
-            "apiVersion": "2020-05-01",
-            "name": "[parameters('enterpriseScaleCompanyPrefix')]",
-            "properties": {}
-        },
-        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('deploymentNames').mgmtGroupDeploymentName]",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
             "location": "[deployment().location]",
-            "dependsOn": [
-                "[parameters('enterpriseScaleCompanyPrefix')]"
-            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -324,7 +312,6 @@
         {
             "condition": "[not(empty(parameters('managementSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
-            "scope": "/",
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('managementSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
             "dependsOn": [
@@ -335,7 +322,6 @@
         {
             "condition": "[not(empty(parameters('lzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
-            "scope": "/",
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('lzSubscriptionId'))), variables('lzMoveSubscription'), variables('noLzSubscription'))]",
             "dependsOn": [
