@@ -445,7 +445,7 @@
                         "variables": {},
                         "resources": [
                           {
-                            "name": "[[concat(parameters('resourceName'), '/', 'Microsoft.Insights/', parameters('profileName'))]",
+                            "name": "[[concat('subscriptionLogs', '/', 'Microsoft.Insights/', parameters('profileName'))]",
                             "type": "Microsoft.Insights/diagnosticSettings",
                             "apiVersion": "2017-05-01-preview",
                             "location": "Global",
