@@ -15931,21 +15931,6 @@
                 }
               },
               {
-                "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog')]",
-                "policyDefinitionReferenceId": "ActivityLogDeployDiagnosticLogDeployLogAnalytics",
-                "parameters": {
-                  "logAnalytics": {
-                    "value": "[[parameters('logAnalytics')]"
-                  },
-                  "effect": {
-                    "value": "[[parameters('ActivityLogLogAnalyticsEffect')]"
-                  },
-                  "profileName": {
-                    "value": "[[parameters('profileName')]"
-                  }
-                }
-              },
-              {
                 "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AKS')]",
                 "policyDefinitionReferenceId": "AKSDeployDiagnosticLogDeployLogAnalytics",
                 "parameters": {
