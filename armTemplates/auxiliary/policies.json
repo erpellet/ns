@@ -372,14 +372,6 @@
                   "description": "Enable or disable the execution of the policy"
                 }
               },
-              "profileName": {
-                "type": "string",
-                "defaultValue": "setbypolicy",
-                "metadata": {
-                  "displayName": "Profile name",
-                  "description": "The diagnostic settings profile name"
-                }
-              },
               "logsEnabled": {
                 "type": "string",
                 "defaultValue": "True",
@@ -435,9 +427,6 @@
                           "logAnalytics": {
                             "type": "string"
                           },
-                          "profileName": {
-                            "type": "string"
-                          },
                           "logsEnabled": {
                             "type": "string"
                           }
@@ -445,7 +434,7 @@
                         "variables": {},
                         "resources": [
                           {
-                            "name": "[[concat('subscriptionLogs', '/', 'Microsoft.Insights/', parameters('profileName'))]",
+                            "name": "subscriptionToLa",
                             "type": "Microsoft.Insights/diagnosticSettings",
                             "apiVersion": "2017-05-01-preview",
                             "location": "Global",
@@ -493,9 +482,6 @@
                       "parameters": {
                         "logAnalytics": {
                           "value": "[[parameters('logAnalytics')]"
-                        },
-                        "profileName": {
-                          "value": "[[parameters('profileName')]"
                         },
                         "logsEnabled": {
                           "value": "[[parameters('logsEnabled')]"
