@@ -136,9 +136,6 @@
                     },
                     "logsEnabled": {
                         "value": "True"
-                    },
-                    "effect": {
-                        "value": "DeployIfNotExists"
                     }
                 }
             }
