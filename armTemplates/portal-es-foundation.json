@@ -492,7 +492,7 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
+						"visible": true
                     },
                     {
                         "name": "esAzBackup",
