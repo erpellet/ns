@@ -439,7 +439,7 @@
             "condition": "[and(not(empty(parameters('lzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[concat(variables('lzActivityResourceDeploymentName'), copyIndex())]",
+            "name": "[take(concat(variables('lzActivityResourceDeploymentName'), copyIndex()), 64)]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
@@ -459,7 +459,7 @@
             "condition": "[and(not(empty(parameters('lzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[concat(variables('lzAscResourceDeploymentName'), copyIndex())]",
+            "name": "[take(concat(variables('lzAscResourceDeploymentName'), copyIndex()), 64)]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureSecurity)]"
