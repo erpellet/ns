@@ -105,10 +105,12 @@
             "deployResourceRiagnostics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').resourceDiagnostics))]"
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
-        "lzAscResourceDeploymentName": "[take(concat('asc-lz', deployment().location, deployment().name), 64)]",
-        "lzActivityResourceDeploymentName": "[take(concat('activity-lz', deployment().location, deployment().name), 64)]",
-        "mgAscResourceDeploymentName": "[take(concat('asc-mgmt', deployment().location, deployment().name), 64)]",
-        "mgActivityResourceDeploymentName": "[take(concat('activity-mgmt', deployment().location, deployment().name), 64)]"
+        "lzAscResourceDeploymentName": "[take(concat('asc-lz', deployment().location, deployment().name), 40)]",
+        "lzActivityResourceDeploymentName": "[take(concat('activity-lz', deployment().location, deployment().name), 40)]",
+        "mgAscResourceDeploymentName": "[take(concat('asc-mgmt', deployment().location, deployment().name), 40)]",
+        "mgActivityResourceDeploymentName": "[take(concat('activity-mgmt', deployment().location, deployment().name), 40)]",
+        "noLzActivityDeployment": "naCctivity",
+        "noLzAscDeployment": "naAsc"
     },
     "resources": [
         {
@@ -439,7 +441,7 @@
             "condition": "[and(not(empty(parameters('lzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[take(concat(variables('lzActivityResourceDeploymentName'), copyIndex()), 64)]",
+            "name": "[if(not(empty(parameters('lzSubscriptionId'))), concat(variables('lzActivityResourceDeploymentName'), copyIndex()), variables('noLzActivityDeployment'))]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
@@ -459,7 +461,7 @@
             "condition": "[and(not(empty(parameters('lzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[take(concat(variables('lzAscResourceDeploymentName'), copyIndex()), 64)]",
+            "name": "[if(not(empty(parameters('lzSubscriptionId'))), concat(variables('lzAscResourceDeploymentName'), copyIndex()), variables('noLzAscDeployment'))]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureSecurity)]"
