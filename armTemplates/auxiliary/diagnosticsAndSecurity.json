@@ -109,7 +109,7 @@
         "lzActivityResourceDeploymentName": "[take(concat('activity-lz', deployment().location, deployment().name), 40)]",
         "mgAscResourceDeploymentName": "[take(concat('asc-mgmt', deployment().location, deployment().name), 40)]",
         "mgActivityResourceDeploymentName": "[take(concat('activity-mgmt', deployment().location, deployment().name), 40)]",
-        "noLzActivityDeployment": "naCctivity",
+        "noLzActivityDeployment": "naActivity",
         "noLzAscDeployment": "naAsc"
     },
     "resources": [
@@ -440,7 +440,7 @@
         {
             "condition": "[and(not(empty(parameters('lzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "2019-05-01",
             "name": "[if(not(empty(parameters('lzSubscriptionId'))), concat(variables('lzActivityResourceDeploymentName'), copyIndex()), variables('noLzActivityDeployment'))]",
             "location": "[deployment().location]",
             "dependsOn": [
@@ -460,7 +460,7 @@
         {
             "condition": "[and(not(empty(parameters('lzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "2019-05-01",
             "name": "[if(not(empty(parameters('lzSubscriptionId'))), concat(variables('lzAscResourceDeploymentName'), copyIndex()), variables('noLzAscDeployment'))]",
             "location": "[deployment().location]",
             "dependsOn": [
