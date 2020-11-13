@@ -391,7 +391,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Landing zone subscription (optional)",
                         "toolTip": "",
-                        "multiselect": false,
+                        "multiselect": true,
                         "selectAll": true,
                         "filter": true,
                         "filterPlaceholder": "Filter items ...",
@@ -619,7 +619,7 @@
         ],
         "outputs": {
             "managementSubscriptionId": "[steps('esGoalState').esMgmtSub]",
-            "lzSubscriptionId": "[if(not(equals(steps('lzGoalState').esLzSub, steps('esGoalState').esMgmtSub)), steps('lzGoalState').esLzSub, '')]",
+            "lzSubscriptionId": "[if(not(contains(steps('lzGoalState').esLzSub, steps('esGoalState').esMgmtSub)), steps('lzGoalState').esLzSub, '')]",
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enableSecuritySolution": "[steps('esGoalState').esSecuritySolution]",
