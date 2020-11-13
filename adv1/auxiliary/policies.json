@@ -744,6 +744,10 @@
               }
             }
           },
+          "metadata": {
+              "version": "1.0.0",
+              "category": "Network"
+            },
           "PolicyRule": {
             "if": {
               "allOf": [
