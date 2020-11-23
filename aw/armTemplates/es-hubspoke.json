@@ -46,7 +46,8 @@
             "allowedValues": [
                 "Yes",
                 "No"
-            ]
+            ],
+            "defaultValue": "No"
         },
         "denyPipForIdentity": {
             "type": "string",
