@@ -116,7 +116,7 @@
                     {
                         "name": "esMgmtSub",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Management subscription (required)",
+                        "label": "Management subscription",
                         "toolTip": "",
                         "multiselect": false,
                         "selectAll": true,
@@ -409,7 +409,7 @@
                     {
                         "name": "esConnectivitySub",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Connectivity subscription (required)",
+                        "label": "Connectivity subscription",
                         "toolTip": "",
                         "multiselect": false,
                         "selectAll": true,
@@ -597,18 +597,6 @@
                             ]
                         },
                         "visible": true
-                    },
-                    {
-                        "name": "onlineText",
-                        "type": "Microsoft.Common.TextBlock",
-                        "visible": "[equals(steps('esIdentityGoalState').esIdentity, 'Yes')]",
-                        "options": {
-                            "text": "Select the subscription you want to move to identity management group.",
-                            "link": {
-                                "label": "Learn more",
-                                "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management"
-                            }
-                        }
                     },
                     {
                         "name": "esIdentitySubsApi",
