@@ -465,13 +465,13 @@
             "condition": "[not(empty(parameters('corpLzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
-            "name": "[if(not(empty(parameters('corpLzSubscriptionId'))), concat(parameters('enterpriseScaleCompanyPrefix'), '-corp', '/', parameters('onlineLzSubscriptionId')[copyIndex()]), variables('noCorpLzSubscription'))]",
+            "name": "[if(not(empty(parameters('corpLzSubscriptionId'))), concat(parameters('enterpriseScaleCompanyPrefix'), '-corp', '/', parameters('corpLzSubscriptionId')[copyIndex()]), variables('noCorpLzSubscription'))]",
             "dependsOn": [
                 "[variables('deploymentNames').mgmtGroupDeploymentName]"
             ],
             "copy": {
                 "name": "onlineLzMove",
-                "count": "[length(parameters('onlineLzSubscriptionId'))]"
+                "count": "[length(parameters('corpLzSubscriptionId'))]"
             },
             "properties": {}
         },        
