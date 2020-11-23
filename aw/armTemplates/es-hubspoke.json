@@ -57,6 +57,14 @@
             ],
             "defaultValue": "No"
         },
+        "enableVmBackupForIdentity": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
         "onlineLzSubscriptionId": {
             "type": "array",
             "defaultValue": [],
@@ -590,6 +598,9 @@
                     },
                     "denyPipForIdentity": {
                         "value": "[parameters('denyPipForIdentity')]"
+                    },
+                    "enableVmBackupForIdentity": {
+                        "value": "[parameters('enableVmBackupForIdentity')]"
                     }
                 }
             }

@@ -16,7 +16,7 @@
                 "bladeTitle": "Company prefix",
                 "elements": [
                     {
-                        "name": "infoBox1",
+                        "name": "info",
                         "type": "Microsoft.Common.InfoBox",
                         "visible": true,
                         "options": {
@@ -26,7 +26,7 @@
                         }
                     },
                     {
-                        "name": "textBlock0",
+                        "name": "mgmtGroup",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
@@ -55,8 +55,8 @@
                 "name": "esGoalState",
                 "label": "Platform management, security, and governance",
                 "subLabel": {
-                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
-                    "postValidation": "Done"
+                    "preValidation": "",
+                    "postValidation": ""
                 },
                 "bladeTitle": "lzGs",
                 "elements": [
@@ -130,7 +130,7 @@
                         }
                     },     			
                     {
-                        "name": "textBlock1",
+                        "name": "monitoring",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
                         "options": {
@@ -635,7 +635,7 @@
                         }
                     },
                     {
-                        "name": "textBlock3",
+                        "name": "identitypolicies",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": "[equals(steps('esIdentityGoalState').esIdentity, 'Yes')]",
                         "options": {
@@ -692,6 +692,26 @@
                         "label": "Prevent usage of public IP",
                         "defaultValue": "Yes (recommended)",
                         "toolTip": "If 'Yes' is selected, Azure Policy will be assigned to ensure public IP resources cannot be created",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esIdentityGoalState').esIdentity, 'Yes')]"
+                    },
+                    {
+                        "name": "esIdAzBackup",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Ensure Azure VMs (Windows & Linux) are enabled for Azure Backup",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Policy will be assigned and enable Azure Backup on all VMs in the landing zones.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -1053,6 +1073,7 @@
             "denyRdpForIdentity": "[steps('esIdentityGoalState').esIdDenyRdp]",
             "denySubnetWithoutNsgForIdentity": "[steps('esIdentityGoalState').esIdDenySubnetNsg]",
             "denyPipForIdentity": "[steps('esIdentityGoalState').esIdDenyPublicIp]",
+            "enableVmBackupForIdentity": "[steps('esIdentityGoalState').esIdAzBackup]",
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enableSecuritySolution": "[steps('esGoalState').esSecuritySolution]",
             "enableAgentHealth": "[steps('esGoalState').esAgentSolution]",
