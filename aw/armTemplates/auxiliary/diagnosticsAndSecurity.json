@@ -76,7 +76,7 @@
             "defaultValue": []
         },
         "identitySubscriptionId": {
-            "type": "value",
+            "type": "string",
             "defaultValue": ""
         }
     },
