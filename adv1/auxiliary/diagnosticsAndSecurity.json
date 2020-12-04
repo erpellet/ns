@@ -68,9 +68,8 @@
             }
         },
         "lzSubscriptionId": {
-            "type": "string",
-            "maxLength": 36,
-            "defaultValue": ""
+            "type": "array",
+            "defaultValue": []
         }
     },
     "variables": {
@@ -440,12 +439,16 @@
             "condition": "[and(not(empty(parameters('lzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('lzActivityResourceDeploymentName')]",
+            "name": "[concat(variables('lzActivityResourceDeploymentName'), copyIndex())]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
             ],
-            "subscriptionId": "[parameters('lzSubscriptionId')]",
+            "copy": {
+                "name": "lzActivityCopy",
+                "count": "[length(parameters('lzSubscriptionId'))]"
+            },
+            "subscriptionId": "[parameters('lzSubscriptionId')[copyIndex()]]",
             "properties": {
                 "mode": "incremental",
                 "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployAzureActivityLog, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
@@ -461,7 +464,11 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureSecurity)]"
             ],
-            "subscriptionId": "[parameters('lzSubscriptionId')]",
+            "copy": {
+                "name": "lzAscCopy",
+                "count": "[length(parameters('lzSubscriptionId'))]"
+            },
+            "subscriptionId": "[parameters('lzSubscriptionId')[copyIndex()]]",
             "properties": {
                 "mode": "incremental",
                 "template": "[if(and(not(empty(parameters('managementSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))), reference(variables('policyDefinitions').deployAzureSecurity, '2018-05-01').policyRule.then.details.deployment.properties.template, 'na')]",
