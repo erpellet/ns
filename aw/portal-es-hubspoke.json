@@ -904,7 +904,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Prevent privileged containers in Kubernetes clusters",
                         "defaultValue": "Yes (recommended)",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected, policy will be assigned to prevent privileged containers in AKS",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -924,7 +924,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Prevent privileged escalation in Kubernetes clusters",
                         "defaultValue": "Yes (recommended)",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected, policy will be assigned to prevent privileged escalations in AKS",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -944,7 +944,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure HTTPS ingress is enforced in Kubernetes clusters",
                         "defaultValue": "Yes (recommended)",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected, HTTPS ingress will be required in AKS",
                         "constraints": {
                             "allowedValues": [
                                 {
