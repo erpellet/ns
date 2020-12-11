@@ -1,0 +1,130 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/policyDefinitions",
+            "apiVersion": "2019-09-01",
+            "name": "laExportDine",
+            "properties": {
+                "description": "Deploy export rule for LA to EventHub",
+                "displayName": "Deploy export rule for LA to EventHub",
+                "mode": "indexed",
+                "parameters": {
+                    "eventHubId": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "tablesToExport": {
+                        "type": "array",
+                        "defaultValue": [
+                            "Event",
+                            "Syslog"
+                        ]
+                    }
+                },
+                "metadata": {
+                    "version": "1.0.0",
+                    "Category": "Monitoring"
+                },
+                "policyRule": {
+                    "if": {
+                        "allOf": [
+                            {
+                                "field": "type",
+                                "equals": "Microsoft.OperationalInsights/workspaces"
+                            },
+                            {
+                                "field": "location",
+                                "equals": "[[parameters('location')]"
+                            }
+                        ]
+                    },
+                    "then": {
+                        "effect": "deployIfNotExists",
+                        "details": {
+                            "type": "Microsoft.OperationalInsights/workspaces/dataExports",
+                            "name": "setByPolicy",
+                            "existenceCondition": {
+                                "allOf": [
+                                    {
+                                        "field": "Microsoft.OperationalInsights/workspaces/dataExports/enable",
+                                        "equals": "true"
+                                    },
+                                    {
+                                        "field": "Microsoft.OperationalInsights/workspaces/dataExports/destination.resourceId",
+                                        "equals": "[[parameters('eventHubId')]"
+                                    }
+                                ]
+                            },
+                            "roleDefinitionIds": [
+                                "/providers/microsoft.authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa",
+                                "/providers/microsoft.authorization/roleDefinitions/92aaf0da-9dab-42b6-94a3-d43ce8d16293"
+                            ],
+                            "deployment": {
+                                "properties": {
+                                    "mode": "incremental",
+                                    "parameters": {
+                                        "eventHubId": {
+                                            "value": "[[parameters('eventHubId')]"
+                                        },
+                                        "location": {
+                                            "value": "[[field('location')]"
+                                        },
+                                        "tablesToExport": {
+                                            "value": "[[parameters('tablesToExport')]"
+                                        },
+                                        "name": {
+                                            "value": "[[field('name')]"
+                                        }
+                                    },
+                                    "template": {
+                                        "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                        "contentVersion": "1.0.0.0",
+                                        "parameters": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "location": {
+                                                "type": "string"
+                                            },
+                                            "tablesToExport": {
+                                                "type": "array"
+                                            },
+                                            "eventHubId": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "variables": {},
+                                        "resources": [
+                                            {
+                                                "type": "Microsoft.OperationalInsights/workspaces/dataExports",
+                                                "apiVersion": "2020-08-01",
+                                                "name": "[[concat(parameters('name'), '/', 'export')]",
+                                                "location": "[[parameters('location')]",
+                                                "dependsOn": [],
+                                                "properties": {
+                                                    "destination": {
+                                                        "resourceId": "[[parameters('eventHubId')]",
+                                                        "metaData": {
+                                                            "EventHubName": "[[concat(parameters('name'), '-logs')]"
+                                                        }
+                                                    },
+                                                    "tableNames": "[[parameters('tablesToExport')]",
+                                                    "enable": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
