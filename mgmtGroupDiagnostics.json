@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "logAnalyticsWorkspaceResourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "the resource id of the log analytics workspace"
+            }
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "name": "mgmtGroupLogsToLogAnalytics",
+            "type": "Microsoft.Insights/diagnosticSettings",
+            "apiVersion": "2020-01-01-preview",
+            "location": "Global",
+            "properties": {
+                "workspaceId": "[parameters('logAnalyticsWorkspaceResourceId')]",
+                "logs": [
+                    {
+                        "category": "Administrative",
+                        "enabled": true
+                    },
+                    {
+                        "category": "Policy",
+                        "enabled": true
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}

@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "enterpriseScaleCompanyPrefix": {
@@ -18,8 +18,8 @@
             }
         },
         "lzSubscriptionId": {
-            "type": "string",
-            "defaultValue": "",
+            "type": "array",
+            "defaultValue": [],
             "maxLength": 36,
             "metadata": {
                 "description": "Provide the subscription id fo an existing, empty subscription you want to move in as your first landing zone."
@@ -52,6 +52,14 @@
                 "description": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
         },
+        "enableAksPolicy": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
         "enableSecuritySolution": {
             "type": "string",
             "defaultValue": "No",
@@ -82,7 +90,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableActivityLog": {
             "type": "string",
@@ -90,7 +98,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableAntiMalware": {
             "type": "string",
@@ -98,7 +106,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableVmInsights": {
             "type": "string",
@@ -106,7 +114,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableServiceMap": {
             "type": "string",
@@ -114,7 +122,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableSqlAssessment": {
             "type": "string",
@@ -122,7 +130,7 @@
                 "Yes",
                 "No"
             ],
-            "defaultValue": "No"
+            "defaultValue": "Yes"
         },
         "enableSqlAudit": {
             "type": "string",
@@ -231,7 +239,6 @@
         },
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]",
-        "lzMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', parameters('lzSubscriptionId'))]",
         "noLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', 'nalz')]",
         "deploymentNames": {
             "mgmtGroupDeploymentName": "[take(concat('EntScale-Mgs', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
@@ -244,22 +251,10 @@
     },
     "resources": [
         {
-            // Create top level management group under tenant root
-            "type": "Microsoft.Management/managementGroups",
-            "scope": "/",
-            "apiVersion": "2020-05-01",
-            "name": "[parameters('enterpriseScaleCompanyPrefix')]",
-            "properties": {}
-        },
-        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('deploymentNames').mgmtGroupDeploymentName]",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
             "location": "[deployment().location]",
-            "dependsOn": [
-                "[parameters('enterpriseScaleCompanyPrefix')]"
-            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -324,7 +319,6 @@
         {
             "condition": "[not(empty(parameters('managementSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
-            "scope": "/",
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('managementSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
             "dependsOn": [
@@ -335,12 +329,15 @@
         {
             "condition": "[not(empty(parameters('lzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
-            "scope": "/",
             "apiVersion": "2020-05-01",
-            "name": "[if(not(empty(parameters('lzSubscriptionId'))), variables('lzMoveSubscription'), variables('noLzSubscription'))]",
+            "name": "[if(not(empty(parameters('lzSubscriptionId'))), concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', parameters('lzSubscriptionId')[copyIndex()]), variables('noLzSubscription'))]",
             "dependsOn": [
                 "[variables('deploymentNames').mgmtGroupDeploymentName]"
             ],
+            "copy": {
+                "name": "lzMove",
+                "count": "[length(parameters('lzSubscriptionId'))]"
+            },
             "properties": {}
         },
         {
@@ -461,6 +458,9 @@
                     },
                     "denyRdp": {
                         "value": "[parameters('denyRdp')]"
+                    },
+                    "enableAksPolicy": {
+                        "value": "[parameters('enableAksPolicy')]"
                     },
                     "enableStorageHttps": {
                         "value": "[parameters('enableStorageHttps')]"

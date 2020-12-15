@@ -1,0 +1,46 @@
+{
+  "properties": {
+    "Description": "This policy denies creation of Sql servers with exposed public endpoints",
+    "DisplayName": "Public network access on Azure SQL Database should be disabled",
+    "Mode": "Indexed",
+    "PolicyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Sql/servers"
+          },
+          {
+            "field": "Microsoft.Sql/servers/publicNetworkAccess",
+            "notequals": "Disabled"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    },
+    "Parameters": {
+      "effect": {
+        "type": "String",
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        }
+      }
+    },
+    "metadata": {
+      "version": "1.0.0",
+      "category": "SQL"
+    }
+  },
+  "id": "/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Sql",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "Deny-PublicEndpoint-Sql"
+}

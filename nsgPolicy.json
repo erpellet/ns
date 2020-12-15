@@ -1,0 +1,125 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Name": "Deploy-NSG-on-Subnets",
+        "ResourceType": "Microsoft.Authorization/policyDefinitions",
+        "SubscriptionId": null,
+        "Properties": {
+          "Description": null,
+          "DisplayName": "Deploy-NSG-on-Subnets",
+          "Mode": "All",
+          "Parameters": {},
+          "PolicyRule": {
+            "if":  {
+              "field": "type",
+              "equals": "Microsoft.Network/virtualNetworks/subnets"
+            },
+            "then": {
+              "effect": "deployIfNotExists",
+              "details": {
+                "resourceGroupName": "[resourceGroup().name]",
+                "type": "Microsoft.Network/networkSecurityGroups",
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                ],
+                "existenceCondition":                 {
+                  "field": "Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id",
+                  "exists": "true"
+                },
+                "deployment": {
+                  "properties": {
+                    "mode": "incremental",
+                    "template": {
+                      "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                      "contentVersion": "1.0.0.0",
+                      "parameters": {
+                        "subnetName": {
+                          "type": "string",
+                          "metadata": {
+                            "description": "Name of Subnet"
+                          }
+                        },
+                        "resourceGroupName": {
+                          "type": "string",
+                          "metadata": {
+                            "description": "Resource group containing the subnet."
+                          }
+                        },
+                        "location": {
+                          "type": "string",
+                          "metadata": {
+                            "description": "Location for subnet."
+                          }
+                        },
+                        "virtualNetworkName": {
+                          "type": "String",
+                          "metadata": {
+                              "description": "The name of the existing VNet"
+                          }
+                      },
+                        "addressPrefix": {
+                          "type": "String",
+                          "metadata": {
+                              "description": "The address space for subnet."
+                          }
+                      }
+                      },
+                      "variables": {
+                        "nsgName": "[concat('nsg-', parameters('virtualNetworkName'), '-', parameters('subnetName'))]"                        
+                      },
+                      "resources": [
+                        {
+                          "type": "Microsoft.Network/networkSecurityGroups",
+                          "name": "[variables('nsgName')]",
+                          "location": "[parameters('location')]",
+                          "apiVersion": "2018-03-01",
+                          "properties": { }
+                        },
+                        {
+                          "type": "Microsoft.Network/virtualNetworks/subnets",
+                          "name": "[concat(parameters('virtualNetworkName'), '/', parameters('subnetName'))]",
+                          "apiVersion": "2017-08-01",
+                          "location": "[parameters('location')]",
+                          "dependsOn": [
+                            "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                          ],
+                          "properties": {
+                            "addressPrefix": "[parameters('addressPrefix')]",
+                            "networkSecurityGroup": {
+                              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                            }
+                          }
+                        }                                                  
+                      ],
+                      "outputs": {}
+                      }
+                    },
+                    "parameters": {
+                      "subnetName": {
+                        "value": "[field('name')]"
+                      },
+                      "resourceGroupName": {
+                        "value": "[resourceGroup().name]"
+                      },
+                      "location": {
+                        "value": "[field('location')]"
+                      },
+                      "virtualNetworkName": {
+                        "value": "[replace(substring(field('id'),indexOf(field('id'),'Microsoft.Network/virtualNetworks/')+34),concat('/subnets/',field('name')),'')]"
+                      },
+                      "addressPrefix": {
+                        "value": "[field('addressPrefix')]"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

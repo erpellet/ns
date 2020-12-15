@@ -1,0 +1,46 @@
+{
+  "properties": {
+    "Description": "This policy denies creation of Key Vaults with IP Firewall exposed to all public endpoints",
+    "DisplayName": "Public network access should be disabled for KeyVault",
+    "Mode": "Indexed",
+    "PolicyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.KeyVault/vaults"
+          },
+          {
+            "field": "Microsoft.KeyVault/vaults/networkAcls.defaultAction",
+            "notequals": "Deny"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    },
+    "Parameters": {
+      "effect": {
+        "type": "String",
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        }
+      }
+    },
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Key Vault"
+    }
+  },
+  "id": "/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-KeyVault",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "Deny-PublicEndpoint-KeyVault"
+}
