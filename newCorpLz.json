@@ -195,7 +195,6 @@
                                         }
                                     },
                                     "variables": {
-                                        // Note: Remember to elevate these variables to parameters in outer template
                                         // These variables doesn't need to be changed as they are unique and deterministic per deployment and scope
                                         "vNetPolicyDefinition": "/providers/Microsoft.Management/managementGroups/ESLZ/providers/Microsoft.Authorization/policyDefinitions/Deploy-VNET-HubSpoke",
                                         "vNetPolicyAssignment": "Deploy-vNet-to-hub",
