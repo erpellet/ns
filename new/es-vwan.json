@@ -98,8 +98,7 @@
             "type": "string",
             "defaultValue": "No",
             "allowedValues": [
-                "Standard",
-                "Free",
+                "Yes",
                 "No"
             ],
             "metadata": {
