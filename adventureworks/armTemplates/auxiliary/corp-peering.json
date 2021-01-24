@@ -1,0 +1,129 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "topLevelManagementGroupPrefix": {
+            "type": "string"
+        },
+        "corpConnectedLzSubscriptionId": {
+            "type": "array"
+        },
+        "connectivitySubscriptionId": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "hubName": "[concat(parameters('topLevelManagementGroupPrefix'), '-hub-', parameters('location'))]",
+        "hubResourceId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-connectivity', parameters('topLevelManagementGroupPrefix'), '-hub-', parameters('location'))]",
+        "vNetPolicyDefinition": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-VNET-HubSpoke')]",
+        "vNetPolicyAssignment": "Deploy-vNet-to-hub",
+        "connectivityManagementGroup": "[concat(parameters('topLevelManagementGroupPrefix'), '-connectivity')]",
+        "rbacNameForLz": "[guid(subscription().id)]",
+        "rbacNameForNConnectivity": "[guid(concat(parameters('lzCidrInner'), deployment().name))]"
+        },
+        "resources": [
+            {
+                "type": "Microsoft.Resources/deployments",
+                "apiVersion": "2020-06-01",
+                "name": "[concat('corp', parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs)]",
+                "location": "[parameters('location')]",
+                "copy": {
+                    "name": "lzCorpAscCopy",
+                    "count": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), length(parameters('corpConnectedLzSubscriptionId')), 1)]"
+                },
+                "subscriptionId": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs, '')]",
+                "properties": {
+                    "mode": "Incremental",
+                    "template": {
+                        "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                        "contentVersion": "1.0.0.0",
+                        "parameters": {},
+                        "resources": [
+                            {
+                                "type": "Microsoft.Authorization/policyAssignments",
+                                "apiVersion": "2019-06-01",
+                                "name": "[variables('vNetPolicyAssignment')]",
+                                "location": "[deployment().location]",
+                                "identity": {
+                                    "type": "SystemAssigned"
+                                },
+                                "properties": {
+                                    "description": "Connect-Vnet-to-hub",
+                                    "displayName": "Connect-Vnet-to-hub",
+                                    "policyDefinitionId": "[variables('vNetPolicyDefinition')]",
+                                    "parameters": {
+                                        // Update values for the policyAssignment for each subscription you will create
+                                        "vNetName": {
+                                            "value": "[concat(subscription().displayName, '-vnet')]"
+                                        },
+                                        "vNetRgName": {
+                                            "value": "[concat(subscription().displayName, 'rg-vnet')]"
+                                        },
+                                        "vNetLocation": {
+                                            "value": "[parameters('location')]"
+                                        },
+                                        "vNetCidrRange": {
+                                            "value": "[parameters('corpConnectedLzSubscriptionId')[copyIndex()].addresses]"
+                                        },
+                                        "hubResourceId": {
+                                            "value": "[variables('hubResourceId')]"
+                                        }
+                                    },
+                                    "scope": "[subscription().id]"
+                                }
+                            },
+                            {
+                                // Role assignment for the policy assignment to do on-behalf-of deployments
+                                "type": "Microsoft.Authorization/roleAssignments",
+                                "apiVersion": "2018-09-01-preview",
+                                "name": "[concat(variables('rbacNameForLz'), parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs)]",
+                                "dependsOn": [
+                                    "[resourceId('Microsoft.Authorization/policyAssignments', variables('vNetPolicyAssignment'))]"
+                                ],
+                                "properties": {
+                                    "principalType": "ServicePrincipal",
+                                    "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments/', variables('vNetPolicyAssignment')), '2019-06-01', 'Full').identity.principalId]",
+                                    "roleDefinitionId": "[reference(variables('vNetPolicyDefinition'), '2019-06-01').policyRule.then.details.roleDefinitionIds[0]]"
+                                }
+                            },
+                            {
+                                // Role assignment on the connectivity hub to do on-behalf-of peering of the virtual network
+                                "type": "Microsoft.Authorization/roleAssignments",
+                                "apiVersion": "2018-09-01-preview",
+                                "scope": "[concat('Microsoft.Management/managementGroups/', variables('connectivityManagementGroup'))]",
+                                "name": "[concat(variables('rbacNameForNConnectivity')[copyIndex()])]",
+                                "dependsOn": [
+                                    "[resourceId('Microsoft.Authorization/policyAssignments', variables('vNetPolicyAssignment'))]",
+                                    "[resourceId('Microsoft.Authorization/roleAssignments', variables('rbacNameForLz'))]"
+                                ],
+                                "properties": {
+                                    "principalType": "ServicePrincipal",
+                                    "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments', variables('vNetPolicyAssignment')), '2019-06-01', 'Full').identity.principalId]",
+                                    "roleDefinitionId": "[reference(variables('vNetPolicyDefinition'), '2019-06-01').policyRule.then.details.roleDefinitionIds[0]]"
+                                }
+                            },
+                            {
+                                // Invoke the template deployment from the policyDefinition using parameters from the policyAssignment
+                                "type": "Microsoft.Resources/deployments",
+                                "apiVersion": "2019-08-01",
+                                "name": "[concat('invoke-', variables('vNetPolicyAssignment'), '-deployment')[copyIndex()]]",
+                                "location": "[deployment().location]",
+                                "dependsOn": [
+                                    "[resourceId('Microsoft.Authorization/roleAssignments', variables('rbacNameForLz'))]"
+                                ],
+                                "properties": {
+                                    "mode": "Incremental",
+                                    "template": "[reference(variables('vNetPolicyDefinition'), '2018-05-01').policyRule.then.details.deployment.properties.template]",
+                                    "parameters": "[reference(resourceId('Microsoft.Authorization/policyAssignments/', variables('vNetPolicyAssignment')), '2018-05-01').parameters]"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "outputs": {}
+}

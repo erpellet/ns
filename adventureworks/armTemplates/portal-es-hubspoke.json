@@ -1003,7 +1003,7 @@
 									}
 								},
 								{
-									"id": "colName",
+									"id": "addresses",
 									"header": "Virtual Network Address space",
 									"width": "1fr",
 									"element": {

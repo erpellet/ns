@@ -842,6 +842,9 @@
                     "corpLzSubscriptionId": {
                         "value": "[parameters('corpLzSubscriptionId')]"
                     },
+                    "corpConnectedLzSubscriptionId": {
+                        "value": "[parameters('corpConnectedLzSubscriptionId')]"
+                    },
                     "identitySubscriptionId": {
                         "value": "[parameters('identitySubscriptionId')]"
                     },
