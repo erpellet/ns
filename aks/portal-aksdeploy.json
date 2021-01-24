@@ -17,7 +17,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "Configure the basic settings for your AKS cluster that will be deployed to an online landing zone.",
+                            "text": "Configure the basic settings for your AKS cluster that will be deployed to an online landing zone. Note that recommended settings are enabled by default, such as RBAC and Azure Policy.",
                             "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization#subscription-organization-and-governance"
                         }
                     },
@@ -25,20 +25,6 @@
 						"name": "aksName",
 						"type": "Microsoft.Common.TextBox",
 						"label": "AKS cluster name",
-						"placeholder": "",
-						"defaultValue": "",
-						"toolTip": "Use only allowed characters",
-						"constraints": {
-							"required": true,
-							"regex": "^[a-z0-9A-Z]{1,30}$",
-							"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
-						},
-						"visible": true
-					},
-					{
-						"name": "aksDnsPrefix",
-						"type": "Microsoft.Common.TextBox",
-						"label": "AKS DNS name prefix",
 						"placeholder": "",
 						"defaultValue": "",
 						"toolTip": "Use only allowed characters",
@@ -119,27 +105,6 @@
 						"visible": true
 					},
 					{
-						"name": "aksNwPolicy",
-						"type": "Microsoft.Common.OptionsGroup",
-						"label": "AKS Network Policy",
-						"defaultValue": "Calico (recommended)",
-						"toolTip": "",
-						"constraints": {
-							"allowedValues": [
-								{
-									"label": "Calico (recommended)",
-									"value": "calico"
-								},
-								{
-									"label": "None",
-									"value": "none"
-								}
-							],
-							"required": true
-						},
-						"visible": true
-					},
-					{
 						"name": "aksRbac",
 						"type": "Microsoft.Common.OptionsGroup",
 						"label": "AKS authentication and authorization",
@@ -150,10 +115,6 @@
 								{
 									"label": "Role-based access control (RBAC)",
 									"value": true
-								},
-								{
-									"label": "Disabled",
-									"value": false
 								}
 							],
 							"required": true
@@ -162,6 +123,127 @@
 					}
                 ]
             },
+			{
+				"name": "aksNetworking",
+				"label": "AKS Networking",
+				"elements": [
+					{
+						"name": "networkingText",
+						"type": "Microsoft.Common.TextBlock",
+						"visible": true,
+						"options": {
+							"text": "The Azure CNI networking plug-in requires an existing virtual network in the landing zone provided by the platform. Application pods are connected directly to this VNet, which allows for native integration with VNet features.",
+							"label": "Learn more about platform requirements for AKS deployment",
+							"uri": "https://placeholder.com"
+						}
+					},
+					{
+						"name": "aksNwPolicy",
+						"type": "Microsoft.Common.OptionsGroup",
+						"label": "AKS Network Policy",
+						"defaultValue": "Calico (recommended)",
+						"toolTip": "",
+						"constraints": {
+							"allowedValues": [
+								{
+									"label": "Calico (recommended)",
+									"value": "calico"
+								}
+							],
+							"required": true
+						},
+						"visible": true
+					},
+					{
+						"name": "aksVnet",
+						"type": "Microsoft.Network.VirtualNetworkCombo",
+						"label": {
+							"virtualNetwork": "Virtual network provided by platform",
+							"subnets": "Subnet for AKS"
+						},
+						"toolTip": {
+							"virtualNetwork": "",
+							"subnets": ""
+						},
+						"defaultValue": {
+							"name": "vnet01",
+							"addressPrefixSize": "/16"
+						},
+						"constraints": {
+							"minAddressPrefixSize": "/16"
+						},
+						"options": {
+							"hideExisting": false
+						},
+						"subnets": {
+							"aks": {
+							"label": "Subnet for the AKS cluster",
+							"defaultValue": {
+								"name": "aksSubnet",
+								"addressPrefixSize": "/16"
+							},
+							"constraints": {
+								"minAddressPrefixSize": "/16",
+								"minAddressCount": 48,
+								"requireContiguousAddresses": true
+								}
+							}
+						},
+						"visible": true
+					},
+					{
+						"name": "aksServiceRange",
+						"type": "Microsoft.Common.TextBox",
+						"label": "AKS service address range",
+						"placeholder": "",
+						"defaultValue": "",
+						"toolTip": "A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. For example: 10.0.0.0/16.",
+						"constraints": {
+							"required": true
+							},
+						"visible": true
+					},
+					{
+						"name": "aksDns",
+						"type": "Microsoft.Common.TextBox",
+						"label": "AKS DNS service IP address",
+						"placeholder": "",
+						"defaultValue": "",
+						"toolTip": "An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range. For example: 10.0.0.10.",
+						"constraints": {
+							"required": true
+							},
+						"visible": true
+					},
+					{
+						"name": "aksDockerBridge",
+						"type": "Microsoft.Common.TextBox",
+						"label": "Docker bridge address",
+						"placeholder": "",
+						"defaultValue": "",
+						"toolTip": "An IP address and netmask assigned to Docker Bridge. It must not be in any Subnet IP ranges, or the Kubernetes service address range. For example: 172.17.0.1/16.",
+						"constraints": {
+							"required": true
+							},
+						"visible": true
+					},
+					{
+						"name": "aksDnsPrefix",
+						"type": "Microsoft.Common.TextBox",
+						"label": "AKS DNS name prefix",
+						"placeholder": "",
+						"defaultValue": "",
+						"toolTip": "Use only allowed characters",
+						"constraints": {
+							"required": true,
+							"regex": "^[a-z0-9A-Z]{1,30}$",
+							"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+						},
+						"visible": true
+					}
+					
+				]
+			},
 			{
 				"name": "aksIntegration",
 				"label": "AKS Integration",
@@ -192,7 +274,7 @@
 						"type": "Microsoft.Common.TextBlock",
 						"visible": true,
 						"options": {
-							"text": "Azure Monitor provides a curated monitoring experience for your AKS cluster. Select whether to use an existing Log Analytics workspace or create a new workspace for this AKS cluster.",
+							"text": "Azure Monitor provides a curated monitoring experience for your AKS cluster. Select whether to use an existing Log Analytics workspace in the landing zone or create a new workspace for this AKS cluster.",
 							"link": {
 								"label": "Learn more",
 								"uri": "https://azure.microsoft.com/blog/monitoring-azure-kubernetes-service-aks-with-azure-monitor-container-health-preview/"
@@ -277,9 +359,12 @@
             "location": "[location()]",
 			"vmSize": "[steps('aksBasics').aksSize]",
 			"identity": "[steps('aksBasics').aksIdentity]",
-			"dnsPrefix": "[steps('aksBasics').aksDnsPrefix]",
 			"kubernetesVersion": "[steps('aksBasics').aksVersion]",
 			"enableRBAC": "[steps('aksBasics').aksRbac]",
+			"serviceCidr": "[steps('aksNetworking').aksServiceRange]",
+			"dnsServiceIp": "[steps('aksNetworking').aksDns]",
+			"dockerBridgeCidr": "[steps('aksNetworking').aksDockerBridge]",
+			"dnsPrefix": "[steps('aksNetworking').aksDnsPrefix]",
 			"enableAcr": "[steps('aksIntegration').aksAcr]",
 			"enableOmsAgent": "[steps('aksIntegration').aksMon]",
 			"useExistingWorkspace": "[steps('aksIntegration').aksWorkspace]",

@@ -47,13 +47,6 @@
                 "description": "Network plugin used for building Kubernetes network."
             }
         },
-        "enableRBAC": {
-            "type": "bool",
-            "defaultValue": false,
-            "metadata": {
-                "description": "Boolean flag to turn on and off of RBAC."
-            }
-        },
         "enableAzurePolicy": {
             "type": "bool",
             "defaultValue": false,
@@ -83,12 +76,8 @@
                 "description": "Specify the resource id of the OMS workspace."
             }
         },
-        "guidValue": {
-            "type": "string",
-            "metadata": {
-                "description": "The unique id used in the role assignment of the kubernetes service to the container registry service. It is recommended to use the default value."
-            },
-            "defaultValue": "[newGuid()]"
+        "vNetSubnetResourceId": {
+            "type": "string"
         },
         "networkPolicy": {
             "type": "string",
@@ -102,13 +91,19 @@
                 "description": "Network policy used for building Kubernetes network."
             }
         },
+        "serviceCidr": {
+            "type": "string"
+        },
+        "dnsServiceIp": {
+            "type": "string"
+        },
+        "dockerBridgeCidr": {
+            "type": "string",
+            "defaultValue": "172.17.0.1/16"
+        },
         "vmSize": {
             "type": "string",
             "defaultValue": "Standard_DS2_v2"
-        },
-        "enableAcr": {
-            "type": "bool",
-            "defaultValue": false
         },
         "identity": {
             "type": "object",
@@ -125,13 +120,16 @@
             "type": "Microsoft.ContainerService/managedClusters",
             "location": "[parameters('location')]",
             "name": "[parameters('resourceName')]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "dependsOn": [
                 "[resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('resourceName'), subscription().subscriptionId))]",
                 "containerSolutionToExistingLa"
             ],
             "properties": {
                 "kubernetesVersion": "[parameters('kubernetesVersion')]",
-                "enableRBAC": "[parameters('enableRBAC')]",
+                "enableRBAC": true,
                 "dnsPrefix": "[parameters('dnsPrefix')]",
                 "agentPoolProfiles": [
                     {
@@ -148,13 +146,17 @@
                             "1",
                             "2",
                             "3"
-                        ]
+                        ],
+                        "vnetSubnetID": "[parameters('vNetSubnetResourceId')]"
                     }
                 ],
                 "networkProfile": {
                     "loadBalancerSku": "standard",
                     "networkPlugin": "[if(equals(parameters('networkPlugin'), 'none'), json(''), parameters('networkPlugin'))]",
-                    "networkPolicy": "[parameters('networkPolicy')]"
+                    "networkPolicy": "[parameters('networkPolicy')]",
+                    "serviceCidr": "[parameters('serviceCidr')]",
+                    "dnsServiceIP": "[parameters('dnsServiceIP')]",
+                    "dockerBridgeCidr": "[parameters('dockerBridgeCidr')]"
                 },
                 "aadProfile": {
                     "managed": true
@@ -176,10 +178,6 @@
                         }
                     }
                 }
-            },
-            "tags": {},
-            "identity": {
-                "type": "SystemAssigned"
             }
         },
         {
@@ -245,8 +243,10 @@
                     ]
                 }
             }
-        },
+        }
+        /*
         {
+            "condition": "[parameters('enableAcr')]",
             "name": "acrDeployment",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
@@ -273,7 +273,23 @@
                     ]
                 }
             }
+        },
+        {
+            "condition": "[parameters('enableAcr')]",
+            "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[concat('acr', '/Microsoft.Authorization/', parameters(guid(resourceGroup().name)))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ContainerRegistry/registries/', 'acr')]"
+            ],
+            "properties": {
+                "principalId": "[if(parameters('enableAcr'), reference(parameters('resourceName'), '2020-09-01').identityProfile.kubeletidentity.objectId, 'na')]",
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+                "scope": "[resourceId('Microsoft.ContainerRegistry/registries/', 'acr')]"
+            }
         }
+        */
     ],
     "outputs": {
         "controlPlaneFQDN": {
