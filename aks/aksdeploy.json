@@ -70,36 +70,11 @@
             "defaultValue": "No"
         },
         "omsWorkspaceId": {
-            "type": "string",
-            "defaultValue": "",
+            "type": "object",
+            "defaultValue": {},
             "metadata": {
                 "description": "Specify the resource id of the OMS workspace."
             }
-        },
-        "vNetSubnetResourceId": {
-            "type": "string"
-        },
-        "networkPolicy": {
-            "type": "string",
-            "defaultValue": "none",
-            "allowedValues": [
-                "none",
-                "calico",
-                "azure"
-            ],
-            "metadata": {
-                "description": "Network policy used for building Kubernetes network."
-            }
-        },
-        "serviceCidr": {
-            "type": "string"
-        },
-        "dnsServiceIp": {
-            "type": "string"
-        },
-        "dockerBridgeCidr": {
-            "type": "string",
-            "defaultValue": "172.17.0.1/16"
         },
         "vmSize": {
             "type": "string",
@@ -146,17 +121,12 @@
                             "1",
                             "2",
                             "3"
-                        ],
-                        "vnetSubnetID": "[parameters('vNetSubnetResourceId')]"
+                        ]
                     }
                 ],
                 "networkProfile": {
                     "loadBalancerSku": "standard",
-                    "networkPlugin": "[if(equals(parameters('networkPlugin'), 'none'), json(''), parameters('networkPlugin'))]",
-                    "networkPolicy": "[parameters('networkPolicy')]",
-                    "serviceCidr": "[parameters('serviceCidr')]",
-                    "dnsServiceIP": "[parameters('dnsServiceIP')]",
-                    "dockerBridgeCidr": "[parameters('dockerBridgeCidr')]"
+                    "networkPlugin": "[if(equals(parameters('networkPlugin'), 'none'), json(''), parameters('networkPlugin'))]"
                 },
                 "aadProfile": {
                     "managed": true
@@ -216,8 +186,8 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-10",
             "name": "containerSolutionToExistingLa",
-            "resourceGroup": "[if(not(empty(parameters('omsWorkspaceId'))), split(parameters('omsWorkspaceId'), '/')[4], 'na')]",
-            "subscriptionId": "[if(not(empty(parameters('omsWorkspaceId'))), split(parameters('omsWorkspaceId'), '/')[4], subscription().subscriptionId)]",
+            "resourceGroup": "[if(not(empty(parameters('omsWorkspaceId'))), split(parameters('omsWorkspaceId').id, '/')[4], 'na')]",
+            "subscriptionId": "[if(not(empty(parameters('omsWorkspaceId'))), split(parameters('omsWorkspaceId').id, '/')[4], subscription().subscriptionId)]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -228,13 +198,13 @@
                         {
                             "type": "Microsoft.OperationsManagement/solutions",
                             "apiVersion": "2015-11-01-preview",
-                            "name": "[concat('ContainerInsights', '(', split(parameters('omsWorkspaceId'), '/')[8], ')')]",
+                            "name": "[concat('ContainerInsights', '(', split(parameters('omsWorkspaceId').id, '/')[8], ')')]",
                             "location": "[resourceGroup().location]",
                             "properties": {
-                                "workspaceResourceId": "[parameters('omsWorkspaceId')]"
+                                "workspaceResourceId": "[parameters('omsWorkspaceId').id]"
                             },
                             "plan": {
-                                "name": "[concat('ContainerInsights', '(', split(parameters('omsWorkspaceId'), '/')[8], ')')]",
+                                "name": "[concat('ContainerInsights', '(', split(parameters('omsWorkspaceId').id, '/')[8], ')')]",
                                 "product": "[concat('OMSGallery/', 'ContainerInsights')]",
                                 "promotionCode": "",
                                 "publisher": "Microsoft"

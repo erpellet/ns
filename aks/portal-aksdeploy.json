@@ -220,7 +220,7 @@
 						"type": "Microsoft.Common.TextBox",
 						"label": "Docker bridge address",
 						"placeholder": "",
-						"defaultValue": "",
+						"defaultValue": "172.17.0.1/16",
 						"toolTip": "An IP address and netmask assigned to Docker Bridge. It must not be in any Subnet IP ranges, or the Kubernetes service address range. For example: 172.17.0.1/16.",
 						"constraints": {
 							"required": true
@@ -355,7 +355,8 @@
             }
         ],
         "outputs": {
-            "resourceName": "[steps('aksBasics').aksName]",
+			"vNetSubnetResourceId": "[steps('aksNetworking').aksVnet]",
+			"resourceName": "[steps('aksBasics').aksName]",
             "location": "[location()]",
 			"vmSize": "[steps('aksBasics').aksSize]",
 			"identity": "[steps('aksBasics').aksIdentity]",
@@ -369,7 +370,7 @@
 			"enableOmsAgent": "[steps('aksIntegration').aksMon]",
 			"useExistingWorkspace": "[steps('aksIntegration').aksWorkspace]",
 			"omsWorkspaceId": "[steps('aksIntegration').workspaceSelector]",
-			"networkPolicy": "[steps('aksBasics').aksNwPolicy]",
+			"networkPolicy": "[steps('aksNetworking').aksNwPolicy]",
             "tagsByResource": "[steps('tags').tagsByResource]"
         }
     }
