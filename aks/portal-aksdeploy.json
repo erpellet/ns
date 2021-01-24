@@ -36,6 +36,20 @@
 						"visible": true
 					},
 					{
+						"name": "aksDns",
+						"type": "Microsoft.Common.TextBox",
+						"label": "AKS DNS prefix",
+						"placeholder": "",
+						"defaultValue": "",
+						"toolTip": "Use only allowed characters",
+						"constraints": {
+							"required": true,
+							"regex": "^[a-z0-9A-Z]{1,30}$",
+							"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+						},
+						"visible": true
+					},
+					{
 						"name": "aksVersion",
 						"type": "Microsoft.Common.DropDown",
 						"label": "AKS version",
@@ -234,6 +248,7 @@
             }
         ],
         "outputs": {
+			"dnsPrefix": "[steps('aksBasics').aksDns]",
 			"resourceName": "[steps('aksBasics').aksName]",
             "location": "[location()]",
 			"vmSize": "[steps('aksBasics').aksSize]",
