@@ -151,7 +151,7 @@
                     "omsagent": {
                         "enabled": "[parameters('enableOmsAgent')]",
                         "config": {
-                            "logAnalyticsWorkspaceResourceID": "[if(equals(parameters('useExistingWorkspace'), 'No'), resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('resourceName'), subscription().subscriptionId)), parameters('omsWorkspaceId'))]"
+                            "logAnalyticsWorkspaceResourceID": "[if(equals(parameters('useExistingWorkspace'), 'No'), resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('resourceName'), subscription().subscriptionId)), parameters('omsWorkspaceId').id)]"
                         }
                     }
                 }
