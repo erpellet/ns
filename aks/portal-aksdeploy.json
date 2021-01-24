@@ -257,7 +257,7 @@
 			"enableRBAC": "[steps('aksBasics').aksRbac]",
 			"enableAcr": "[steps('aksIntegration').aksAcr]",
 			"enableOmsAgent": "[steps('aksIntegration').aksMon]",
-			"useExistingWorkspace": "[steps('aksIntegration').aksWorkspace.id]",
+			"useExistingWorkspace": "[steps('aksIntegration').aksWorkspace]",
 			"omsWorkspaceId": "[steps('aksIntegration').workspaceSelector]",
             "tagsByResource": "[steps('tags').tagsByResource]"
         }
