@@ -38,8 +38,6 @@
                 "name": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), concat('peeringcopy', copyIndex()), 'na')]",
                 "location": "[parameters('location')]",
                 "copy": {
-                    "batchSize": 1,
-                    "mode": "Serial",
                     "name": "lzCorpConnectedCopy",
                     "count": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), length(parameters('corpConnectedLzSubscriptionId')), 1)]"
                 },
