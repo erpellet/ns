@@ -71,6 +71,7 @@
                 "roleDefinitionId": "[reference(variables('vNetPolicyDefinition'), '2019-06-01').policyRule.then.details.roleDefinitionIds[0]]"
             }
         },
+        /*
         {
             // Role assignment on the connectivity hub to do on-behalf-of peering of the virtual network
             "type": "Microsoft.Authorization/roleAssignments",
@@ -86,12 +87,12 @@
                 "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments', variables('vNetPolicyAssignment')), '2019-06-01', 'Full').identity.principalId]",
                 "roleDefinitionId": "[reference(variables('vNetPolicyDefinition'), '2019-06-01').policyRule.then.details.roleDefinitionIds[0]]"
             }
-        },
+        },*/
         {
             // Invoke the template deployment from the policyDefinition using parameters from the policyAssignment
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-08-01",
-            "name": "[concat('invoke-', variables('vNetPolicyAssignment'), parameters('connectivitySubscriptionId'))]",
+            "name": "[concat('connect', variables('vNetPolicyAssignment'), parameters('connectivitySubscriptionId'))]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments', variables('rbacNameForLz'))]"
