@@ -39,10 +39,10 @@
                 "parameters": {
                     // Update values for the policyAssignment for each subscription you will create
                     "vNetName": {
-                        "value": "[concat('corp-vnet-', parameters('location'))]"
+                        "value": "[concat('corp-vnet-', subscription().subscriptionId)]"
                     },
                     "vNetRgName": {
-                        "value": "[concat('corp-rg-vnet-', parameters('location'))]"
+                        "value": "[concat('corp-rg-vnet-', subscription().subscriptionId)]"
                     },
                     "vNetLocation": {
                         "value": "[parameters('location')]"
@@ -91,7 +91,7 @@
             // Invoke the template deployment from the policyDefinition using parameters from the policyAssignment
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-08-01",
-            "name": "[concat('invoke-', variables('vNetPolicyAssignment'), '-deployment')]",
+            "name": "[concat('invoke-', variables('vNetPolicyAssignment'), parameters('connectivitySubscriptionId'))]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments', variables('rbacNameForLz'))]"
