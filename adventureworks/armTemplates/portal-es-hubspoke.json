@@ -67,7 +67,7 @@
                         "options": {
                             "icon": "Info",
                             "text": "To enable platform management, security and governance, you must allocate a management Subscription. Please note, this Subscription will be moved to the platform Management Group, and ARM will deploy a Log Analytics workspace and requisite settings. We recommend using a new Subscription with no existing resources. Note that Azure Policy will be used to govern the configuration for the platform at scale.",
-                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
+                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-and-monitoring"
                         }
                     },
                     {
@@ -551,13 +551,13 @@
                         "options": {
                             "icon": "Info",
                             "text": "To enable Hub & Spoke connectivity, you must allocate a connectivity Subscription. Please note, this Subscription will be moved to the connectivity Management Group, and ARM will deploy the first networking hub and requisite settings. We recommend using a new Subscription with no existing resources.",
-                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
+                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/network-topology-and-connectivity#traditional-azure-networking-topology"
                         }
                     },
                     {
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy virtual hub",
+                        "label": "Deploy virtual hub network",
                         "defaultValue": "Yes (recommended)",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy virtual network for hub",
                         "constraints": {
@@ -601,7 +601,7 @@
                     {
                         "name": "esAddressHub",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Address space (required for virtual network hub)",
+                        "label": "Address space (required for hub virtual hub)",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
                         "defaultValue": "10.100.0.0/16",
                         "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
@@ -751,7 +751,7 @@
                         "options": {
                             "icon": "Info",
                             "text": "To enable identity (AuthN/AuthZ) for workloads in landing zones, you must allocate an identity Subscription that is dedicated to host your Active Directory domain controllers. Please note, this Subscription will be moved to the identity Management Group, and ARM will assign the selected policies. We recommend using a new Subscription with no existing resources.",
-                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
+                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/identity-and-access-management"
                         }
                     },
                     {
@@ -908,7 +908,7 @@
                         "options": {
                             "icon": "Info",
                             "text": "You can optionally provide subscriptions for your first landing zones for both 'online' and 'corp' and assign recommended policies that will ensure workloads will be secure, monitored, and protected according to best practices.",
-                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/Deploy/ES-schema.md"
+                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles#policy-driven-governance"
                         }
                     },
 					{
@@ -919,16 +919,16 @@
                             "text": "Select the subscriptions you want to move to corp management group.",
                             "link": {
                                 "label": "Learn more",
-                                "uri": "https://docs.microsoft.com/azure/azure-monitor/insights/solutions"
+                                "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles#subscription-democratization"
                             }
                         }
                     },
 					{
                         "name": "esLzConnectivity",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Connect corp landing zones to the connectivity hub?",
+                        "label": "Connect corp landing zones to the connectivity hub (optional)?",
                         "defaultValue": "[if(equals(steps('esConnectivityGoalState').esHub, 'Yes'), 'Yes (recommended)', 'No')]",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will connect the subscriptions with the virtual networking hub.",
+                        "toolTip": "If 'Yes' is selected for corp landing zones, ARM will connect the subscriptions to the hub virtual network via VNet peering.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -1038,7 +1038,7 @@
                             "text": "Select the subscriptions you want to move to online management group.",
                             "link": {
                                 "label": "Learn more",
-                                "uri": "https://docs.microsoft.com/azure/azure-monitor/insights/solutions"
+                                "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles#subscription-democratization"
                             }
                         }
                     },
