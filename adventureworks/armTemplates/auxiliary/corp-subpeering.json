@@ -15,9 +15,6 @@
         "connectivitySubscriptionId": {
             "type": "string"
         },
-        "corpConnectedLzSubscriptionId": {
-            "type": "string"
-        },
         "topLevelManagementGroupPrefix": {
             "type": "string"
         }

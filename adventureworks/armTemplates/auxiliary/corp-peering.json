@@ -50,19 +50,16 @@
                     },
                     "parameters": {
                         "connectivitySubscriptionId": {
-                            "value": "[parameters('corpConnectedLzSubscriptionId')]"
+                            "value": "[parameters('connectivitySubscriptionId')]"
                         },
                         "topLevelManagementGroupPrefix": {
                             "value": "[parameters('topLevelManagementGroupPrefix')]"
-                        },
-                        "corpConnectedLzSubscriptionId": {
-                            "value": "[parameters('corpConnectedLzSubscriptionId')[copyIndex().subs]]"
                         },
                         "location": {
                             "value": "[parameters('location')]"
                         },
                         "addresses": {
-                            "value": "[parameters('corpConnectedLzSubscriptionId')[copyIndex().addresses]]"
+                            "value": "[parameters('corpConnectedLzSubscriptionId')[copyIndex()].addresses]"
                         }
                     }
                 }
