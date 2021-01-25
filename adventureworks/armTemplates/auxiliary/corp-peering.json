@@ -3,21 +3,33 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "topLevelManagementGroupPrefix": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "foo"
         },
         "corpConnectedLzSubscriptionId": {
             "type": "array",
-            "defaultValue": []
+            "defaultvalue": [
+                {
+                    "subs": "d05415ca-02a0-4062-9eb2-ffd4bb4bde8d",
+                    "addresses": "192.168.0.0/24"
+                },
+                {
+                    "subs": "f9755a6c-bc4c-4752-8bc5-147ef9785f96",
+                    "addresses": "192.168.5.0/24"
+                }
+            ]
         },
         "connectivitySubscriptionId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "b7ba378a-4619-49f2-a46b-25e1f2ab24aa"
         },
         "location": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "westeurope"
         }
     },
     "variables": {
-
+        "deploymentUri": "corpConnectedLzs": "[uri(deployment().properties.templateLink.uri, '../auxiliary/corp-subpeering.json')]"
         },
         "resources": [
             {
@@ -32,102 +44,26 @@
                 "subscriptionId": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs, '')]",
                 "properties": {
                     "mode": "Incremental",
-                    "expressionEvaluationOptions": {
-                      "scope": "inner"
+                    "templateLink": {
+                        "contentVersion": "1.0.0.0",
+                        "uri": "[variables('deploymentUri')]"
                     },
                     "parameters": {
-                        "connSubId": {
-                            "value": "[parameters('connectivitySubscriptionId')]"
-                        },
-                        "eslzPrefix": {
-                            "value": "[parameters('topLevelManagementGroupPrefix')]"
-                        },
-                        "corpConnSubIds": {
+                        "connectivitySubscriptionId": {
                             "value": "[parameters('corpConnectedLzSubscriptionId')]"
                         },
-                        "innerLocation": {
+                        "topLevelManagementGroupPrefix": {
+                            "value": "[parameters('topLevelManagementGroupPrefix')]"
+                        },
+                        "corpConnectedLzSubscriptionId": {
+                            "value": "[parameters('corpConnectedLzSubscriptionId')[copyIndex().subs]]"
+                        },
+                        "location": {
                             "value": "[parameters('location')]"
+                        },
+                        "addresses": {
+                            "value": "[parameters('corpConnectedLzSubscriptionId')[copyIndex().addresses]]"
                         }
-                    },
-                    "template": {
-                        "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
-                        "contentVersion": "1.0.0.0",
-                        "parameters": {
-                            "corpConnSubIds": {
-                                "type": "array"
-                            },
-                            "eslzPrefix": {
-                                "type": "string"
-                            },
-                            "connSubId": {
-                                "type": "string"
-                            },
-                            "innerLocation": {
-                                "type": "string"
-                            }
-                        },
-                        "variables": {
-                            "hubResourceId": "[concat('/subscriptions/', parameters('connSubId'), '/resourceGroups/', parameters('eslzPrefix'), '-connectivity', '/providers/Microsoft.Network/virtualNetworks/', parameters('eslzPrefix'), '-hub-', parameters('innerLocation'))]",
-                            "vNetPolicyDefinition": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('eslzPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-VNET-HubSpoke')]",
-                            "vNetPolicyAssignment": "Deploy-vNet-to-hub"
-                        },
-                        "resources": [
-                            {
-                                "type": "Microsoft.Authorization/policyAssignments",
-                                "apiVersion": "2019-06-01",
-                                "name": "[concat(variables('vNetPolicyAssignment'), copyIndex())]",
-                                "location": "[deployment().location]",
-                                "copy": {
-                                    "count": "[length(parameters('corpConnSubIds'))]",
-                                    "name": "policyCopy"
-                                },
-                                "identity": {
-                                    "type": "SystemAssigned"
-                                },
-                                "properties": {
-                                    "description": "Connect-Vnet-to-hub",
-                                    "displayName": "Connect-Vnet-to-hub",
-                                    "policyDefinitionId": "[variables('vNetPolicyDefinition')]",
-                                    "parameters": {                                        
-                                        "vNetLocation": {
-                                            "value": "[parameters('innerLocation')]"
-                                        },
-                                        "vNetName": {
-                                            "value": "corp-vnet"
-                                        },
-                                        "vNetRgName": {
-                                            "value": "corp-rg-vnet"
-                                        },
-                                        "vNetCidrRange": {
-                                            "value": "[parameters('corpConnSubIds')[copyIndex()].addresses]"
-                                        },
-                                        "hubResourceId": {
-                                            "value": "[variables('hubResourceId')]"
-                                        }
-                                    },
-                                    "scope": "[subscription().id]"
-                                }
-                            },
-                            {
-                                // Invoke the template deployment from the policyDefinition using parameters from the policyAssignment
-                                "type": "Microsoft.Resources/deployments",
-                                "apiVersion": "2019-08-01",
-                                "name": "[concat('invoke-', variables('vNetPolicyAssignment'), '-deployment', copyIndex())]",
-                                "location": "[deployment().location]",
-                                "dependsOn": [
-                                    "policyCopy"
-                                ],
-                                "copy": {
-                                    "name": "templateCopy",
-                                    "count": "[length(parameters('corpConnSubIds'))]"
-                                },
-                                "properties": {
-                                    "mode": "Incremental",
-                                    "template": "[reference(variables('vNetPolicyDefinition'), '2018-05-01').policyRule.then.details.deployment.properties.template]",
-                                    "parameters": "[if(not(empty(parameters('corpConnSubIds'))), reference(concat('/subscriptions/', parameters('corpConnSubIds')[copyIndex()].subs, '/providers/Microsoft.Authorization/policyAssignments/', variables('vNetPolicyAssignment'), copyIndex()), '2019-06-01').parameters, 'na')]"
-                                }
-                            }
-                        ]
                     }
                 }
             }
