@@ -10,11 +10,11 @@
             "type": "array",
             "defaultvalue": [
                 {
-                    "subs": "d05415ca-02a0-4062-9eb2-ffd4bb4bde8d",
+                    "subs": "61c7653d-4d0f-4729-a0d2-c8138cfa1434",
                     "addresses": "192.168.0.0/24"
                 },
                 {
-                    "subs": "f9755a6c-bc4c-4752-8bc5-147ef9785f96",
+                    "subs": "104868fd-b35a-4cf7-a13c-c22416b0dadb",
                     "addresses": "192.168.5.0/24"
                 }
             ]
