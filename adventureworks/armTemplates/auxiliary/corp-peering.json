@@ -31,7 +31,7 @@
                 "name": "[concat('corp', parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs)]",
                 "location": "[parameters('location')]",
                 "copy": {
-                    "name": "lzCorpAscCopy",
+                    "name": "lzCorpConnectedCopy",
                     "count": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), length(parameters('corpConnectedLzSubscriptionId')), 1)]"
                 },
                 "subscriptionId": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs, '')]",
@@ -45,7 +45,7 @@
                             {
                                 "type": "Microsoft.Authorization/policyAssignments",
                                 "apiVersion": "2019-06-01",
-                                "name": "[variables('vNetPolicyAssignment')]",
+                                "name": "[variables('vNetPolicyAssignment')[copyIndex()]]",
                                 "location": "[deployment().location]",
                                 "identity": {
                                     "type": "SystemAssigned"
@@ -81,11 +81,11 @@
                                 "apiVersion": "2018-09-01-preview",
                                 "name": "[concat(variables('rbacNameForLz'), parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs)]",
                                 "dependsOn": [
-                                    "[resourceId('Microsoft.Authorization/policyAssignments', variables('vNetPolicyAssignment'))]"
+                                    "[resourceId('Microsoft.Authorization/policyAssignments', variables('vNetPolicyAssignment')[copyIndex()])]"
                                 ],
                                 "properties": {
                                     "principalType": "ServicePrincipal",
-                                    "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments/', variables('vNetPolicyAssignment')), '2019-06-01', 'Full').identity.principalId]",
+                                    "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments/', variables('vNetPolicyAssignment')[copyIndex()]), '2019-06-01', 'Full').identity.principalId]",
                                     "roleDefinitionId": "[reference(variables('vNetPolicyDefinition'), '2019-06-01').policyRule.then.details.roleDefinitionIds[0]]"
                                 }
                             },
@@ -101,7 +101,7 @@
                                 ],
                                 "properties": {
                                     "principalType": "ServicePrincipal",
-                                    "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments', variables('vNetPolicyAssignment')), '2019-06-01', 'Full').identity.principalId]",
+                                    "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments', variables('vNetPolicyAssignment')[copyIndex()]), '2019-06-01', 'Full').identity.principalId]",
                                     "roleDefinitionId": "[reference(variables('vNetPolicyDefinition'), '2019-06-01').policyRule.then.details.roleDefinitionIds[0]]"
                                 }
                             },
