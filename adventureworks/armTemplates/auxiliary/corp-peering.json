@@ -35,7 +35,7 @@
             {
                 "type": "Microsoft.Resources/deployments",
                 "apiVersion": "2020-06-01",
-                "name": "[concat(parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs)]",
+                "name": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), concat('peeringcopy', copyIndex()), 'na')]",
                 "location": "[parameters('location')]",
                 "copy": {
                     "name": "lzCorpConnectedCopy",
