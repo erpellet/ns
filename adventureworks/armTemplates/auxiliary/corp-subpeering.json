@@ -122,8 +122,7 @@
                                             "defaultValue": false
                                         },
                                         "hubName": {
-                                            "Type": "string",
-                                            "defaultValue": false
+                                            "Type": "string"
                                         }
                                     },
                                     "variables": {},
