@@ -39,10 +39,10 @@
                 "parameters": {
                     // Update values for the policyAssignment for each subscription you will create
                     "vNetName": {
-                        "value": "[concat(subscription().displayName, '-vnet')]"
+                        "value": "[concat('corp-vnet-', parameters('location'))]"
                     },
                     "vNetRgName": {
-                        "value": "[concat(subscription().displayName, 'rg-vnet')]"
+                        "value": "[concat('corp-rg-vnet-', parameters('location'))]"
                     },
                     "vNetLocation": {
                         "value": "[parameters('location')]"
