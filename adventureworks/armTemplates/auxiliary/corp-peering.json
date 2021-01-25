@@ -29,7 +29,7 @@
         }
     },
     "variables": {
-        "deploymentUri": "[uri(deployment().properties.templateLink.uri, '../auxiliary/corp-subpeering.json')]"
+        "deploymentUri": "[uri(deployment().properties.templateLink.uri, '../auxiliary/corp-policy-peering.json')]"
         },
         "resources": [
             {
