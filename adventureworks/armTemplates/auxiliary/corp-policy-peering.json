@@ -19,7 +19,7 @@
         "hubResourceId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-connectivity', '/providers/Microsoft.Network/virtualNetworks/', parameters('topLevelManagementGroupPrefix'), '-hub-', parameters('location'))]",
         "rbacNameForLz": "[guid(subscription().id)]",
         "rbacNameForNConnectivity": "[guid(concat(parameters('addresses'), deployment().name))]",
-        "vNetPolicyAssignment": "peer-to-corp",
+        "vNetPolicyAssignment": "VNet-to-corp",
         "connectivityManagementGroup": "[concat(parameters('topLevelManagementGroupPrefix'), '-connectivity')]",
         "vNetpolicyDefinition": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-VNET-HubSpoke')]"
     },
