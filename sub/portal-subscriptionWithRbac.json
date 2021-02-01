@@ -205,7 +205,7 @@
         "outputs": {
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esPrefix]",
 			"subscriptionAliasName": "[steps('lzTarget').esSubAliasName]",
-			"billingAccount": "[steps('lzSettings').esEa]",
+			"billingAccountId": "[steps('lzSettings').esEa]",
 			"targetManagementGroup": "[steps('lzTarget').lzType]",
 			"principalId": "[steps('SPNcontrol').ServicePrincipal.objectId]"
         }
