@@ -207,7 +207,7 @@
 			"subscriptionAliasName": "[steps('lzTarget').esSubAliasName]",
 			"billingAccountId": "[steps('lzSettings').esEa]",
 			"targetManagementGroup": "[steps('lzTarget').lzType]",
-			"principalId": "[steps('SPNcontrol').ServicePrincipal.objectId]"
+			"principalId": "[steps('lzTarget').lzServicePrincipal.objectId]"
         }
     }
 }
