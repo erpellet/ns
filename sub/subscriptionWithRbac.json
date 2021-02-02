@@ -42,7 +42,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[concat('create-', parameters('subscriptionAliasName'))]",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('targetManagementGroup'))]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', variables('targetManagementGroup'))]",
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
