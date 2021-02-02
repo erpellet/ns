@@ -164,7 +164,7 @@
                         "value": "[reference(concat('create-', parameters('subscriptionAliasName'))).outputs.subscriptionId.value]"
                     },
                     "principalIdInner": {
-                        "value": "[string(parameters('principalId'))]"
+                        "value": "[array(parameters('principalId'))]"
                     }
                 },
                 "template": {
@@ -176,7 +176,7 @@
                             "type": "string"
                         },
                         "principalIdInner": {
-                            "type": "string"
+                            "type": "array"
                         }
                     },
                     "resources": [
@@ -203,7 +203,7 @@
                                     "parameters": {
                                          // parameters for inner scope
                                         "principalIdInputInner": {
-                                            "type": "string"
+                                            "type": "array"
                                         }
                                     },
                                     "variables": {},
@@ -214,7 +214,7 @@
                                             "name": "[guid(subscription().subscriptionId)]",
                                             "properties": {
                                                 "roleDefinitionId": "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
-                                                "principalId": "[parameters('principalIdInputInner')]"
+                                                "principalId": "[parameters('principalIdInputInner')[copyIndex()]]"
                                             }
                                         }
                                     ]
