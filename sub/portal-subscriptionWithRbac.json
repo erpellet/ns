@@ -97,7 +97,7 @@
             },
 			{
                 "name": "lzTarget",
-                "label": "ESLZ Subscription Vending Machine",
+                "label": "ESLZ Landing Zone Machine",
                 "bladeTitle": "Company prefix",
                 "elements": [
                     {
