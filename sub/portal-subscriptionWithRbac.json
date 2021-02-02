@@ -101,18 +101,6 @@
                 "bladeTitle": "Company prefix",
                 "elements": [
                     {
-                        "name": "textBlock0",
-                        "type": "Microsoft.Common.TextBlock",
-                        "visible": true,
-                        "options": {
-                            "text": "Select the type of landing zone and required configuration.",
-                            "link": {
-                                "label": "Learn more",
-                                "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/enterprise-enrollment-and-azure-ad-tenants"
-                            }
-                        }
-                    },
-                    {
                         "name": "mgApi",
                         "type": "Microsoft.Solutions.ArmApiControl",
                         "request": {
@@ -154,8 +142,8 @@
 						"toolTip": "Use only allowed characters",
 						"constraints": {
 							"required": true,
-							"regex": "^[a-z0-9A-Z]{1,30}$",
-							"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+							"regex": "^[a-z0-9A-Z-]{1,10}$",
+							"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-10 characters long."
 						},
 						"visible": true
 					},
@@ -164,10 +152,10 @@
 						"type": "Microsoft.Common.TextBlock",
 						"visible": true,
 						"options": {
-							"text": "You can optionally create - or use an existing Service Principal that will be granted access to the newly created landing zone, for you to use in context of DevOsp pipelines and GitHub actions for IaC for your workload deployments.",
+							"text": "You can optionally create a new - or use an existing Service Principal that will be granted access to the newly created landing zone to be use in context DevOps pipelines and GitHub actions for IaC for your workload deployments.",
 							"link": {
 								"label": "Learn more",
-								"uri": "https://www.microsoft.com"
+								"uri": "https://docs.microsoft.com/azure/devops/pipelines/library/connect-to-azure?view=azure-devops#create-an-azure-resource-manager-service-connection-with-an-existing-service-principal"
 							}
 						}
 					},
