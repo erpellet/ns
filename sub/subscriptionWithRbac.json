@@ -2,6 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "enterpriseScaleCompanyPrefix": {
+            "type": "string",
+            "maxLength": 5,
+            "metadata": {
+                "description": "Provide the ESLZ company prefix, 5 characters max."
+            }
+        },
         "subscriptionAliasName": {
             "type": "string",
             "metadata": {
@@ -21,13 +28,15 @@
             }
         },
         "principalId": {
-            "type": "string",
+            "type": "array",
             "metadata": {
                 "description": "Provide principalId for the user/group/service principal that should be granted access"
             }
         }
     },
-    "variables": {},
+    "variables": {
+        "targetManagementGroup": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-', parameters('targetManagementGroup'))]"
+    },
     "resources": [
         {
             "type": "Microsoft.Resources/deployments",
@@ -86,7 +95,7 @@
         },
         {
             // Creating deployment to place the new/existing subscription into the management group
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('targetManagementGroup'))]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', variables('targetManagementGroup'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-08-01",
             "name": "[concat('mg-', parameters('subscriptionAliasName'))]",
@@ -105,7 +114,7 @@
                         "value": "[reference(concat('create-', parameters('subscriptionAliasName'))).outputs.subscriptionId.value]"
                     },
                     "mgmtGroupId": {
-                        "value": "[parameters('targetManagementGroup')]"
+                        "value": "[variables('targetManagementGroup')]"
                     }
                 },
                 "template": {
@@ -136,7 +145,7 @@
         },
         {
             // Creating deployment to invoke policyAssignment of newly created subscription
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('targetManagementGroup'))]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', variables('targetManagementGroup'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-08-01",
             "name": "[concat('rbac-', parameters('subscriptionAliasName'))]",
@@ -155,7 +164,7 @@
                         "value": "[reference(concat('create-', parameters('subscriptionAliasName'))).outputs.subscriptionId.value]"
                     },
                     "principalIdInner": {
-                        "value": "[parameters('principalId')]"
+                        "value": "[string(parameters('principalId'))]"
                     }
                 },
                 "template": {
