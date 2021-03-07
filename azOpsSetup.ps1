@@ -46,15 +46,11 @@
 
     # Creating secret for the Service Principal into GitHub
 
-    Write-Host "Creating required secrets for Azure authorization..."
-    $servicePrincipal = New-AzADServicePrincipal -DisplayName "$($GitHubUserNameOrOrg)-ESLZ123"
-    New-AzRoleAssignment -ApplicationId $servicePrincipal.ApplicationId -RoleDefinitionName Owner
-
-    $ARMClient = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($servicePrincipal.applicationId))
-    $ARMSecret = [System.Net.NetworkCredential]::new("",$servicePrincipal.Secret).Password
+    $ARMClient = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($SpnObjectId))
+    $ARMSecret = [System.Net.NetworkCredential]::new("",$AzureSpnPwd).Password
     $ARMClientSecret = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($ARMSecret))
-    $ARMTenant = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes((Get-AzContext).Tenant.Id))
-    $ARMSubscription = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes((Get-AzContext).Subscription.Id))
+    $ARMTenant = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureTenantId))
+    $ARMSubscription = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureSubscriptionId))
 
     Write-host "Getting GitHub Public Key to create new secrets..."
     $GetPublicKey = @{
