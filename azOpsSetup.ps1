@@ -44,9 +44,6 @@
     }
     $ESLZRepo = Invoke-RestMethod @GetESLZRepoTemplate
 
-    $CreateNewRepo = @{
-        Uri     = "https://api.github.com/"
-    }
     # Creating secret for the Service Principal into GitHub
 
     Write-Host "Creating required secrets for Azure authorization..."
