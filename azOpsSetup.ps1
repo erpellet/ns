@@ -8,7 +8,8 @@ param (
  [string]$SpnObjectId,
  [string]$AzureSpnPwd,
  [string]$AzureTenantId,
- [string]$AzureSubscriptionId
+ [string]$AzureSubscriptionId,
+ [string]$EnterpriseScalePrefix
 )
 
 Install-Module -Name PowerShellForGitHub -Confirm:$false -Force
@@ -18,7 +19,7 @@ $SecureString = $PAToken | ConvertTo-SecureString -AsPlainText -Force
 $Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureString
 $ESLZGitHubOrg = "Azure"
 $ESLZRepository = "AzOps-Accelerator"
-$NewESLZRepository = $ESLZRepository
+$NewESLZRepository = $EnterpriseScalePrefix + '-' + $ESLZRepository
 #$TestRepo = $ESLZRepository
 
 Try {
