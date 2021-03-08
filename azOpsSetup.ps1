@@ -39,15 +39,19 @@ Try {
     Write-Host "Creating Git repository from template..."
     Write-Host "Checking if repository already exists..."
     # Creating GitHub repository based on Enterprise-Scale
-    $CheckExistence = Get-GitHubRepository -OwnerName $GitHubUserNameOrOrg -RepositoryName $TestRepo
+    $CheckIfRepoExists = @{
+        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($TestRepo)"
+        Headers = @{
+            Authorization = "Token $($PAToken)"
+            "Content-Type" = "application/json"
+            Accept = "application/vnd.github.v3+json"
+        }
+        Method = "GET"
+    }
+    $CheckExistence = Invoke-RestMethod @CheckIfRepoExists -ErrorAction Continue
 }
 Catch {
-    $ErrorMessage = 'Repository does not exist - and script will continue'
-    $ErrorMessage += " `n"
-    $ErrorMessage += 'Error: '
-    $ErrorMessage += $_
-    Write-Error -Message $ErrorMessage
-                -ErrorAction continue
+    Write-Host "Repository doesn't exist, hence throwing a $($_.Exception.Response.StatusCode.Value__)"
 }
 if ([string]::IsNullOrEmpty($CheckExistence))
 {
