@@ -1080,7 +1080,7 @@
             "principalSecret": "[steps('lzDevOps').lzServicePrincipal.password]",
             "gitHubUserNameOrOrg": "[steps('lzDevOps').esGit]",
             "subscriptionId": "[if(not(empty(steps('esGoalState').esMgmtSub)), steps('esGoalState').esMgmtSub, if(not(empty(steps('lzDevOps').esGitSub)), steps('lzDevOps').esGitSub, ''))]",
-            "enableDevOps": "[steps('lzDevOps').cicdOption]"
+            "enableAzOps": "[steps('lzDevOps').cicdOption]"
         }
     }
 }

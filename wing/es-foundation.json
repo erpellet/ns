@@ -327,6 +327,13 @@
         },
         "gitHubUserNameOrOrg": {
             "type": "string"
+        },
+        "enableAzOps": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
         }
     },
     "variables": {
@@ -665,7 +672,7 @@
             }
         },
         {
-            "condition": "[equals(parameters('enableAzOps'), 'Yes')]",
+            "condition": "[and(equals(parameters('enableAzOps'), 'Yes'), not(empty(parameters('gitHubUserNameOrOrg'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "name": "[variables('deploymentNames').azOpsDeploymentName]",
