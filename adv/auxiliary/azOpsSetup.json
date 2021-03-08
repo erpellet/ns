@@ -83,7 +83,7 @@
                             "name": "[variables('deploymentNames').azOpsRg]",
                             "resourceGroup": "[variables('rgName')]",
                             "dependsOn": [
-                                "[variables('rgName')]"
+                                "[concat('Microsoft.Resources/resourceGroups/', variables('rgName'))]"
                             ],
                             "properties": {
                                 "mode": "Incremental",
