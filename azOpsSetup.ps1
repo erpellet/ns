@@ -16,20 +16,39 @@ Import-Module -Name PowerShellForGitHub
 
 $SecureString = $PAToken | ConvertTo-SecureString -AsPlainText -Force
 $Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureString
-
-Write-Host "Authenticating to GitHub using PA token..."
-
-Set-GitHubAuthentication -Credential $Cred
-
 $ESLZGitHubOrg = "Azure"
 $ESLZRepository = "AzOps-Accelerator"
 $TestRepo = "fromScript"
 #$TestRepo = $ESLZRepository
 
-Write-Host "Creating Git repository from template.."
-# Creating GitHub repository based on Enterprise-Scale
+Try {
+    Write-Host "Authenticating to GitHub using PA token..."
 
-$CheckExistence = Get-GitHubRepository -OwnerName $GitHubUserNameOrOrg -RepositoryName $TestRepo
+    Set-GitHubAuthentication -Credential $Cred
+}
+Catch {
+    $ErrorMessage = 'Failed to authorize to Git. Ensure you have correct PA Token.'
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
+}
+
+Try {
+    Write-Host "Creating Git repository from template..."
+    Write-Host "Checking if repository already exists..."
+    # Creating GitHub repository based on Enterprise-Scale
+    $CheckExistence = Get-GitHubRepository -OwnerName $GitHubUserNameOrOrg -RepositoryName $TestRepo
+}
+Catch {
+    $ErrorMessage = 'Repository does not exist - and script will continue'
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage
+                -ErrorAction continue
+}
 if ([string]::IsNullOrEmpty($CheckExistence))
 {
     Write-Host "Repository does not exist in target organization/user - script will continue"
