@@ -21,7 +21,6 @@ $Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureSt
 $ESLZGitHubOrg = "Azure"
 $ESLZRepository = "AzOps-Accelerator"
 $NewESLZRepository = $EnterpriseScalePrefix + '-' + $ESLZRepository
-#$TestRepo = $ESLZRepository
 
 Try {
     Write-Host "Authenticating to GitHub using PA token..."
