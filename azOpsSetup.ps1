@@ -34,8 +34,6 @@ Catch {
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
 }
-
-
 Try {
     Write-Host "Creating Git repository from template..."
     Write-Host "Checking if repository already exists..."
@@ -158,23 +156,8 @@ $CreateARMSubscription = @{
     Method = "PUT"
 }
 Invoke-RestMethod @CreateARMSubscription
-
-# Creating AzOps Pull via dispatch
-
-$CreateDispatch = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/dispatches"
-    Headers = @{
-        Authorization = "Token $($PAToken)"
-        "Content-Type" = "application/json"
-        "Accept" = "application/vnd.github.everest-preview+json"
-    }
-    Body = @{
-        "event_type" = "PowerShell"
-    } | Convertto-json
-}
-Invoke-RestMethod @CreateDispatch
 }
 else
 {
-Write-Host "Repository already exist."
+    Write-Host "Repository already exist."
 }
