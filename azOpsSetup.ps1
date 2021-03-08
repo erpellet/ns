@@ -61,7 +61,7 @@ if ([string]::IsNullOrEmpty($CheckExistence))
 
     Get-GitHubRepository -OwnerName $ESLZGitHubOrg `
                      -RepositoryName $ESLZRepository | New-GitHubRepositoryFromTemplate `
-                     -TargetRepositoryName $TestRepo `
+                     -TargetRepositoryName $NewESLZRepository `
                      -TargetOwnerName $GitHubUserNameOrOrg
 
 # Creating secret for the Service Principal into GitHub
