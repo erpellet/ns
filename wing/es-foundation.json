@@ -315,6 +315,18 @@
                 "No"
             ],
             "defaultValue": "No"
+        },
+        "paToken": {
+            "type": "securestring"
+        },
+        "principalId": {
+            "type": "array"
+        },
+        "principalSecret": {
+            "type": "securestring"
+        },
+        "gitHubUserNameOrOrg": {
+            "type": "string"
         }
     },
     "variables": {
@@ -330,7 +342,8 @@
             "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
             "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalyticsSolutions.json')]",
             "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
-            "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]"
+            "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
+            "azOps": "[uri(deployment().properties.templateLink.uri, 'auxiliary/azOpsSetup.json')]"
         },
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]",
@@ -341,7 +354,8 @@
             "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
             "monitoringSolutionsDeploymentName": "[take(concat('EntScale-Solutions', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
             "diagAndSecDeploymentName": "[take(concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-            "lzDeploymentName": "[take(concat('EntScale-LZ', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
+            "lzDeploymentName": "[take(concat('EntScale-LZ', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "azOpsDeploymentName": "[take(concat('EntScale-AzOps', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
         }
     },
     "resources": [
@@ -646,6 +660,45 @@
                     },
                     "enableArcMonitoring": {
                         "value": "[parameters('enableArcMonitoring')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[equals(parameters('enableAzOps'), 'Yes')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('deploymentNames').azOpsDeploymentName]",
+            "location": "[deployment().location]",
+            "dependsOn": [
+                "[variables('deploymentNames').lzDeploymentName]",
+                "[variables('deploymentNames').diagAndSecDeploymentName]",
+                "[variables('deploymentNames').mgmtGroupDeploymentName]",
+                "[variables('deploymentNames').monitoringDeploymentName]",
+                "[variables('deploymentNames').monitoringSolutionsDeploymentName]",
+                "[variables('deploymentNames').policyDeploymentName]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').azOps]"
+                },
+                "parameters": {
+                    "paToken": {
+                        "value": "[parameters('paToken')]"
+                    },
+                    "principalId": {
+                        "value": "[parameters('principalId')]"
+                    },
+                    "principalSecret": {
+                        "value": "[parameters('principalSecret')]"
+                    },
+                    "gitHubUserNameOrOrg": {
+                        "value": "[parameters('gitHubUserNameOrOrg')]"
+                    },
+                    "topLevelManagementGroupPrefix": {
+                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     }
                 }
             }

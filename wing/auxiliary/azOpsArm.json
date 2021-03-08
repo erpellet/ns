@@ -1,0 +1,62 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "paToken": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Provide the PA Token to authorize Git and create new repository for the organization/user"
+            }
+        },
+        "principalId": {
+            "type": "array",
+            "metadata": {
+                "description": "Provide the principalId which is needed to create GitHub secret"
+            }
+        },
+        "principalSecret": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the principalId which is needed to create GitHub secret"
+            }
+        },
+        "gitHubUserNameOrOrg": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide username or org name for GitHub."
+            }
+        },
+        "topLevelManagementGroupPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the prefix for your ESLZ setup.",
+            }
+        }
+    },
+    "variables": {
+        "formattingPrincipalIdToString": "[replace(replace(replace(string(parameters('principalId')), '\"', ''), '[', ''), ']', '')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deploymentScripts",
+            "apiVersion": "2020-10-01",
+            "name": "[concat(resourceGroup().name, '-AzOpsKN99')]",
+            "location": "[resourceGroup().location]",
+            "kind": "AzurePowerShell",
+            "properties": {
+                "primaryScriptUri": "https://raw.githubusercontent.com/krnese/ns/master/azOpsSetup.ps1",
+                "arguments": "[concat('-PAToken', ' ', parameters('paToken'), ' ', 
+                                      '-GitHubUserNameOrOrg', ' ', parameters('gitHubUserNameOrOrg'), ' ', 
+                                      '-SpnObjectId', ' ', variables('formattingPrincipalIdToString'), ' ',
+                                      '-AzureSpnPwd', ' ', parameters('principalSecret'), ' ',
+                                      '-AzureTenantId', ' ', subscription().tenantId, ' ',
+                                      '-EnterpriseScalePrefix', ' ', parameters('topLevelManagementGroupPrefix'), ' ',
+                                      '-AzureSubscriptionId', ' ', subscription().subscriptionId)]",
+                "azPowerShellVersion": "3.0",
+                "timeout": "PT30M",
+                "cleanupPreference": "Always",
+                "retentionInterval": "P1D"
+            }
+        }
+    ]
+}
