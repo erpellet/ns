@@ -231,7 +231,7 @@
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/publicIpAddresses",
                                             "location": "[parameters('location')]",
-                                          //  "zones": "[parameters('vpnOrErZones')]",
+                                         // "zones": "[parameters('vpnOrErZones')]",
                                             "name": "[variables('azVpnGwIpName')]",
                                             "sku": {
                                                 "name": "[if(not(empty(parameters('vpnOrErZones'))), 'Standard', 'Basic')]"
@@ -279,7 +279,7 @@
                                             "type": "Microsoft.Network/publicIpAddresses",
                                             "location": "[parameters('location')]",
                                             "name": "[variables('azErGwIpName')]",
-                                           // "zones": "[parameters('vpnOrErZones')]",
+                                         // "zones": "[parameters('vpnOrErZones')]",
                                             "sku": {
                                                 "name": "[if(not(empty(parameters('vpnOrErZones'))), 'Standard', 'Basic')]"
                                             },                                  
@@ -327,7 +327,7 @@
                                             "type": "Microsoft.Network/publicIpAddresses",
                                             "name": "[variables('azFwIpName')]",
                                             "location": "[parameters('location')]",
-                                            "zones": "[parameters('firewallZones')]",
+                                       //   "zones": "[parameters('firewallZones')]",
                                             "sku": {
                                                 "name": "[if(not(empty(parameters('firewallZones'))), 'Standard', 'Basic')]"
                                             },                                  
