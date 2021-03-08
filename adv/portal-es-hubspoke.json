@@ -1471,6 +1471,8 @@
             "enableVmMonitoring": "[steps('lzGoalState').esVmMonitoring]",
             "enableVmssMonitoring": "[steps('lzGoalState').esVmssMonitoring]",
             "enableArcMonitoring": "[steps('lzGoalState').esArcVmMonitoring]",
+            "esGwOrErAz": "[steps('esConnectivityGoalState').esGwOrErAz]",
+            "esFwAz": "[steps('esConnectivityGoalState').esGwOrErAz]",
 			"corpConnectedLzSubscriptionId": "[if(or(not(contains(steps('lzGoalState').esCorpLzSub, steps('esGoalState').esMgmtSub)), not(contains(steps('lzGoalState').esCorpLzSub, steps('esConnectivityGoalState').esConnectivitySub))), steps('lzGoalState').lzConnectedSubs, '')]"
         }
     }

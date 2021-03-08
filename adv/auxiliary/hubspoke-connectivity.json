@@ -99,6 +99,14 @@
             "metadata": {
                 "description": "Provide subnet for VPN/ER."
             }
+        },
+        "vpnOrErZones": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "firewallZones": {
+            "type": "array",
+            "defaultValue": []
         }
     },
     "variables": {
@@ -132,6 +140,30 @@
                 "properties": {
                     "addressPrefix": "[parameters('subnetMaskForAzFw')]"
                 }
+            }
+        ],
+        "expressRouteNoAz": [
+            {
+                "name": "Standard",
+                "tier": "Standard"
+            }
+        ],
+        "expressRoute1Az": [
+            {
+                "name": "ErGw1AZ",
+                "tier": "ErGw1AZ"
+            }
+        ],
+        "expressRoute2Az": [
+            {
+                "name": "ErGw2AZ",
+                "tier": "ErGw2AZ"
+            }
+        ],
+        "expressRoute3Az": [
+            {
+                "name": "ErGw3AZ",
+                "tier": "ErGw3AZ"
             }
         ]
     },
@@ -199,9 +231,13 @@
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/publicIpAddresses",
                                             "location": "[parameters('location')]",
+                                            "zones": "[parameters('vpnOrErZones')]",
                                             "name": "[variables('azVpnGwIpName')]",
+                                            "sku": {
+                                                "name": "[if(not(empty(parameters('vpnOrErZones'))), 'Standard', 'Basic')]"
+                                            },                                  
                                             "properties": {
-                                                "publicIPAllocationMethod": "Dynamic"
+                                                "publicIPAllocationMethod": "[if(not(empty(parameters('vpnOrErZones'))), 'Static', 'Dynamic')]"
                                             }
                                         },
                                         {
@@ -232,8 +268,8 @@
                                                     }
                                                 ],
                                                 "sku": {
-                                                    "name": "VpnGw1",
-                                                    "tier": "VpnGw1"
+                                                    "name": "[if(not(empty(parameters('vpnOrErZones'))), 'VpnGw2AZ', 'VpnGw1')]",
+                                                    "tier": "[if(not(empty(parameters('vpnOrErZones'))), 'VpnGw2AZ', 'VpnGw1')]"
                                                 }
                                             }
                                         },
@@ -243,8 +279,12 @@
                                             "type": "Microsoft.Network/publicIpAddresses",
                                             "location": "[parameters('location')]",
                                             "name": "[variables('azErGwIpName')]",
+                                            "zones": "[parameters('vpnOrErZones')]",
+                                            "sku": {
+                                                "name": "[if(not(empty(parameters('vpnOrErZones'))), 'Standard', 'Basic')]"
+                                            },                                  
                                             "properties": {
-                                                "publicIPAllocationMethod": "Dynamic"
+                                                "publicIPAllocationMethod": "[if(not(empty(parameters('vpnOrErZones'))), 'Static', 'Dynamic')]"
                                             }
                                         },
                                         {
@@ -274,10 +314,11 @@
                                                         }
                                                     }
                                                 ],
-                                                "sku": {
-                                                    "name": "Standard",
-                                                    "tier": "Standard"
-                                                }
+                                                "sku": "[union(
+                                                               if(equals(parameters('vpnOrErZones'), json('[]')), variables('expressRouteNoAz'), json('[]')),
+                                                               if(equals(parameters('vpnOrErZones'), '1'), variables('expressRoute1Az'), json('[]')),
+                                                               if(equals(parameters('vpnOrErZones'), '2'), variables('expressRoute2Az'), json('[]')),
+                                                               if(equals(parameters('vpnOrErZones'), '3'), variables('expressRoute3Az'), json('[]')))]"
                                             }
                                         },
                                         {
@@ -286,11 +327,12 @@
                                             "type": "Microsoft.Network/publicIpAddresses",
                                             "name": "[variables('azFwIpName')]",
                                             "location": "[parameters('location')]",
+                                            "zones": "[parameters('firewallZones')]",
                                             "sku": {
-                                                "name": "Standard"
-                                            },
+                                                "name": "[if(not(empty(parameters('firewallZones'))), 'Standard', 'Basic')]"
+                                            },                                  
                                             "properties": {
-                                                "publicIPAllocationMethod": "Static"
+                                                "publicIPAllocationMethod": "[if(not(empty(parameters('firewallZones'))), 'Static', 'Dynamic')]"
                                             }
                                         },
                                         {
@@ -299,15 +341,12 @@
                                             "type": "Microsoft.Network/azureFirewalls",
                                             "name": "[variables('azfwname')]",
                                             "location": "[parameters('location')]",
+                                            "zones": "[if(not(empty(parameters('firewallZones'))), parameters('firewallZones'), json('null'))]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/publicIpAddresses/', variables('azFwIpName'))]",
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
                                             ],
                                             "properties": {
-                                                "sku": {
-                                                    "Name": "AZFW_VNet",
-                                                    "Tier": "Standard"
-                                                },
                                                 "ipConfigurations": [
                                                     {
                                                         "name": "[variables('azFwIpName')]",
