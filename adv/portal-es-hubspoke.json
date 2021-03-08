@@ -653,7 +653,7 @@
                     {
                         "name": "esGwOrErAz",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Select Availability Zones for the Virtual Gateway/Express Route Gateway",
+                        "label": "Select Availability Zones for the Virtual Network Gateway/ExpressRoute Gateway",
                         "defaultValue": "None",
                         "multiselect": true,
                         "selectAll": true,
