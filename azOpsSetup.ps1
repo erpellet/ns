@@ -12,6 +12,7 @@ param (
  [string]$EnterpriseScalePrefix
 )
 
+$ErrorActionPreference = "Continue"
 Install-Module -Name PowerShellForGitHub -Confirm:$false -Force
 Import-Module -Name PowerShellForGitHub
 
@@ -52,7 +53,6 @@ Try {
 }
 Catch {
     Write-Host "Repository doesn't exist, hence throwing a $($_.Exception.Response.StatusCode.Value__)"
-    $ErrorActionPreference = "Continue"
 }
 if ([string]::IsNullOrEmpty($CheckExistence))
 {
