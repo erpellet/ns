@@ -18,7 +18,7 @@ $SecureString = $PAToken | ConvertTo-SecureString -AsPlainText -Force
 $Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureString
 $ESLZGitHubOrg = "Azure"
 $ESLZRepository = "AzOps-Accelerator"
-$TestRepo = "fromScript"
+$NewESLZRepository = $ESLZRepository
 #$TestRepo = $ESLZRepository
 
 Try {
@@ -41,7 +41,7 @@ Try {
     Write-Host "Checking if repository already exists..."
     # Creating GitHub repository based on Enterprise-Scale
     $CheckIfRepoExists = @{
-        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($TestRepo)"
+        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)"
         Headers = @{
             Authorization = "Token $($PAToken)"
             "Content-Type" = "application/json"
@@ -74,7 +74,7 @@ $ARMSubscription = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($
 
 Write-host "Getting GitHub Public Key to create new secrets..."
 $GetPublicKey = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($TestRepo)/actions/secrets/public-key"
+    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/public-key"
     Headers = @{
         Authorization = "Token $($PAToken)"
     }
@@ -91,7 +91,7 @@ $ARMClientIdBody = @"
 
 Write-Host "Creating secret for ARMClient"
 $CreateARMClientId = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($TestRepo)/actions/secrets/ARM_CLIENT_ID"
+    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_CLIENT_ID"
     Headers = @{
         Authorization = "Token $($PAToken)"
         "Content-Type" = "application/json"
@@ -110,7 +110,7 @@ $ARMClientSecretBody = @"
 "@
 Write-Host "Creating secret for ARM Service Principal"
 $CreateARMClientSecret = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($TestRepo)/actions/secrets/ARM_CLIENT_SECRET"
+    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_CLIENT_SECRET"
     Headers = @{
         Authorization = "Token $($PAToken)"
         "Content-Type" = "application/json"
@@ -129,7 +129,7 @@ Invoke-RestMethod @CreateARMClientSecret
 "@
 Write-Host "Creating secret for ARM tenant id"
 $CreateARMTenant = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($TestRepo)/actions/secrets/ARM_TENANT_ID"
+    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_TENANT_ID"
     Headers = @{
         Authorization = "Token $($PAToken)"
         "Content-Type" = "application/json"
@@ -148,7 +148,7 @@ $ARMSubscriptionBody = @"
 "@
 Write-Host "Creating secret for ARM subscription id"    
 $CreateARMSubscription = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($TestRepo)/actions/secrets/ARM_SUBSCRIPTION_ID"
+    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_SUBSCRIPTION_ID"
     Headers = @{
         Authorization = "Token $($PAToken)"
         "Content-Type" = "application/json"
@@ -162,7 +162,7 @@ Invoke-RestMethod @CreateARMSubscription
 # Creating AzOps Pull via dispatch
 
 $CreateDispatch = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($TestRepo)/dispatches"
+    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/dispatches"
     Headers = @{
         Authorization = "Token $($PAToken)"
         "Content-Type" = "application/json"
