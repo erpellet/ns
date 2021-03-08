@@ -35,6 +35,7 @@ Catch {
                 -ErrorAction Stop
 }
 
+
 Try {
     Write-Host "Creating Git repository from template..."
     Write-Host "Checking if repository already exists..."
@@ -52,6 +53,7 @@ Try {
 }
 Catch {
     Write-Host "Repository doesn't exist, hence throwing a $($_.Exception.Response.StatusCode.Value__)"
+    $ErrorActionPreference = "Continue"
 }
 if ([string]::IsNullOrEmpty($CheckExistence))
 {
