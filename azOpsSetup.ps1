@@ -27,7 +27,7 @@ Try {
     Set-GitHubAuthentication -Credential $Cred
 }
 Catch {
-    $ErrorMessage = 'Failed to authorize to Git. Ensure you have correct PA Token.'
+    $ErrorMessage = "Failed to authenticate to Git. Ensure you provided the correct PA Token for $($GitHubUserNameOrOrg)."
     $ErrorMessage += " `n"
     $ErrorMessage += 'Error: '
     $ErrorMessage += $_
