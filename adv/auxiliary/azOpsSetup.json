@@ -82,7 +82,9 @@
                             "apiVersion": "2020-06-01",
                             "name": "[variables('deploymentNames').azOpsRg]",
                             "resourceGroup": "[variables('rgName')]",
-                            "dependsOn": "[variables('rgName')]",
+                            "dependsOn": [
+                                "[variables('rgName')]"
+                            ],
                             "properties": {
                                 "mode": "Incremental",
                                 "templateLink": {
