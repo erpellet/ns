@@ -662,7 +662,7 @@
 					{
                         "name": "SubContext",
                         "type": "Microsoft.Common.TextBlock",
-                        "visible": "[empty(steps('esGoalState').esMgmtSub",
+                        "visible": "[and(equals(steps('lzDevOps').cicdOption, 'Yes'), empty(steps('esGoalState').esMgmtSub))]",
                         "options": {
                             "text": "Provide a subscription that will be used to orchestrate the Git initialization.",
                             "link": {
@@ -689,7 +689,8 @@
                         "filter": true,
                         "filterPlaceholder": "Filter items ...",
                         "multiLine": true,
-                        "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
+                        "defaultValue": "[if(not(empty(steps('esGoalState').esMgmtSub)), steps('esGoalState').esMgmtSub, '')]",
+                        "visible": "[and(equals(steps('lzDevOps').cicdOption, 'Yes'), empty(steps('esGoalState').esMgmtSub))]",
                         "constraints": {
                             "allowedValues": "[map(steps('lzDevOps').mgmtGitApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                             "required": true
@@ -1078,7 +1079,8 @@
             "principalId": "[steps('lzDevOps').lzServicePrincipal.objectId]",
             "principalSecret": "[steps('lzDevOps').lzServicePrincipal.password]",
             "gitHubUserNameOrOrg": "[steps('lzDevOps').esGit]",
-            "subscriptionId": "[if(not(empty(steps('esGoalState').esMgmtSub)), steps('esGoalState').esMgmtSub, if(not(empty(steps('lzDevOps').esGitSub)), steps('lzDevOps').esGitSub, ''))]"
+            "subscriptionId": "[if(not(empty(steps('esGoalState').esMgmtSub)), steps('esGoalState').esMgmtSub, if(not(empty(steps('lzDevOps').esGitSub)), steps('lzDevOps').esGitSub, ''))]",
+            "enableDevOps": "[steps('lzDevOps').cicdOption]"
         }
     }
 }
