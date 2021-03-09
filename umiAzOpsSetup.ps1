@@ -16,29 +16,47 @@ param (
 
 Write-Host "Starting...."
 
-$rg = Get-AzResourceGroup -Name secure
-
-write-host $rg
-
 $ErrorActionPreference = "Continue"
 Install-Module -Name PowerShellForGitHub -Confirm:$false -Force
 Import-Module -Name PowerShellForGitHub
 
-Write-Host "Getting $($PATSecretName)"
+Try {
+    Write-Host "Getting secrets from KeyVault"
 
-$PATSecretFromKeyVault = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $PATSecretName
-$PATSecretConvert = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($PATSecretFromKeyVault.SecretValue)
-$PATSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($PATSecretConvert)
+    Write-Host "Getting $($PATSecretName)"
 
-Write-Host "Converting $($PATSecretName)"
-$SecureString = $PATSecret | ConvertTo-SecureString -AsPlainText -Force
-$Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureString
-
-Write-Host "Getting $($SPNSecretName)"
-$SPNSecretFromKeyVault = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $SPNSecretName
-$SPNSecretConvert = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SPNSecretFromKeyVault.SecretValue)
-$SPNSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SPNSecretConvert)
-
+    $PATSecretFromKeyVault = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $PATSecretName
+    $PATSecretConvert = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($PATSecretFromKeyVault.SecretValue)
+    $PATSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($PATSecretConvert)
+    
+    Write-Host "Converting $($PATSecretName)"
+    $SecureString = $PATSecret | ConvertTo-SecureString -AsPlainText -Force
+    $Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureString
+}
+Catch {
+    $ErrorMessage = "Failed to retrieve the secret from $($KeyVault)."
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
+}
+Try {
+    Write-Host "Getting secrets from KeyVault"
+    
+    Write-Host "Getting $($SPNSecretName)"
+    $SPNSecretFromKeyVault = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $SPNSecretName
+    $SPNSecretConvert = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SPNSecretFromKeyVault.SecretValue)
+    $SPNSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SPNSecretConvert)
+}
+Catch {
+    $ErrorMessage = "Failed to retrieve the secret from $($KeyVault)."
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
+}
 
 $ESLZGitHubOrg = "Azure"
 $ESLZRepository = "AzOps-Accelerator"
