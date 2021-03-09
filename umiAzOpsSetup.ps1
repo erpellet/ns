@@ -76,6 +76,25 @@ Catch {
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
 }
+Try {
+    Write-Host "Creating Git repository from template..."
+    Write-Host "Checking if repository already exists..."
+    # Creating GitHub repository based on Enterprise-Scale
+    $CheckIfRepoExists = @{
+        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)"
+        Headers = @{
+            Authorization = "Token $($PAToken)"
+            "Content-Type" = "application/json"
+            Accept = "application/vnd.github.v3+json"
+        }
+        Method = "GET"
+    }
+    $CheckExistence = Invoke-RestMethod @CheckIfRepoExists -ErrorAction Continue
+}
+Catch {
+    Write-Host "Repository doesn't exist, hence throwing a $($_.Exception.Response.StatusCode.Value__)"
+}
+if ([string]::IsNullOrEmpty($CheckExistence)){
 Try{
     Write-Host "Repository does not exist in target organization/user - script will continue"
 
@@ -83,7 +102,15 @@ Try{
                      -RepositoryName $ESLZRepository | New-GitHubRepositoryFromTemplate `
                      -TargetRepositoryName $NewESLZRepository `
                      -TargetOwnerName $GitHubUserNameOrOrg
-
+}
+Catch {
+    $ErrorMessage = "Failed to create Git repository for $($GitHubUserNameOrOrg)."
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
+}
 # Creating secret for the Service Principal into GitHub
 
 $ARMClient = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($SpnObjectId))
@@ -92,7 +119,9 @@ $ARMClientSecret = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($
 $ARMTenant = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureTenantId))
 $ARMSubscription = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureSubscriptionId))
 
-Start-Sleep -Seconds 120
+#Start-Sleep -Seconds 120
+
+Try {
 Write-host "Getting GitHub Public Key to create new secrets..."
 $GetPublicKey = @{
     Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/public-key"
@@ -102,7 +131,16 @@ $GetPublicKey = @{
     Method = "GET"
 }
 $GitHubPublicKey = Invoke-RestMethod @GetPublicKey
-
+}
+Catch {
+    $ErrorMessage = "Failed to retrieve Public Key for $($GitHubUserNameOrOrg)."
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
+}
+Try {
 $ARMClientIdBody = @"
 {
 "encrypted_value": "$($ARMClient)",
@@ -122,7 +160,16 @@ $CreateARMClientId = @{
     Method = "PUT"
 }
 Invoke-RestMethod @CreateARMClientId
-
+}
+Catch {
+    $ErrorMessage = "Failed to create secret for $($GitHubUserNameOrOrg)."
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
+}
+Try {
 $ARMClientSecretBody = @"
 {
 "encrypted_value": "$($ARMClientSecret)",
@@ -141,7 +188,16 @@ $CreateARMClientSecret = @{
     Method = "PUT"
 }
 Invoke-RestMethod @CreateARMClientSecret
-
+}
+Catch {
+    $ErrorMessage = "Failed to create secret for $($GitHubUserNameOrOrg)."
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
+}
+Try {
     $ARMTenantBody = @"
 {
 "encrypted_value": "$($ARMTenant)",
@@ -160,7 +216,16 @@ $CreateARMTenant = @{
     Method = "PUT"
 }
 Invoke-RestMethod @CreateARMTenant
-
+}
+Catch {
+    $ErrorMessage = "Failed to create Secret for $($GitHubUserNameOrOrg)."
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
+}
+Try {
 $ARMSubscriptionBody = @"
 {
 "encrypted_value": "$($ARMSubscription)",
@@ -181,10 +246,15 @@ $CreateARMSubscription = @{
 Invoke-RestMethod @CreateARMSubscription
 }
 Catch {
-    $ErrorMessage = "Failed to deliver..."
+    $ErrorMessage = "Failed to create Git repository for $($GitHubUserNameOrOrg)."
     $ErrorMessage += " `n"
     $ErrorMessage += 'Error: '
     $ErrorMessage += $_
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
 }
+}
+{
+    Write-Host "Repo already exists!"
+}
+
