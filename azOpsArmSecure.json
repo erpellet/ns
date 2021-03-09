@@ -15,7 +15,7 @@
             }
         },
         "principalSecret": {
-            "type": "string",
+            "type": "securestring",
             "metadata": {
                 "description": "Provide the principalId which is needed to create GitHub secret"
             }
@@ -44,7 +44,7 @@
             "location": "[resourceGroup().location]",
             "kind": "AzurePowerShell",
             "properties": {
-                "primaryScriptUri": "https://raw.githubusercontent.com/krnese/ns/master/azOpsSetup.ps1",
+                "primaryScriptUri": "https://raw.githubusercontent.com/krnese/ns/master/azOpsSecure.ps1",
                 "arguments": "[concat('-PAToken', ' ', parameters('paToken'), ' ', 
                                       '-GitHubUserNameOrOrg', ' ', parameters('gitHubUserNameOrOrg'), ' ', 
                                       '-SpnObjectId', ' ', variables('formattingPrincipalIdToString'), ' ',
