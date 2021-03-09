@@ -94,8 +94,7 @@ Try {
 Catch {
     Write-Host "Repository doesn't exist, hence throwing a $($_.Exception.Response.StatusCode.Value__)"
 }
-if ([string]::IsNullOrEmpty($CheckExistence)){
-Try{
+Try {
     Write-Host "Repository does not exist in target organization/user - script will continue"
 
     Get-GitHubRepository -OwnerName $ESLZGitHubOrg `
@@ -253,8 +252,5 @@ Catch {
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
 }
-}
-{
-    Write-Host "Repo already exists!"
-}
+
 
