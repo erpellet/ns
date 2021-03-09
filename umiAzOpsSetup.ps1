@@ -8,7 +8,6 @@ param (
  [string]$PATSecretName,
  [string]$SPNSecretName,
  [string]$SpnObjectId,
- [string]$AzureSpnPwd,
  [string]$AzureTenantId,
  [string]$AzureSubscriptionId,
  [string]$EnterpriseScalePrefix
