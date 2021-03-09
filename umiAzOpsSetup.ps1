@@ -3,8 +3,7 @@
 
 [CmdletBinding()]
 param (
- #[string]$KeyVault,
- #[string]$UMIClientId,
+ [string]$KeyVault,
  [string]$GitHubUserNameOrOrg,
  [string]$PATSecretName,
  [string]$SPNSecretName,
