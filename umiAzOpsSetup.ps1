@@ -14,6 +14,7 @@ param (
  [string]$EnterpriseScalePrefix
 )
 
+$DeploymentScriptOutputs = @{}
 Write-Host "Starting...."
 
 $ErrorActionPreference = "Continue"
@@ -24,11 +25,15 @@ Try {
     Write-Host "Getting secrets from KeyVault"
 
     Write-Host "Getting $($PATSecretName)"
+    $DeploymentScriptOutputs['PATSecretName'] = $PATSecretName
+
     $PATSecret = (Get-AzKeyVaultSecret -VaultName $KeyVault -Name $PATSecretName).SecretValueText
     
     Write-Host "Converting $($PATSecretName)"
     $SecureString = $PATSecret | ConvertTo-SecureString -AsPlainText -Force
     $Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureString
+
+    $DeploymentScriptOutputs['Credentials'] = $Cred
 }
 Catch {
     $ErrorMessage = "Failed to retrieve the secret from $($KeyVault)."
@@ -42,6 +47,7 @@ Try {
     Write-Host "Getting secrets from KeyVault"
     
     Write-Host "Getting $($SPNSecretName)"
+    $DeploymentScriptOutputs['PATSecretName'] = $SPNSecretName
 
     $SPNSecret = (Get-AzKeyVaultSecret -VaultName $KeyVault -Name $SPNSecretName).SecretValueText
 }
@@ -57,7 +63,7 @@ Catch {
 $ESLZGitHubOrg = "Azure"
 $ESLZRepository = "AzOps-Accelerator"
 $NewESLZRepository = $EnterpriseScalePrefix + '-' + $ESLZRepository
-
+$DeploymentScriptOutputs['Repository'] = $NewESLZRepository
 Try {
     Write-Host "Authenticating to GitHub using PA token..."
 
