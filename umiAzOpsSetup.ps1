@@ -93,6 +93,7 @@ $ARMClientSecret = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($
 $ARMTenant = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureTenantId))
 $ARMSubscription = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureSubscriptionId))
 
+Start-Sleep -Seconds 120
 Write-host "Getting GitHub Public Key to create new secrets..."
 $GetPublicKey = @{
     Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/public-key"
