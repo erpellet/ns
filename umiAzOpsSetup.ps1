@@ -24,10 +24,7 @@ Try {
     Write-Host "Getting secrets from KeyVault"
 
     Write-Host "Getting $($PATSecretName)"
-
-    $PATSecretFromKeyVault = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $PATSecretName
-    $PATSecretConvert = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($PATSecretFromKeyVault.SecretValue)
-    $PATSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($PATSecretConvert)
+    $PATSecret = (Get-AzKeyVaultSecret -VaultName $KeyVault -Name $PATSecretName).SecretValueText
     
     Write-Host "Converting $($PATSecretName)"
     $SecureString = $PATSecret | ConvertTo-SecureString -AsPlainText -Force
@@ -45,9 +42,8 @@ Try {
     Write-Host "Getting secrets from KeyVault"
     
     Write-Host "Getting $($SPNSecretName)"
-    $SPNSecretFromKeyVault = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $SPNSecretName
-    $SPNSecretConvert = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SPNSecretFromKeyVault.SecretValue)
-    $SPNSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SPNSecretConvert)
+
+    $SPNSecret = (Get-AzKeyVaultSecret -VaultName $KeyVault -Name $SPNSecretName).SecretValueText
 }
 Catch {
     $ErrorMessage = "Failed to retrieve the secret from $($KeyVault)."
