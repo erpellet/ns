@@ -119,8 +119,6 @@ $ARMClientSecret = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($
 $ARMTenant = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureTenantId))
 $ARMSubscription = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureSubscriptionId))
 
-#Start-Sleep -Seconds 120
-
 Try {
 Write-host "Getting GitHub Public Key to create new secrets..."
 $GetPublicKey = @{
@@ -252,7 +250,7 @@ Catch {
     $ErrorMessage += $_
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
-}
+    }
 }
 {
     Write-Host "Repo already exists!"
