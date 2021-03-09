@@ -77,24 +77,6 @@ Catch {
                 -ErrorAction Stop
 }
 Try {
-    Write-Host "Creating Git repository from template..."
-    Write-Host "Checking if repository already exists..."
-    # Creating GitHub repository based on Enterprise-Scale
-    $CheckIfRepoExists = @{
-        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)"
-        Headers = @{
-            Authorization = "Token $($PAToken)"
-            "Content-Type" = "application/json"
-            Accept = "application/vnd.github.v3+json"
-        }
-        Method = "GET"
-    }
-    $CheckExistence = Invoke-RestMethod @CheckIfRepoExists -ErrorAction Continue
-}
-Catch {
-    Write-Host "Repository doesn't exist, hence throwing a $($_.Exception.Response.StatusCode.Value__)"
-}
-Try {
     Write-Host "Repository does not exist in target organization/user - script will continue"
 
     Get-GitHubRepository -OwnerName $ESLZGitHubOrg `
@@ -118,8 +100,9 @@ $ARMClientSecret = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($
 $ARMTenant = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureTenantId))
 $ARMSubscription = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureSubscriptionId))
 
-#Start-Sleep -Seconds 120
-
+Write-Host "Sleeping for 30 seconds..."
+Start-Sleep -Seconds 30
+write-host "Done sleeping"
 Try {
 Write-host "Getting GitHub Public Key to create new secrets..."
 $GetPublicKey = @{
