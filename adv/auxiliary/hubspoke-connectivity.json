@@ -142,30 +142,24 @@
                 }
             }
         ],
-        "expressRouteNoAz": [
-            {
+        "sku": {
+            "0": {
                 "name": "Standard",
                 "tier": "Standard"
-            }
-        ],
-        "expressRoute1Az": [
-            {
+            },
+            "1": {
                 "name": "ErGw1AZ",
                 "tier": "ErGw1AZ"
-            }
-        ],
-        "expressRoute2Az": [
-            {
+            },
+            "2": {
                 "name": "ErGw2AZ",
                 "tier": "ErGw2AZ"
-            }
-        ],
-        "expressRoute3Az": [
-            {
+            },
+            "3": {
                 "name": "ErGw3AZ",
                 "tier": "ErGw3AZ"
             }
-        ]
+        }
     },
     "resources": [
         {
@@ -252,6 +246,7 @@
                                             ],
                                             "properties": {
                                                 "gatewayType": "Vpn",
+                                                "vpnGatewayGeneration": "Generation2",
                                                 "vpnType": "[parameters('vpnGwType')]",
                                                 "ipConfigurations": [
                                                     {
@@ -314,11 +309,7 @@
                                                         }
                                                     }
                                                 ],
-                                                "sku": "[union(
-                                                               if(equals(parameters('vpnOrErZones'), json('[]')), variables('expressRouteNoAz'), json('[]')),
-                                                               if(equals(parameters('vpnOrErZones'), '1'), variables('expressRoute1Az'), json('[]')),
-                                                               if(equals(parameters('vpnOrErZones'), '2'), variables('expressRoute2Az'), json('[]')),
-                                                               if(equals(parameters('vpnOrErZones'), '3'), variables('expressRoute3Az'), json('[]')))]"
+                                                "sku": "[variables('sku')[string(length(parameters('vpnOrErZones')))]]"
                                             }
                                         },
                                         {
