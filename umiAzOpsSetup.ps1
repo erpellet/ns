@@ -26,7 +26,7 @@ Try {
     Write-Host "Getting $($PATSecretName)"
     $DeploymentScriptOutputs['PATSecretName'] = $PATSecretName
 
-    $PATSecret = (Get-AzKeyVaultSecret -VaultName $KeyVault -Name $PATSecretName).SecretValueText
+    $PATSecret = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $PATSecretName -AsPlainText
     
     Write-Host "Converting $($PATSecretName)"
     $SecureString = $PATSecret | ConvertTo-SecureString -AsPlainText -Force
@@ -48,7 +48,7 @@ Try {
     Write-Host "Getting $($SPNSecretName)"
     $DeploymentScriptOutputs['PATSecretName'] = $SPNSecretName
 
-    $SPNSecret = (Get-AzKeyVaultSecret -VaultName $KeyVault -Name $SPNSecretName).SecretValueText
+    $SPNSecret = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $SPNSecretName -AsPlainText
 }
 Catch {
     $ErrorMessage = "Failed to retrieve the secret from $($KeyVault)."
