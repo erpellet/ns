@@ -77,26 +77,7 @@ Catch {
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
 }
-Try {
-    Write-Host "Creating Git repository from template..."
-    Write-Host "Checking if repository already exists..."
-    # Creating GitHub repository based on Enterprise-Scale
-    $CheckIfRepoExists = @{
-        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)"
-        Headers = @{
-            Authorization = "Token $($PAToken)"
-            "Content-Type" = "application/json"
-            Accept = "application/vnd.github.v3+json"
-        }
-        Method = "GET"
-    }
-    $CheckExistence = Invoke-RestMethod @CheckIfRepoExists -ErrorAction Continue
-}
-Catch {
-    Write-Host "Repository doesn't exist, hence throwing a $($_.Exception.Response.StatusCode.Value__)"
-}
-if ([string]::IsNullOrEmpty($CheckExistence))
-{
+Try{
     Write-Host "Repository does not exist in target organization/user - script will continue"
 
     Get-GitHubRepository -OwnerName $ESLZGitHubOrg `
@@ -199,7 +180,11 @@ $CreateARMSubscription = @{
 }
 Invoke-RestMethod @CreateARMSubscription
 }
-else
-{
-    Write-Host "Repository already exist."
+Catch {
+    $ErrorMessage = "Failed to deliver..."
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
 }
