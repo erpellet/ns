@@ -14,11 +14,11 @@ param (
  [string]$EnterpriseScalePrefix
 )
 
-#Write-Host "Authenticating to Azure AD"
-#Connect-AzAccount -Identity -Account $UMIClientId -Tenant $AzureTenantId
+Write-Host "Starting...."
 
-$Context = Get-AzContext
-Write-Host $Context
+$rg = Get-AzResourceGroup -Name secure
+
+write-host $rg
 
 $ErrorActionPreference = "Continue"
 Install-Module -Name PowerShellForGitHub -Confirm:$false -Force
@@ -36,8 +36,8 @@ $Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureSt
 
 Write-Host "Getting $($SPNSecretName)"
 $SPNSecretFromKeyVault = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $SPNSecretName
-$SPNSecretConvert = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($PATSecretFromKeyVault.SecretValue)
-$SPNSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($PATSecretConvert)
+$SPNSecretConvert = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SPNSecretFromKeyVault.SecretValue)
+$SPNSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SPNSecretConvert)
 
 
 $ESLZGitHubOrg = "Azure"
