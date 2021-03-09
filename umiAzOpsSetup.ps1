@@ -3,7 +3,8 @@
 
 [CmdletBinding()]
 param (
- [string]$KeyVault,
+ #[string]$KeyVault,
+ #[string]$UMIClientId,
  [string]$GitHubUserNameOrOrg,
  [string]$PATSecretName,
  [string]$SPNSecretName,
@@ -14,8 +15,8 @@ param (
  [string]$EnterpriseScalePrefix
 )
 
-Write-Host "Authenticating to Azure AD"
-Connect-AzAccount -Identity -Tenant $AzureTenantId
+#Write-Host "Authenticating to Azure AD"
+#Connect-AzAccount -Identity -Account $UMIClientId -Tenant $AzureTenantId
 
 $Context = Get-AzContext
 Write-Host $Context
