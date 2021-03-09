@@ -77,6 +77,25 @@ Catch {
                 -ErrorAction Stop
 }
 Try {
+    Write-Host "Creating Git repository from template..."
+    Write-Host "Checking if repository already exists..."
+    # Creating GitHub repository based on Enterprise-Scale
+    $CheckIfRepoExists = @{
+        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)"
+        Headers = @{
+            Authorization = "Token $($PATSecret)"
+            "Content-Type" = "application/json"
+            Accept = "application/vnd.github.v3+json"
+        }
+        Method = "GET"
+    }
+    $CheckExistence = Invoke-RestMethod @CheckIfRepoExists -ErrorAction Continue
+}
+Catch {
+    Write-Host "Repository doesn't exist, hence throwing a $($_.Exception.Response.StatusCode.Value__)"
+}
+if ([string]::IsNullOrEmpty($CheckExistence)){
+Try{
     Write-Host "Repository does not exist in target organization/user - script will continue"
 
     Get-GitHubRepository -OwnerName $ESLZGitHubOrg `
@@ -100,15 +119,14 @@ $ARMClientSecret = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($
 $ARMTenant = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureTenantId))
 $ARMSubscription = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureSubscriptionId))
 
-Write-Host "Sleeping for 30 seconds..."
-Start-Sleep -Seconds 30
-write-host "Done sleeping"
+#Start-Sleep -Seconds 120
+
 Try {
 Write-host "Getting GitHub Public Key to create new secrets..."
 $GetPublicKey = @{
     Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/public-key"
     Headers = @{
-        Authorization = "Token $($PAToken)"
+        Authorization = "Token $($PATSecret)"
     }
     Method = "GET"
 }
@@ -134,7 +152,7 @@ Write-Host "Creating secret for ARMClient"
 $CreateARMClientId = @{
     Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_CLIENT_ID"
     Headers = @{
-        Authorization = "Token $($PAToken)"
+        Authorization = "Token $($PATSecret)"
         "Content-Type" = "application/json"
         Accept = "application/vnd.github.v3+json"
     }
@@ -162,7 +180,7 @@ Write-Host "Creating secret for ARM Service Principal"
 $CreateARMClientSecret = @{
     Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_CLIENT_SECRET"
     Headers = @{
-        Authorization = "Token $($PAToken)"
+        Authorization = "Token $($PATSecret)"
         "Content-Type" = "application/json"
         Accept = "application/vnd.github.v3+json"
     }
@@ -190,7 +208,7 @@ Write-Host "Creating secret for ARM tenant id"
 $CreateARMTenant = @{
     Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_TENANT_ID"
     Headers = @{
-        Authorization = "Token $($PAToken)"
+        Authorization = "Token $($PATSecret)"
         "Content-Type" = "application/json"
         Accept = "application/vnd.github.v3+json"
     }
@@ -218,7 +236,7 @@ Write-Host "Creating secret for ARM subscription id"
 $CreateARMSubscription = @{
     Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_SUBSCRIPTION_ID"
     Headers = @{
-        Authorization = "Token $($PAToken)"
+        Authorization = "Token $($PATSecret)"
         "Content-Type" = "application/json"
         Accept = "application/vnd.github.v3+json"
     }
@@ -235,5 +253,8 @@ Catch {
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
 }
-
+}
+{
+    Write-Host "Repo already exists!"
+}
 
