@@ -31,6 +31,9 @@
             "metadata": {
                 "description": "Provide the prefix for your ESLZ setup."
             }
+        },
+        "appId": {
+            "type": "string"
         }
     },
     "variables": {
@@ -139,7 +142,7 @@
                 "arguments": "[concat('-KeyVault', ' ', variables('keyVaultName'), ' ', 
                                       '-GitHubUserNameOrOrg', ' ', parameters('gitHubUserNameOrOrg'), ' ', 
                                       '-SPNSecretName', ' ', variables('spnSecretName'), ' ',
-                                      '-SpnObjectId', ' ', variables('formattingPrincipalIdToString'), ' ',
+                                      '-SpnAppId', ' ', parameters('appId'), ' ',
                                       '-PATSecretName', ' ', variables('patSecretName'), ' ',
                                       '-AzureTenantId', ' ', subscription().tenantId, ' ',
                                       '-EnterpriseScalePrefix', ' ', parameters('topLevelManagementGroupPrefix'), ' ',
