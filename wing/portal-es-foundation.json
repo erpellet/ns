@@ -641,7 +641,7 @@
 							"sectionHeader": "Service Principal"
 						},
 						"toolTip": {
-							"password": "Password",
+							"password": "Provide the application secret as it will be used to authenticate with Azure AD",
 							"certificateThumbprint": "Certificate thumbprint",
 							"authenticationType": "Authentication Type"
 						},
@@ -658,7 +658,7 @@
 						"visible": true
 					},
 					{
-                        "name": "SubContext",
+                        "name": "subContext",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": "[and(equals(steps('lzDevOps').cicdOption, 'Yes'), empty(steps('esGoalState').esMgmtSub))]",
                         "options": {
