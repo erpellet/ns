@@ -1,4 +1,4 @@
-### PowerShell script to bootstrap AzOps into GitHub - as part of Enterprise-Scale landing zone setup 
+### PowerShell script to bootstrap AzOps into GitHub - as part of Enterprise-Scale landing zone setup
 ### This script is developed and maintained by a set of diverse architects and engineers, part of the Azure Customer Architecture & Engineering team
 
 [CmdletBinding()]
@@ -17,8 +17,8 @@ $DeploymentScriptOutputs = @{}
 Write-Host "Starting...."
 
 $ErrorActionPreference = "Continue"
-Install-Module -Name PowerShellForGitHub -Confirm:$false -Force
-Import-Module -Name PowerShellForGitHub
+Install-Module -Name PowerShellForGitHub,PSSodium -Confirm:$false -Force
+Import-Module -Name PowerShellForGitHub,PSSodium
 
 Try {
     Write-Host "Getting secrets from KeyVault"
@@ -27,7 +27,7 @@ Try {
     $DeploymentScriptOutputs['PATSecretName'] = $PATSecretName
 
     $PATSecret = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $PATSecretName -AsPlainText
-    
+
     Write-Host "Converting $($PATSecretName)"
     $SecureString = $PATSecret | ConvertTo-SecureString -AsPlainText -Force
     $Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureString
@@ -44,7 +44,7 @@ Catch {
 }
 Try {
     Write-Host "Getting secrets from KeyVault"
-    
+
     Write-Host "Getting $($SPNSecretName)"
     $DeploymentScriptOutputs['PATSecretName'] = $SPNSecretName
 
@@ -111,25 +111,18 @@ Catch {
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
 }
-# Creating secret for the Service Principal into GitHub
-
-$ARMClient = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($SpnObjectId))
-$ARMSecret = [System.Net.NetworkCredential]::new("",$SPNSecret).Password
-$ARMClientSecret = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($ARMSecret))
-$ARMTenant = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureTenantId))
-$ARMSubscription = [convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($AzureSubscriptionId))
-
+# Creating secrets for the Service Principal into GitHub
 Try {
-Write-host "Getting GitHub Public Key to create new secrets..."
-$GetPublicKey = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/public-key"
-    Headers = @{
-        Authorization = "Token $($PATSecret)"
+    Write-host "Getting GitHub Public Key to create new secrets..."
+    $GetPublicKey = @{
+        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/public-key"
+        Headers = @{
+            Authorization = "Token $($PATSecret)"
+        }
+        Method = "GET"
     }
-    Method = "GET"
-}
-$GitHubPublicKey = Invoke-RestMethod @GetPublicKey
-}
+    $GitHubPublicKey = Invoke-RestMethod @GetPublicKey
+    }
 Catch {
     $ErrorMessage = "Failed to retrieve Public Key for $($GitHubUserNameOrOrg)."
     $ErrorMessage += " `n"
@@ -138,6 +131,13 @@ Catch {
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
 }
+#Convert secrets to sodium with public key
+$ARMClient = ConvertTo-SodiumEncryptedString -Text $SpnObjectId -PublicKey $GitHubPublicKey.key
+$ARMClientSecret = ConvertTo-SodiumEncryptedString -Text $SPNSecret -PublicKey $GitHubPublicKey.key
+$ARMTenant = ConvertTo-SodiumEncryptedString -Text $AzureTenantId -PublicKey $GitHubPublicKey.key
+$ARMSubscription = ConvertTo-SodiumEncryptedString -Text $AzureSubscriptionId -PublicKey $GitHubPublicKey.key
+
+
 Try {
 $ARMClientIdBody = @"
 {
@@ -230,7 +230,7 @@ $ARMSubscriptionBody = @"
 "key_id": "$($GitHubPublicKey.Key_id)"
 }
 "@
-Write-Host "Creating secret for ARM subscription id"    
+Write-Host "Creating secret for ARM subscription id"
 $CreateARMSubscription = @{
     Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_SUBSCRIPTION_ID"
     Headers = @{
