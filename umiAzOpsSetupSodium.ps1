@@ -97,7 +97,7 @@ Try {
 Catch {
     Write-Host "Repository doesn't exist, hence throwing a $($_.Exception.Response.StatusCode.Value__)"
 }
-if ([string]::IsNullOrEmpty($CheckExistence)){
+
 Try{
     Write-Host "Repository does not exist in target organization/user - script will continue"
 
