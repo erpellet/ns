@@ -1077,6 +1077,7 @@
             "principalId": "[steps('lzDevOps').lzServicePrincipal.objectId]",
             "principalSecret": "[steps('lzDevOps').lzServicePrincipal.password]",
             "gitHubUserNameOrOrg": "[steps('lzDevOps').esGit]",
+            "appId": "[steps('lzDevOps').lzServicePrincipal.appId]",
             "subscriptionId": "[if(not(empty(steps('esGoalState').esMgmtSub)), steps('esGoalState').esMgmtSub, if(not(empty(steps('lzDevOps').esGitSub)), steps('lzDevOps').esGitSub, ''))]",
             "enableAzOps": "[steps('lzDevOps').cicdOption]"
         }

@@ -7,7 +7,7 @@ param (
  [string]$GitHubUserNameOrOrg,
  [string]$PATSecretName,
  [string]$SPNSecretName,
- [string]$SpnObjectId,
+ [string]$SpnAppId,
  [string]$AzureTenantId,
  [string]$AzureSubscriptionId,
  [string]$EnterpriseScalePrefix
@@ -132,7 +132,7 @@ Catch {
                 -ErrorAction Stop
 }
 #Convert secrets to sodium with public key
-$ARMClient = ConvertTo-SodiumEncryptedString -Text $SpnObjectId -PublicKey $GitHubPublicKey.key
+$ARMClient = ConvertTo-SodiumEncryptedString -Text $SpnAppId -PublicKey $GitHubPublicKey.key
 $ARMClientSecret = ConvertTo-SodiumEncryptedString -Text $SPNSecret -PublicKey $GitHubPublicKey.key
 $ARMTenant = ConvertTo-SodiumEncryptedString -Text $AzureTenantId -PublicKey $GitHubPublicKey.key
 $ARMSubscription = ConvertTo-SodiumEncryptedString -Text $AzureSubscriptionId -PublicKey $GitHubPublicKey.key

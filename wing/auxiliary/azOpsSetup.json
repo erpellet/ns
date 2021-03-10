@@ -31,6 +31,9 @@
             "metadata": {
                 "description": "Provide the subscriptionId which will be used to initialize Git during deployment runtime."
             }
+        },
+        "appId": {
+            "type": "string"
         }
     },
     "variables": {
@@ -107,6 +110,9 @@
                                     },
                                     "topLevelManagementGroupPrefix": {
                                         "value": "[parameters('topLevelManagementGroupPrefix')]"
+                                    },
+                                    "appId": {
+                                        "value": "[parameters('appId')]"
                                     }
                                 }
                             }

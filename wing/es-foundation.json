@@ -322,6 +322,9 @@
         "principalId": {
             "type": "array"
         },
+        "appId": {
+            "type": "string"
+        },
         "principalSecret": {
             "type": "securestring"
         },
@@ -713,6 +716,9 @@
                     },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
+                    },
+                    "appId": {
+                        "value": "[parameters('appId')]"
                     }
                 }
             }
