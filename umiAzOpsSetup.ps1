@@ -96,7 +96,7 @@ Catch {
 }
 if ([string]::IsNullOrEmpty($CheckExistence)){
 Try{
-    Write-Host "Repository does not exist in target organization/user - script will continue"
+    Write-Host "Moving on; creating the repository :-)"
 
     Get-GitHubRepository -OwnerName $ESLZGitHubOrg `
                      -RepositoryName $ESLZRepository | New-GitHubRepositoryFromTemplate `
@@ -245,6 +245,32 @@ Invoke-RestMethod @CreateARMSubscription
 }
 Catch {
     $ErrorMessage = "Failed to create Git repository for $($GitHubUserNameOrOrg)."
+    $ErrorMessage += " `n"
+    $ErrorMessage += 'Error: '
+    $ErrorMessage += $_
+    Write-Error -Message $ErrorMessage `
+                -ErrorAction Stop
+    }
+Try {
+    Write-Host "Invoking GitHub Action to bootstrap the repository."
+    $DispatchBody = @"
+{
+    "event_type": "Azure Activity Logs"
+}
+"@
+    $InvokeGitHubAction = @{
+        Uri   = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/dispatches"
+        Headers = @{
+            Authorization = "Token $($PATSecret)"
+            Accept  = "application/vnd.github.v3+json"
+        }
+        Body = $DispatchBody
+        Method = "POST"
+    }
+    $InvokeAction = Invoke-RestMethod @InvokeGitHubAction
+}
+Catch {
+    $ErrorMessage = "Failed to invoke GitHub Action for $($GitHubUserNameOrOrg)."
     $ErrorMessage += " `n"
     $ErrorMessage += 'Error: '
     $ErrorMessage += $_
