@@ -15,10 +15,14 @@ param (
 )
 
 $DeploymentScriptOutputs = @{}
+
+$ESLZGitHubOrg = "Azure"
+$ESLZRepository = "AzOps-Accelerator"
+$NewESLZRepository = $NewRepositoryName
+$DeploymentScriptOutputs['New Repository'] = $NewRepositoryName
 Write-Host "Starting...."
 
 # Adding sleep so that RBAC can propegate
-
 Start-Sleep -Seconds 500
 
 $ErrorActionPreference = "Continue"
@@ -57,11 +61,6 @@ Catch {
     Write-Error -Message $ErrorMessage `
                 -ErrorAction Stop
 }
-
-$ESLZGitHubOrg = "Azure"
-$ESLZRepository = "AzOps-Accelerator"
-$NewESLZRepository = $NewRepositoryName
-$DeploymentScriptOutputs['Repository'] = $NewRepositoryName
 Try {
     Write-Host "Authenticating to GitHub using PA token..."
 
@@ -113,6 +112,7 @@ Catch {
 # Creating secrets for the Service Principal into GitHub
 Try {
     Write-host "Getting GitHub Public Key to create new secrets..."
+    
     $GetPublicKey = @{
         Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/public-key"
         Headers = @{
@@ -144,18 +144,19 @@ $ARMClientIdBody = @"
 }
 "@
 
-Write-Host "Creating secret for ARMClient"
-$CreateARMClientId = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_CLIENT_ID"
-    Headers = @{
-        Authorization = "Token $($PATSecret)"
-        "Content-Type" = "application/json"
-        Accept = "application/vnd.github.v3+json"
+    Write-Host "Creating secret for ARMClient"
+
+    $CreateARMClientId = @{
+        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_CLIENT_ID"
+        Headers = @{
+            Authorization = "Token $($PATSecret)"
+            "Content-Type" = "application/json"
+            Accept = "application/vnd.github.v3+json"
+        }
+        Body = $ARMClientIdBody
+        Method = "PUT"
     }
-    Body = $ARMClientIdBody
-    Method = "PUT"
-}
-Invoke-RestMethod @CreateARMClientId
+    Invoke-RestMethod @CreateARMClientId
 }
 Catch {
     $ErrorMessage = "Failed to create secret for $($GitHubUserNameOrOrg)."
@@ -172,18 +173,20 @@ $ARMClientSecretBody = @"
 "key_id": "$($GitHubPublicKey.Key_id)"
 }
 "@
-Write-Host "Creating secret for ARM Service Principal"
-$CreateARMClientSecret = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_CLIENT_SECRET"
-    Headers = @{
-        Authorization = "Token $($PATSecret)"
-        "Content-Type" = "application/json"
-        Accept = "application/vnd.github.v3+json"
+
+    Write-Host "Creating secret for ARM Service Principal"
+
+    $CreateARMClientSecret = @{
+        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_CLIENT_SECRET"
+        Headers = @{
+            Authorization = "Token $($PATSecret)"
+            "Content-Type" = "application/json"
+            Accept = "application/vnd.github.v3+json"
+        }
+        Body = $ARMClientSecretBody
+        Method = "PUT"
     }
-    Body = $ARMClientSecretBody
-    Method = "PUT"
-}
-Invoke-RestMethod @CreateARMClientSecret
+    Invoke-RestMethod @CreateARMClientSecret
 }
 Catch {
     $ErrorMessage = "Failed to create secret for $($GitHubUserNameOrOrg)."
@@ -194,24 +197,26 @@ Catch {
                 -ErrorAction Stop
 }
 Try {
-    $ARMTenantBody = @"
+$ARMTenantBody = @"
 {
 "encrypted_value": "$($ARMTenant)",
 "key_id": "$($GitHubPublicKey.Key_id)"
 }
 "@
-Write-Host "Creating secret for ARM tenant id"
-$CreateARMTenant = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_TENANT_ID"
-    Headers = @{
-        Authorization = "Token $($PATSecret)"
-        "Content-Type" = "application/json"
-        Accept = "application/vnd.github.v3+json"
+
+    Write-Host "Creating secret for ARM tenant id"
+
+    $CreateARMTenant = @{
+        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_TENANT_ID"
+        Headers = @{
+            Authorization = "Token $($PATSecret)"
+            "Content-Type" = "application/json"
+            Accept = "application/vnd.github.v3+json"
+        }
+        Body = $ARMTenantBody
+        Method = "PUT"
     }
-    Body = $ARMTenantBody
-    Method = "PUT"
-}
-Invoke-RestMethod @CreateARMTenant
+    Invoke-RestMethod @CreateARMTenant
 }
 Catch {
     $ErrorMessage = "Failed to create Secret for $($GitHubUserNameOrOrg)."
@@ -228,18 +233,20 @@ $ARMSubscriptionBody = @"
 "key_id": "$($GitHubPublicKey.Key_id)"
 }
 "@
-Write-Host "Creating secret for ARM subscription id"
-$CreateARMSubscription = @{
-    Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_SUBSCRIPTION_ID"
-    Headers = @{
-        Authorization = "Token $($PATSecret)"
-        "Content-Type" = "application/json"
-        Accept = "application/vnd.github.v3+json"
+
+    Write-Host "Creating secret for ARM subscription id"
+
+    $CreateARMSubscription = @{
+        Uri     = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/actions/secrets/ARM_SUBSCRIPTION_ID"
+        Headers = @{
+            Authorization = "Token $($PATSecret)"
+            "Content-Type" = "application/json"
+            Accept = "application/vnd.github.v3+json"
+        }
+        Body = $ARMSubscriptionBody
+        Method = "PUT"
     }
-    Body = $ARMSubscriptionBody
-    Method = "PUT"
-}
-Invoke-RestMethod @CreateARMSubscription
+    Invoke-RestMethod @CreateARMSubscription
 }
 Catch {
     $ErrorMessage = "Failed to create Git repository for $($GitHubUserNameOrOrg)."
@@ -250,12 +257,14 @@ Catch {
                 -ErrorAction Stop
     }
 Try {
-    Write-Host "Invoking GitHub Action to bootstrap the repository."
-    $DispatchBody = @"
+$DispatchBody = @"
 {
     "event_type": "Enterprise-Scale Deployment"
 }
 "@
+    
+    Write-Host "Invoking GitHub Action to bootstrap the repository."
+
     $InvokeGitHubAction = @{
         Uri   = "https://api.github.com/repos/$($GitHubUserNameOrOrg)/$($NewESLZRepository)/dispatches"
         Headers = @{
@@ -265,7 +274,7 @@ Try {
         Body = $DispatchBody
         Method = "POST"
     }
-    $InvokeAction = Invoke-RestMethod @InvokeGitHubAction
+    Invoke-RestMethod @InvokeGitHubAction
 }
 Catch {
     $ErrorMessage = "Failed to invoke GitHub Action for $($GitHubUserNameOrOrg)."
