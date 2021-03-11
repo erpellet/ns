@@ -141,7 +141,7 @@
                 "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('spnSecretName'))]"
             ],
             "properties": {
-                "primaryScriptUri": "https://raw.githubusercontent.com/krnese/ns/master/umiAzOpsSetup.ps1",
+                "primaryScriptUri": "[base64ToString('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2tybmVzZS9ucy9tYXN0ZXIvdW1pQXpPcHNTZXR1cC5wczE=')]",
                 "arguments": "[concat('-KeyVault', ' ', variables('keyVaultName'), ' ',
                                       '-NewRepositoryName', ' ', parameters('repositoryName'), ' ',
                                       '-GitHubUserNameOrOrg', ' ', parameters('gitHubUserNameOrOrg'), ' ', 

@@ -28,6 +28,7 @@ Start-Sleep -Seconds 500
 $ErrorActionPreference = "Continue"
 Install-Module -Name PowerShellForGitHub,PSSodium -Confirm:$false -Force
 Import-Module -Name PowerShellForGitHub,PSSodium
+Set-GitHubConfiguration -DisableTelemetry
 
 Try {
     Write-Host "Getting secrets from KeyVault"
@@ -99,7 +100,8 @@ Try{
     Get-GitHubRepository -OwnerName $ESLZGitHubOrg `
                      -RepositoryName $ESLZRepository | New-GitHubRepositoryFromTemplate `
                      -TargetRepositoryName $NewESLZRepository `
-                     -TargetOwnerName $GitHubUserNameOrOrg
+                     -TargetOwnerName $GitHubUserNameOrOrg `
+                     -Private
 }
 Catch {
     $ErrorMessage = "Failed to create Git repository for $($GitHubUserNameOrOrg)."
