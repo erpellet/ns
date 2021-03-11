@@ -249,7 +249,7 @@ Try {
     Write-Host "Invoking GitHub Action to bootstrap the repository."
     $DispatchBody = @"
 {
-    "event_type": "Azure Activity Logs"
+    "event_type": "Enterprise-Scale Deployment"
 }
 "@
     $InvokeGitHubAction = @{
