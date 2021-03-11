@@ -19,7 +19,7 @@ Write-Host "Starting...."
 
 # Adding sleep so that RBAC can propegate
 
-Start-Sleep -Seconds 300
+Start-Sleep -Seconds 500
 
 $ErrorActionPreference = "Continue"
 Install-Module -Name PowerShellForGitHub,PSSodium -Confirm:$false -Force
