@@ -320,16 +320,23 @@
             "type": "securestring"
         },
         "principalId": {
-            "type": "array"
+            "type": "array",
+            "defaultValue": []
         },
         "appId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": ""
         },
         "principalSecret": {
             "type": "securestring"
         },
         "gitHubUserNameOrOrg": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": ""
+        },
+        "repositoryName": {
+            "type": "string",
+            "defaultValue": ""
         },
         "enableAzOps": {
             "type": "string",
@@ -339,7 +346,9 @@
             ]
         },
         "subscriptionId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36
         }
     },
     "variables": {
@@ -719,6 +728,9 @@
                     },
                     "appId": {
                         "value": "[parameters('appId')]"
+                    },
+                    "repositoryName": {
+                        "value": "[parameters('repositoryName')]"
                     }
                 }
             }

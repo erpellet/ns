@@ -34,6 +34,9 @@
         },
         "appId": {
             "type": "string"
+        },
+        "repositoryName": {
+            "type": "string"
         }
     },
     "variables": {
@@ -139,7 +142,8 @@
             ],
             "properties": {
                 "primaryScriptUri": "https://raw.githubusercontent.com/krnese/ns/master/umiAzOpsSetup.ps1",
-                "arguments": "[concat('-KeyVault', ' ', variables('keyVaultName'), ' ', 
+                "arguments": "[concat('-KeyVault', ' ', variables('keyVaultName'), ' ',
+                                      '-NewRepositoryName', ' ', parameters('repositoryName'), ' ',
                                       '-GitHubUserNameOrOrg', ' ', parameters('gitHubUserNameOrOrg'), ' ', 
                                       '-SPNSecretName', ' ', variables('spnSecretName'), ' ',
                                       '-SpnAppId', ' ', parameters('appId'), ' ',

@@ -614,6 +614,19 @@
                             "validationMessage": "The prefix must be 1-5 characters."
                         }
                     },
+                    {
+                        "name": "esGitRepoName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "GitHub repository name",
+                        "toolTip": "Provide a name for the new repository that will be created",
+                        "defaultValue": "",
+                        "placeholder": "ESLZ",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{1,15}$",
+                            "validationMessage": "The prefix must be 1-5 characters."
+                        }
+                    },
 					{
 						"name": "esPaToken",
 						"type": "Microsoft.Common.PasswordBox",
@@ -632,7 +645,7 @@
 						"visible": true
 					},
                     {
-						"name": "lzServicePrincipal",
+						"name": "esServicePrincipal",
 						"type": "Microsoft.Common.ServicePrincipalSelector",
 						"label": {
 							"password": "Password",
@@ -1074,12 +1087,13 @@
             "enableVmssMonitoring": "[steps('lzGoalState').esVmssMonitoring]",
             "enableArcMonitoring": "[steps('lzGoalState').esArcVmMonitoring]",
             "paToken": "[steps('lzDevOps').esPaToken]",
-            "principalId": "[steps('lzDevOps').lzServicePrincipal.objectId]",
-            "principalSecret": "[steps('lzDevOps').lzServicePrincipal.password]",
+            "principalId": "[steps('lzDevOps').esServicePrincipal.objectId]",
+            "principalSecret": "[steps('lzDevOps').esServicePrincipal.password]",
             "gitHubUserNameOrOrg": "[steps('lzDevOps').esGit]",
-            "appId": "[steps('lzDevOps').lzServicePrincipal.appId]",
+            "appId": "[steps('lzDevOps').esServicePrincipal.appId]",
             "subscriptionId": "[if(not(empty(steps('esGoalState').esMgmtSub)), steps('esGoalState').esMgmtSub, if(not(empty(steps('lzDevOps').esGitSub)), steps('lzDevOps').esGitSub, ''))]",
-            "enableAzOps": "[steps('lzDevOps').cicdOption]"
+            "enableAzOps": "[steps('lzDevOps').cicdOption]",
+            "repositoryName": "[steps('lzDevOps').esGitRepoName]"
         }
     }
 }

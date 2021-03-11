@@ -34,6 +34,9 @@
         },
         "appId": {
             "type": "string"
+        },
+        "repositoryName": {
+            "type": "string"
         }
     },
     "variables": {
@@ -116,6 +119,9 @@
                                     },
                                     "appId": {
                                         "value": "[parameters('appId')]"
+                                    },
+                                    "repositoryName": {
+                                        "value": "[parameters('repositoryName')]"
                                     }
                                 }
                             }

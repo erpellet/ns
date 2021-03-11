@@ -10,7 +10,8 @@ param (
  [string]$SpnAppId,
  [string]$AzureTenantId,
  [string]$AzureSubscriptionId,
- [string]$EnterpriseScalePrefix
+ [string]$EnterpriseScalePrefix,
+ [string]$NewRepositoryName
 )
 
 $DeploymentScriptOutputs = @{}
@@ -59,8 +60,8 @@ Catch {
 
 $ESLZGitHubOrg = "Azure"
 $ESLZRepository = "AzOps-Accelerator"
-$NewESLZRepository = $EnterpriseScalePrefix + '-' + $ESLZRepository
-$DeploymentScriptOutputs['Repository'] = $NewESLZRepository
+$NewESLZRepository = $NewRepositoryName
+$DeploymentScriptOutputs['Repository'] = $NewRepositoryName
 Try {
     Write-Host "Authenticating to GitHub using PA token..."
 
