@@ -16,6 +16,10 @@ param (
 $DeploymentScriptOutputs = @{}
 Write-Host "Starting...."
 
+# Adding sleep so that RBAC can propegate
+
+Start-Sleep -Seconds 300
+
 $ErrorActionPreference = "Continue"
 Install-Module -Name PowerShellForGitHub,PSSodium -Confirm:$false -Force
 Import-Module -Name PowerShellForGitHub,PSSodium
@@ -130,7 +134,6 @@ $ARMClient = ConvertTo-SodiumEncryptedString -Text $SpnAppId -PublicKey $GitHubP
 $ARMClientSecret = ConvertTo-SodiumEncryptedString -Text $SPNSecret -PublicKey $GitHubPublicKey.key
 $ARMTenant = ConvertTo-SodiumEncryptedString -Text $AzureTenantId -PublicKey $GitHubPublicKey.key
 $ARMSubscription = ConvertTo-SodiumEncryptedString -Text $AzureSubscriptionId -PublicKey $GitHubPublicKey.key
-
 
 Try {
 $ARMClientIdBody = @"
