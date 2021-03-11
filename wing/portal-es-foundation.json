@@ -576,7 +576,7 @@
                     {
                         "name": "Instructions",
                         "type": "Microsoft.Common.TextBlock",
-                        "visible": "[equals(steps'lzDevOps').cicdOption, 'Yes')]",
+                        "visible": true,
                         "options": {
                             "text": "Provide the credentials to initialize the repository with the ARM templates for Enterprise-Scale.",
                             "link": {
@@ -600,7 +600,7 @@
 							],
 							"required": true
 						},
-						"visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]"
+						"visible": true
 					},					
                     {
                         "name": "esGit",
@@ -608,7 +608,6 @@
                         "label": "GitHub Org/Username",
                         "toolTip": "Provide Git org/username.",
                         "defaultValue": "",
-                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{1,15}$",
@@ -621,7 +620,6 @@
                         "label": "GitHub repository name",
                         "toolTip": "Provide a name for the new repository that will be created",
                         "defaultValue": "",
-                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
                         "placeholder": "ESLZ",
                         "constraints": {
                             "required": true,
@@ -642,9 +640,9 @@
 							"validationMessage": "Password must be at least 8 characters long, contain only numbers and letters"
 						},
 						"options": {
-							"hideConfirmation": true
+							"hideConfirmation": false
 						},
-						"visible": "[equals(steps'lzDevOps').cicdOption, 'Yes')]"
+						"visible": true
 					},
                     {
 						"name": "esServicePrincipal",
