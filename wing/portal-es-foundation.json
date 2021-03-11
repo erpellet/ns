@@ -576,7 +576,7 @@
                     {
                         "name": "Instructions",
                         "type": "Microsoft.Common.TextBlock",
-                        "visible": true,
+                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
                         "options": {
                             "text": "Provide the credentials to initialize the repository with the ARM templates for Enterprise-Scale.",
                             "link": {
@@ -600,13 +600,14 @@
 							],
 							"required": true
 						},
-						"visible": true
+						"visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]"
 					},					
                     {
                         "name": "esGit",
                         "type": "Microsoft.Common.TextBox",
                         "label": "GitHub Org/Username",
                         "toolTip": "Provide Git org/username.",
+						"visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
                         "defaultValue": "",
                         "constraints": {
                             "required": true,
@@ -620,6 +621,7 @@
                         "label": "GitHub repository name",
                         "toolTip": "Provide a name for the new repository that will be created",
                         "defaultValue": "",
+						"visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
                         "placeholder": "ESLZ",
                         "constraints": {
                             "required": true,
@@ -640,13 +642,14 @@
 							"validationMessage": "Password must be at least 8 characters long, contain only numbers and letters"
 						},
 						"options": {
-							"hideConfirmation": false
+							"hideConfirmation": true
 						},
-						"visible": true
+						"visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]"
 					},
                     {
 						"name": "esServicePrincipal",
 						"type": "Microsoft.Common.ServicePrincipalSelector",
+						"visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
 						"label": {
 							"password": "Password",
 							"certificateThumbprint": "Certificate thumbprint",
@@ -667,8 +670,7 @@
 						},
 						"options": {
 							"hideCertificate": true
-						},
-						"visible": true
+						}
 					},
 					{
                         "name": "subContext",
