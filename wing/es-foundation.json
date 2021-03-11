@@ -317,7 +317,8 @@
             "defaultValue": "No"
         },
         "paToken": {
-            "type": "securestring"
+            "type": "securestring",
+            "defaultValue": ""
         },
         "principalId": {
             "type": "array",
@@ -328,7 +329,8 @@
             "defaultValue": ""
         },
         "principalSecret": {
-            "type": "securestring"
+            "type": "securestring",
+            "defaultValue": ""
         },
         "gitHubUserNameOrOrg": {
             "type": "string",

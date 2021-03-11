@@ -20,7 +20,7 @@ $ESLZGitHubOrg = "Azure"
 $ESLZRepository = "AzOps-Accelerator"
 $NewESLZRepository = $NewRepositoryName
 $DeploymentScriptOutputs['New Repository'] = $NewRepositoryName
-Write-Host "Starting...."
+Write-Host "Before we start, we'll actually wait for 5 minutes to ensure that the RBAC assignment for the service principal has been granted, before we bootstap Git to discover - and put the templates into your repository. If not, this operation would fail and you would not be impressed :-)"
 
 # Adding sleep so that RBAC can propegate
 Start-Sleep -Seconds 500
