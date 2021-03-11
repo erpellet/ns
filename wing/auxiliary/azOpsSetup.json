@@ -57,7 +57,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
-            "name": "[guid(variables('formattedPrincipalId'))]",
+            "name": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('formattedPrincipalId')))]",
             "properties": {
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[variables('roleDefinitionId')]",
