@@ -24,15 +24,12 @@ Try {
     Write-Host "Getting secrets from KeyVault"
 
     Write-Host "Getting $($PATSecretName)"
-    $DeploymentScriptOutputs['PATSecretName'] = $PATSecretName
 
     $PATSecret = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $PATSecretName -AsPlainText
 
     Write-Host "Converting $($PATSecretName)"
     $SecureString = $PATSecret | ConvertTo-SecureString -AsPlainText -Force
     $Cred = New-Object System.Management.Automation.PSCredential "ignore", $SecureString
-
-    $DeploymentScriptOutputs['Credentials'] = $Cred
 }
 Catch {
     $ErrorMessage = "Failed to retrieve the secret from $($KeyVault)."
@@ -43,10 +40,7 @@ Catch {
                 -ErrorAction Stop
 }
 Try {
-    Write-Host "Getting secrets from KeyVault"
-
     Write-Host "Getting $($SPNSecretName)"
-    $DeploymentScriptOutputs['PATSecretName'] = $SPNSecretName
 
     $SPNSecret = Get-AzKeyVaultSecret -VaultName $KeyVault -Name $SPNSecretName -AsPlainText
 }
@@ -279,6 +273,6 @@ Catch {
     }
 }
 {
-    Write-Host "Repo already exists!"
+    Write-Host "Repo already exists, so we will assume you are good already :-)"
 }
 
