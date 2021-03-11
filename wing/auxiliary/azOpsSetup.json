@@ -71,7 +71,7 @@
             "location": "[deployment().location]",
             "subscriptionId": "[parameters('subscriptionId')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments', guid(variables('formattedPrincipalId')))]"
+                "[resourceId('Microsoft.Authorization/roleAssignments',guid(concat(parameters('topLevelManagementGroupPrefix'), variables('formattedPrincipalId'))))]"
             ],
             "properties": {
                 "mode": "Incremental",
