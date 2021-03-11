@@ -67,6 +67,9 @@
             "name": "[variables('deploymentNames').azOpsSub]",
             "location": "[deployment().location]",
             "subscriptionId": "[parameters('subscriptionId')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Authorization/roleAssignments', guid(variables('formattedPrincipalId')))]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "template": {
