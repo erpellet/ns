@@ -1,9 +1,9 @@
 {
-    "$schema": "<relative path to createFormUI.schema.json>",
+    "$schema": "http://json-schema.org/draft-04/schema",
     "view": {
         "kind": "Form",
         "properties": {
-            "title": "Test Form View",
+            "title": "Enterprise-Scale landing zones",
             "steps": [
                 {
                     "name": "basics",
