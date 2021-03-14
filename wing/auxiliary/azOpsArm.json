@@ -42,7 +42,7 @@
     "variables": {
         "formattingPrincipalIdToString": "[replace(replace(replace(string(parameters('principalId')), '\"', ''), '[', ''), ']', '')]",
         "keyVaultName": "[concat(resourceGroup().name, '-azopsvault')]",
-        "keyVaultRbacName": "[concat(variables('keyVaultName'), 'Microsoft.Authorization/', guid(variables('keyVaultName')))]",
+        "keyVaultRbacName": "[concat(variables('keyVaultName'), '/Microsoft.Authorization/', guid(variables('keyVaultName')))]",
         "patSecretName": "PATSecret",
         "spnSecretName": "SPNSecret",
         "userManagedIdentityName": "[concat(resourceGroup().name, '-umi')]",
