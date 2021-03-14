@@ -22,7 +22,7 @@ $ESLZRepository = "AzOps-Accelerator"
 $NewESLZRepository = $NewRepositoryName
 $DeploymentScriptOutputs['New Repository'] = $NewRepositoryName
 
-Write-Host "Script will start executing in 5 minutes..."
+Write-Host "The request has been accepted for processing, but the processing has not been completed."
 
 # Adding sleep so that RBAC can propegate
 Start-Sleep -Seconds 500
