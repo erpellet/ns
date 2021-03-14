@@ -42,6 +42,7 @@
     "variables": {
         "formattingPrincipalIdToString": "[replace(replace(replace(string(parameters('principalId')), '\"', ''), '[', ''), ']', '')]",
         "keyVaultName": "[concat(resourceGroup().name, '-azopsvault')]",
+        "keyVaultRbacName": "[concat(variables('keyVaultName'), 'Microsoft.Authorization/', guid(variables('keyVaultName')))]",
         "patSecretName": "PATSecret",
         "spnSecretName": "SPNSecret",
         "userManagedIdentityName": "[concat(resourceGroup().name, '-umi')]",
@@ -98,10 +99,9 @@
             }
         },
         {
-            "type": "Microsoft.Authorization/roleAssignments",
+            "type": "Microsoft.KeyVault/vaults/providers/roleAssignments",
             "apiVersion": "2020-04-01-preview",
-            "name": "[guid(variables('userManagedIdentityName'))]",
-            "scope": "[concat('Microsoft.KeyVault/vaults', '/', variables('keyVaultName'))]",
+            "name": "[variables('keyVaultRbacName')]",
             "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userManagedIdentityName'))]"
@@ -138,7 +138,7 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments', guid(variables('ownerRbac')))]",
-                "[resourceId('Microsoft.Authorization/roleAssignments', guid(variables('userManagedIdentityName')))]",
+                "[variables('keyVaultRbacName')]",
                 "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('patSecretName'))]",
                 "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('spnSecretName'))]"
             ],
