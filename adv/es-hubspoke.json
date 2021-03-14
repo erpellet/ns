@@ -1027,7 +1027,10 @@
                 "[variables('deploymentNames').mgmtGroupDeploymentName]",
                 "[variables('deploymentNames').monitoringDeploymentName]",
                 "[variables('deploymentNames').monitoringSolutionsDeploymentName]",
-                "[variables('deploymentNames').policyDeploymentName]"
+                "[variables('deploymentNames').policyDeploymentName]",
+                "[variables('deploymentNames').connectivityDeploymentName]",
+                "[variables('deploymentNames').corpConnectedDeploymentName]",
+                "[variables('deploymentNames').identityDeploymentName]"
             ],
             "properties": {
                 "mode": "Incremental",
