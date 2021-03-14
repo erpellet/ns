@@ -41,12 +41,12 @@
                         "name": "esMgmtGroup",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Management Group prefix",
-                        "toolTip": "Provide a prefix for management group structure, 1-5 characters.",
+                        "toolTip": "Provide a prefix (max 10 characters, unique at tenant-scope) for the Management Group hierarchy and other resources created as part of Enterprise-scale.",
                         "defaultValue": "",
                         "constraints": {
                             "required": true,
-                            "regex": "^[a-z0-9A-Z-]{1,5}$",
-                            "validationMessage": "The prefix must be 1-5 characters."
+                            "regex": "^[a-z0-9A-Z-]{1,10}$",
+                            "validationMessage": "The prefix must be 1-10 characters."
                         }
                     }
                 ]
@@ -535,6 +535,181 @@
                     }					
                 ]
             },
+            {
+                "name": "lzDevOps",
+                "label": "Platform DevOps Automation",
+                "subLabel": {},
+                "bladeTitle": "lz Dev Ops",
+                "elements": [
+                    {
+                        "name": "info",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Enterprise-Scale provides an integrated CICD pipeline via AzOps that can be used with either GitHub Actions or Azure DevOps pipelines.",
+                            "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin"
+                        }
+                    },
+                    {
+                        "name": "cicdOption",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Bootstrap CICD pipeline?",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "Instructions",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
+                        "options": {
+                            "text": "Provide the credentials to initialize the repository with the ARM templates for Enterprise-Scale.",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
+                            }
+                        }
+                    },
+                    {
+                        "name": "optionsGroup1",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure DevOps or GitHub Actions",
+                        "defaultValue": "GitHub Actions",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "GitHub Actions",
+                                    "value": "actions"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]"
+                    },
+                    {
+                        "name": "esGit",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "GitHub Org/Username",
+                        "toolTip": "Provide Git org/username.",
+                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
+                        "defaultValue": "",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{1,15}$",
+                            "validationMessage": "The prefix must be 1-5 characters."
+                        }
+                    },
+                    {
+                        "name": "esGitRepoName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "GitHub repository name",
+                        "toolTip": "Provide a name for the new repository that will be created",
+                        "defaultValue": "",
+                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
+                        "placeholder": "ESLZ",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{1,15}$",
+                            "validationMessage": "The prefix must be 1-5 characters."
+                        }
+                    },
+                    {
+                        "name": "esPaToken",
+                        "type": "Microsoft.Common.PasswordBox",
+                        "label": {
+                            "password": "GitHub PA Token",
+                            "confirmPassword": "Confirm PA Token"
+                        },
+                        "toolTip": "",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "Password must be at least 8 characters long, contain only numbers and letters"
+                        },
+                        "options": {
+                            "hideConfirmation": true
+                        },
+                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]"
+                    },
+                    {
+                        "name": "esServicePrincipal",
+                        "type": "Microsoft.Common.ServicePrincipalSelector",
+                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
+                        "label": {
+                            "password": "Password",
+                            "certificateThumbprint": "Certificate thumbprint",
+                            "authenticationType": "Authentication Type",
+                            "sectionHeader": "Service Principal"
+                        },
+                        "toolTip": {
+                            "password": "Provide the application secret as it will be used to authenticate with Azure AD",
+                            "certificateThumbprint": "Certificate thumbprint",
+                            "authenticationType": "Authentication Type"
+                        },
+                        "defaultValue": {
+                            "principalId": "<default guid>",
+                            "name": "(New) default App Id"
+                        },
+                        "constraints": {
+                            "required": true
+                        },
+                        "options": {
+                            "hideCertificate": true
+                        }
+                    },
+                    {
+                        "name": "subContext",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": "[and(equals(steps('lzDevOps').cicdOption, 'Yes'), empty(steps('esGoalState').esMgmtSub))]",
+                        "options": {
+                            "text": "Provide a subscription that will be used to orchestrate the Git initialization.",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
+                            }
+                        }
+                    },
+                    {
+                        "name": "mgmtGitApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "subscriptions?api-version=2020-01-01"
+                        }
+                    },
+                    {
+                        "name": "esGitSub",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Subscription used for Git initialization",
+                        "toolTip": "",
+                        "multiselect": false,
+                        "selectAll": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "defaultValue": "[if(not(empty(steps('esGoalState').esMgmtSub)), steps('esGoalState').esMgmtSub, '')]",
+                        "visible": "[and(equals(steps('lzDevOps').cicdOption, 'Yes'), empty(steps('esGoalState').esMgmtSub))]",
+                        "constraints": {
+                            "allowedValues": "[map(steps('lzDevOps').mgmtGitApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                            "required": true
+                        }
+                    }
+                ]
+            },            
             {
                 "name": "esConnectivityGoalState",
                 "label": "Connectivity (Virtual WAN)",
@@ -1285,7 +1460,15 @@
             "retentionInDays": "[string(steps('esGoalState').esLogRetention)]",
             "enableVmMonitoring": "[steps('lzGoalState').esVmMonitoring]",
             "enableVmssMonitoring": "[steps('lzGoalState').esVmssMonitoring]",
-            "enableArcMonitoring": "[steps('lzGoalState').esArcVmMonitoring]"
+            "enableArcMonitoring": "[steps('lzGoalState').esArcVmMonitoring]",
+            "paToken": "[steps('lzDevOps').esPaToken]",
+            "principalId": "[steps('lzDevOps').esServicePrincipal.objectId]",
+            "principalSecret": "[steps('lzDevOps').esServicePrincipal.password]",
+            "gitHubUserNameOrOrg": "[steps('lzDevOps').esGit]",
+            "appId": "[steps('lzDevOps').esServicePrincipal.appId]",
+            "subscriptionId": "[if(not(empty(steps('esGoalState').esMgmtSub)), steps('esGoalState').esMgmtSub, if(not(empty(steps('lzDevOps').esGitSub)), steps('lzDevOps').esGitSub, ''))]",
+            "enableAzOps": "[steps('lzDevOps').cicdOption]",
+            "repositoryName": "[steps('lzDevOps').esGitRepoName]"
         }
     }
 }
