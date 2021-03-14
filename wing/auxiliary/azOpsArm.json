@@ -101,6 +101,7 @@
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2018-01-01-preview",
             "name": "[guid(variables('userManagedIdentityName'))]",
+            "scope": "[concat('Microsoft.KeyVault/vaults', '/', variables('keyVaultName'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userManagedIdentityName'))]"
@@ -110,7 +111,7 @@
                 "roleDefinitionId": "[variables('keyVaultAdminRbac')]"
             }
         },
-        /*{
+        {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2018-01-01-preview",
             "name": "[guid(variables('ownerRbac'))]",
@@ -122,7 +123,7 @@
                 "principalId": "[reference(variables('userManagedIdentityName'), '2018-11-30').principalId]",
                 "roleDefinitionId": "[variables('ownerRbac')]"
             }
-        },*/
+        },
         {
             "type": "Microsoft.Resources/deploymentScripts",
             "apiVersion": "2020-10-01",
@@ -142,7 +143,8 @@
             ],
             "properties": {
                 "primaryScriptUri": "[base64ToString('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2tybmVzZS9ucy9tYXN0ZXIvdW1pQXpPcHNTZXR1cC5wczE=')]",
-                "arguments": "[concat('-KeyVault', ' ', variables('keyVaultName'), ' ',
+                "arguments": "[concat('-ResourceGroupName', ' ', resourceGroup().name, ' ',
+                                      '-KeyVault', ' ', variables('keyVaultName'), ' ',
                                       '-NewRepositoryName', ' ', parameters('repositoryName'), ' ',
                                       '-GitHubUserNameOrOrg', ' ', parameters('gitHubUserNameOrOrg'), ' ', 
                                       '-SPNSecretName', ' ', variables('spnSecretName'), ' ',
