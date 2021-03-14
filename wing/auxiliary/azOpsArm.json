@@ -138,6 +138,7 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments', guid(variables('ownerRbac')))]",
+                "[resourceId('Microsoft.KeyVault/vaults/providers/roleAssignments', variables('keyVaultRbacName'))]",
                 "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('patSecretName'))]",
                 "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('spnSecretName'))]"
             ],
