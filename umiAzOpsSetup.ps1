@@ -281,8 +281,8 @@ $DispatchBody = @"
     Invoke-RestMethod @InvokeGitHubAction
     
     Write-Host "The end"
-    
-    Remove-AzResourceGroup -Name $ResourceGroupName -Confirm:$false -Force -AsJob
+
+    Remove-AzResourceGroup -Name $ResourceGroupName -Confirm:$false -Force -AsJob | Out-Null
 }
 Catch {
     $ErrorMessage = "Failed to invoke GitHub Action for $($GitHubUserNameOrOrg)."
@@ -298,6 +298,6 @@ Catch {
     
     Write-Host "The end"
 
-    Remove-AzResourceGroup -Name $ResourceGroupName -Confirm:$false -Force -AsJob
+    Remove-AzResourceGroup -Name $ResourceGroupName -Confirm:$false -Force -AsJob | Out-Null
 }
 
