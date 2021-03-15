@@ -434,7 +434,7 @@
             ],
             "copy": {
                 "batchSize": 1,
-                "count": 50,
+                "count": 20,
                 "mode": "Serial",
                 "name": "policyCompletion"
             },
