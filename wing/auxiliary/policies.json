@@ -17971,7 +17971,7 @@
             ],
             "copy": {
                 "batchSize": 1,
-                "count": 20,
+                "count": 50,
                 "mode": "Serial",
                 "name": "deploymentDelay"
             },
@@ -18004,6 +18004,32 @@
                 "parameters": "[variables('initiatives').policySetDefinitions[copyIndex()].properties.parameters]",
                 "policyDefinitions": "[variables('initiatives').policySetDefinitions[copyIndex()].properties.policyDefinitions]",
                 "metadata": "[variables('initiatives').policySetDefinitions[copyIndex()].properties.metadata]"
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[concat('startSleep', copyIndex())]",
+            "location": "[deployment().location]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
+            "dependsOn": [
+                "policySetDefinitionCopy"
+            ],
+            "copy": {
+                "batchSize": 1,
+                "count": 50,
+                "mode": "Serial",
+                "name": "deploymentDelay"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "resources": [],
+                    "outputs": {}
+                }
             }
         }
     ]
