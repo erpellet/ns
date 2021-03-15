@@ -17948,7 +17948,9 @@
             "apiVersion": "2019-09-01",
             "copy": {
                 "name": "policyDefinitionCopy",
-                "count": "[length(variables('policies').policyDefinitions)]"
+                "count": "[length(variables('policies').policyDefinitions)]",
+                "mode": "Serial",
+                "batchSize": 4
             },
             "properties": {
                 "displayName": "[variables('policies').policyDefinitions[copyIndex()].properties.displayName]",
