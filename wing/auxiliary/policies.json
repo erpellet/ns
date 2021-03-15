@@ -17961,11 +17961,38 @@
             }
         },
         {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[concat('delayFor', copyIndex())]",
+            "location": "[deployment().location]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
+            "dependsOn": [
+                "policyDefinitionCopy"
+            ],
+            "copy": {
+                "batchSize": 1,
+                "count": 20,
+                "mode": "Serial",
+                "name": "deploymentDelay"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "resources": [],
+                    "outputs": {}
+                }
+            }
+        },        
+        {
             "type": "Microsoft.Authorization/policySetDefinitions",
             "name": "[variables('initiatives').policySetDefinitions[copyIndex()].name]",
             "apiVersion": "2019-09-01",
             "dependsOn": [
-                "policyDefinitionCopy"
+                "policyDefinitionCopy",
+                "deploymentDelay"
             ],
             "copy": {
                 "name": "policySetDefinitionCopy",
