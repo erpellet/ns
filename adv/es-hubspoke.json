@@ -561,32 +561,6 @@
             }
         },
         {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "[concat('delayFor', copyIndex())]",
-            "location": "[deployment().location]",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
-            "dependsOn": [
-                "[variables('deploymentNames').policyDeploymentName]"
-            ],
-            "copy": {
-                "batchSize": 1,
-                "count": 20,
-                "mode": "Serial",
-                "name": "DeploymentDelay"
-            },
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {},
-                    "resources": [],
-                    "outputs": {}
-                }
-            }
-        },
-        {
             "condition": "[not(empty(parameters('managementSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
@@ -655,8 +629,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management')]",
             "name": "[variables('deploymentNames').monitoringDeploymentName]",
             "dependsOn": [
-                "[variables('deploymentNames').policyDeploymentName]",
-                "DeploymentDelay"
+                "[variables('deploymentNames').policyDeploymentName]"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -741,8 +714,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-identity')]",
             "name": "[variables('deploymentNames').identityDeploymentName]",
             "dependsOn": [
-                "[variables('deploymentNames').policyDeploymentName]",
-                "DeploymentDelay"
+                "[variables('deploymentNames').policyDeploymentName]"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -777,8 +749,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-landingzones')]",
             "name": "[variables('deploymentNames').lzDeploymentName]",
             "dependsOn": [
-                "[variables('deploymentNames').policyDeploymentName]",
-                "DeploymentDelay"
+                "[variables('deploymentNames').policyDeploymentName]"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -834,8 +805,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
             "name": "[variables('deploymentNames').diagAndSecDeploymentName]",
             "dependsOn": [
-                "[variables('deploymentNames').monitoringDeploymentName]",
-                "DeploymentDelay"
+                "[variables('deploymentNames').monitoringDeploymentName]"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -917,7 +887,7 @@
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('connectivitySubscriptionId'))), variables('connectivityMoveSubscription'), variables('noConnectivitySubscription'))]",
             "dependsOn": [
-                "DeploymentDelay"
+                "[variables('deploymentNames').policyDeploymentName]"
             ],
             "properties": {}
         },
@@ -928,8 +898,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-connectivity')]",
             "name": "[variables('deploymentNames').connectivityDeploymentName]",
             "dependsOn": [
-                "[variables('deploymentNames').diagAndSecDeploymentName]",
-                "DeploymentDelay"
+                "[variables('deploymentNames').diagAndSecDeploymentName]"
             ],
             "location": "[deployment().location]",
             "properties": {
