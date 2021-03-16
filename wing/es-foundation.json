@@ -448,7 +448,7 @@
                     "outputs": {}
                 }
             }
-        },        
+        },    
         {
             "condition": "[not(empty(parameters('managementSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
