@@ -1,0 +1,82 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "clusterName": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide a name for the Open Shift cluster"
+            }
+        },
+        "clusterSpn": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the _clientId_ of the Service Principal"
+            }
+        },
+        "clusterSecret": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Provide the secret for the Service Principal"
+            }
+        },
+        "vNetId": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the full resourceId of the virtual network holding the two subnets for Open Shift"
+            }
+        }
+    },
+    "variables": {
+        "domainNamePrefix": "[take(parameters('clusterName'), 3)]",
+        "domainName": "[concat(variables('domainNamePrefix'), '123uk')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.RedHatOpenShift/openShiftClusters",
+            "apiVersion": "2020-04-30",
+            "name": "[parameters('clusterName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "clusterProfile": {
+                    "domain": "[variables('domainName')]",
+                    "version": "4.6.17",
+                    "resourceGroupId": "[concat(subscription().id, '/resourceGroups/', resourceGroup().name, '-managed')]"
+                },
+                "consoleProfile": {
+                    "url": "[concat('https://console-openshift-console.apps.', variables('domainName'), '.', resourceGroup().location, '.aroapp.io/')]"
+                },
+                "servicePrincipalProfile": {
+                    "clientId": "[parameters('clusterSpn')]",
+                    "clientSecret": "[parameters('clusterSecret')]"
+                },
+                "networkProfile": {
+                    "podCidr": "10.128.0.0/14",
+                    "serviceCidr": "172.30.0.0/16"
+                },
+                "masterProfile": {
+                    "vmSize": "Standard_D8s_v3",
+                    "subnetId": "[concat(parameters('vNetId'), '/subnets/master-subnet')]"
+                },
+                "workerProfiles": [
+                    {
+                        "name": "worker",
+                        "vmSize": "Standard_D4s_v3",
+                        "diskSizeGB": 128,
+                        "subnetId": "[concat(parameters('vNetId'), '/subnets/worker-subnet')]",
+                        "count": 3
+                    }
+                ],
+                "apiserverProfile": {
+                    "visibility": "Private"
+                },
+                "ingressProfiles": [
+                    {
+                        "name": "default",
+                        "visibility": "Private"
+                    }
+                ]
+            }
+        }
+    ]
+}
