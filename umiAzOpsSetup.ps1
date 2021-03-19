@@ -3,7 +3,6 @@
 
 [CmdletBinding()]
 param (
- [string]$ResourceGroupName,
  [string]$KeyVault,
  [string]$GitHubUserNameOrOrg,
  [string]$PATSecretName,

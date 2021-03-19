@@ -66,6 +66,8 @@
             "properties": {
                 "enabledForTemplateDeployment": true,
                 "enableRbacAuthorization": true,
+                "enablePurgeProtection": true,
+                "enableSoftDelete": true,
                 "tenantId": "[subscription().tenantId]",
                 "sku": {
                     "family": "A",
@@ -129,8 +131,7 @@
             ],
             "properties": {
                 "primaryScriptUri": "[base64ToString('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2tybmVzZS9ucy9tYXN0ZXIvdW1pQXpPcHNTZXR1cC5wczE=')]",
-                "arguments": "[concat('-ResourceGroupName', ' ', resourceGroup().name, ' ',
-                                      '-KeyVault', ' ', variables('keyVaultName'), ' ',
+                "arguments": "[concat('-KeyVault', ' ', variables('keyVaultName'), ' ',
                                       '-NewRepositoryName', ' ', parameters('repositoryName'), ' ',
                                       '-GitHubUserNameOrOrg', ' ', parameters('gitHubUserNameOrOrg'), ' ', 
                                       '-SPNSecretName', ' ', variables('spnSecretName'), ' ',
