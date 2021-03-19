@@ -7321,7 +7321,7 @@
                       },
                       {
                         "field": "Microsoft.KeyVault/vaults/enableSoftDelete",
-                        "notEquals": false
+                        "notEquals": true
                       }
                     ]
                   }
@@ -9162,14 +9162,14 @@
                 "type": "string",
                 "metadata": {
                   "displayName": "ddosName",
-                  "description": "Name of the ddos"
+                  "description": "DDoSVnet"
                 }
               },
               "ddosRegion": {
                 "type": "string",
                 "metadata": {
                   "displayName": "ddosRegion",
-                  "description": "Select Azure region for ddos",
+                  "description": "DDoSVnet location",
                   "strongType": "location"
                 }
               },
