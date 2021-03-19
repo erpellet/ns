@@ -537,7 +537,7 @@
             },
             {
                 "name": "lzDevOps",
-                "label": "Platform DevOps Automation",
+                "label": "Platform DevOps and Automation",
                 "subLabel": {},
                 "bladeTitle": "lz Dev Ops",
                 "elements": [
@@ -554,7 +554,7 @@
                     {
                         "name": "cicdOption",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Bootstrap CICD pipeline?",
+                        "label": "Deploy integrated CICD pipeline?",
                         "defaultValue": "Yes (recommended)",
                         "toolTip": "",
                         "constraints": {
@@ -587,9 +587,9 @@
                     {
                         "name": "optionsGroup1",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Azure DevOps or GitHub Actions",
+                        "label": "Select CICD option",
                         "defaultValue": "GitHub Actions",
-                        "toolTip": "",
+                        "toolTip": "Enterprise-Scale will provide options for both GitHub Actions and Azure DevOps pipelines. For now, only GitHub Actions is available",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -604,7 +604,7 @@
                     {
                         "name": "esGit",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "GitHub Org/Username",
+                        "label": "GitHub organization or username",
                         "toolTip": "Provide Git org/username.",
                         "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
                         "defaultValue": "",
@@ -617,7 +617,7 @@
                     {
                         "name": "esGitRepoName",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "GitHub repository name",
+                        "label": "New GitHub repository name",
                         "toolTip": "Provide a name for the new repository that will be created",
                         "defaultValue": "",
                         "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
@@ -632,10 +632,10 @@
                         "name": "esPaToken",
                         "type": "Microsoft.Common.PasswordBox",
                         "label": {
-                            "password": "GitHub PA Token",
+                            "password": "GitHub personal access token",
                             "confirmPassword": "Confirm PA Token"
                         },
-                        "toolTip": "",
+                        "toolTip": "Provide the personal access token to access your GitHub account or organization. For more information see this link: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token",
                         "constraints": {
                             "required": true,
                             "validationMessage": "Password must be at least 8 characters long, contain only numbers and letters"
