@@ -621,7 +621,7 @@
                         "toolTip": "Provide a name for the new repository that will be created",
                         "defaultValue": "",
                         "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
-                        "placeholder": "ESLZ",
+                        "placeholder": "",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{1,15}$",
