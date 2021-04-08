@@ -646,30 +646,38 @@
                         "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]"
                     },
                     {
-                        "name": "esServicePrincipal",
-                        "type": "Microsoft.Common.ServicePrincipalSelector",
-                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
-                        "label": {
-                            "password": "Password",
-                            "certificateThumbprint": "Certificate thumbprint",
-                            "authenticationType": "Authentication Type",
-                            "sectionHeader": "Service Principal"
-                        },
-                        "toolTip": {
-                            "password": "Provide the application secret as it will be used to authenticate with Azure AD",
-                            "certificateThumbprint": "Certificate thumbprint",
-                            "authenticationType": "Authentication Type"
-                        },
-                        "defaultValue": {
-                            "principalId": "<default guid>",
-                            "name": "(New) default App Id"
-                        },
-                        "constraints": {
-                            "required": true
-                        },
-                        "options": {
-                            "hideCertificate": true
-                        }
+                        "name": "spnSection",
+                        "type": "Microsoft.Common.Section",
+                        "label": "",
+                        "elements": [
+                            {
+                                "name": "esServicePrincipal",
+                                "type": "Microsoft.Common.ServicePrincipalSelector",
+                                "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]",
+                                "label": {
+                                    "password": "Password",
+                                    "certificateThumbprint": "Certificate thumbprint",
+                                    "authenticationType": "Authentication Type",
+                                    "sectionHeader": "Service Principal"
+                                },
+                                "toolTip": {
+                                    "password": "Provide the application secret as it will be used to authenticate with Azure AD",
+                                    "certificateThumbprint": "Certificate thumbprint",
+                                    "authenticationType": "Authentication Type"
+                                },
+                                "defaultValue": {
+                                    "principalId": "<default guid>",
+                                    "name": "(New) default App Id"
+                                },
+                                "constraints": {
+                                    "required": true
+                                },
+                                "options": {
+                                    "hideCertificate": true
+                                }
+                            }
+                        ],
+                        "visible": "[equals(steps('lzDevOps').cicdOption, 'Yes')]"
                     },
                     {
                         "name": "subContext",
@@ -1650,10 +1658,10 @@
             "firewallZones": "[steps('esConnectivityGoalState').esFwAz]",
 			"corpConnectedLzSubscriptionId": "[if(or(not(contains(steps('lzGoalState').esCorpLzSub, steps('esGoalState').esMgmtSub)), not(contains(steps('lzGoalState').esCorpLzSub, steps('esConnectivityGoalState').esConnectivitySub))), steps('lzGoalState').lzConnectedSubs, '')]",
             "paToken": "[steps('lzDevOps').esPaToken]",
-            "principalId": "[steps('lzDevOps').esServicePrincipal.objectId]",
-            "principalSecret": "[steps('lzDevOps').esServicePrincipal.password]",
+            "principalId": "[steps('lzDevOps').spnSection.esServicePrincipal.objectId]",
+            "principalSecret": "[steps('lzDevOps').spnSection.esServicePrincipal.password]",
             "gitHubUserNameOrOrg": "[steps('lzDevOps').esGit]",
-            "appId": "[steps('lzDevOps').esServicePrincipal.appId]",
+            "appId": "[steps('lzDevOps').spnSection.esServicePrincipal.appId]",
             "subscriptionId": "[if(not(empty(steps('esGoalState').esMgmtSub)), steps('esGoalState').esMgmtSub, if(not(empty(steps('lzDevOps').esGitSub)), steps('lzDevOps').esGitSub, ''))]",
             "enableAzOps": "[steps('lzDevOps').cicdOption]",
             "repositoryName": "[steps('lzDevOps').esGitRepoName]"
