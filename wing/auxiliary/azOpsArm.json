@@ -41,7 +41,7 @@
     },
     "variables": {
         "formattingPrincipalIdToString": "[replace(replace(replace(string(parameters('principalId')), '\"', ''), '[', ''), ']', '')]",
-        "keyVaultName": "[take(concat(resourceGroup().name, '-az', uniqueString(resourceGroup().name)), 24)]",
+        "keyVaultName": "[take(concat(resourceGroup().name, uniqueString(subscription().subscriptionId)), 24)]",
         "keyVaultRbacName": "[concat(variables('keyVaultName'), '/Microsoft.Authorization/', guid(variables('keyVaultName')))]",
         "patSecretName": "PATSecret",
         "spnSecretName": "SPNSecret",
@@ -142,7 +142,7 @@
                                       '-AzureSubscriptionId', ' ', subscription().subscriptionId)]",
                 "azPowerShellVersion": "5.5",
                 "timeout": "PT30M",
-                "cleanupPreference": "OnSuccess",
+                "cleanupPreference": "Always",
                 "retentionInterval": "P1D"
             }
         }
