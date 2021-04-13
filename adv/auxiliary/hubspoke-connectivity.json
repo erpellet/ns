@@ -201,7 +201,7 @@
                 "policyDefinitionId": "[variables('policyDefinitions').dDoSPolicyDefinitionId]",
                 "parameters": {
                     "ddosPlan": {
-                        "value": "[variables('dDoSName')]"
+                        "value": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('dDoSRgName'), '/providers/Microsoft.Network/ddosProtectionPlans/', variables('dDoSName'))]"
                     },
                     "effect": {
                         "value": "Modify"
@@ -282,6 +282,9 @@
             "apiVersion": "2019-10-01",
             "location": "[deployment().location]",
             "name": "[concat('EntScale', '-connectivityHubSub')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', concat('EntScale', 'connectivityDdoS'))]"
+            ],
             "subscriptionId": "[parameters('connectivitySubscriptionId')]",
             "properties": {
                 "mode": "Incremental",
@@ -330,7 +333,11 @@
                                                                           empty(parameters('subnetMaskForGw'))), variables('gwSubnet'), json('[]')), 
                                                                           if(
                                                                               not(
-                                                                                  empty(parameters('subnetMaskForAzFw'))), variables('fwSubnet'), json('[]')))]"
+                                                                                  empty(parameters('subnetMaskForAzFw'))), variables('fwSubnet'), json('[]')))]",
+                                                "enableDdosProtection": "[if(equals(parameters('enableDdoS'), 'Yes'), 'true', 'false')]",
+                                                "ddosProtectionPlan": {
+                                                    "id": "[if(equals(parameters('enableDdoS'), 'Yes'), concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('dDoSRgName'), '/providers/Microsoft.Network/ddosProtectionPlans/', variables('dDoSName')), json('null'))]"
+                                                }
                                             }
                                         },
                                         {
