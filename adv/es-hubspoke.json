@@ -417,6 +417,14 @@
             ],
             "defaultValue": "No"
         },
+        "enableDdoS": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
         "vpnGwType": {
             "type": "string",
             "allowedValues": [
@@ -955,6 +963,9 @@
                     },
                     "enableErGw": {
                         "value": "[parameters('enableErGw')]"
+                    },
+                    "enableDdoS": {
+                        "value": "[parameters('enableDdoS')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
