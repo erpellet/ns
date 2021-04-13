@@ -183,6 +183,9 @@
                 "name": "ErGw3AZ",
                 "tier": "ErGw3AZ"
             }
+        },
+        "ddosProtectionPlanId": {
+            "id": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('dDoSRgName'), '/providers/Microsoft.Network/ddosProtectionPlans/', variables('dDoSName'))]"
         }
     },
     "resources": [
@@ -335,9 +338,7 @@
                                                                               not(
                                                                                   empty(parameters('subnetMaskForAzFw'))), variables('fwSubnet'), json('[]')))]",
                                                 "enableDdosProtection": "[if(equals(parameters('enableDdoS'), 'Yes'), 'true', 'false')]",
-                                                "ddosProtectionPlan": {
-                                                    "id": "[if(equals(parameters('enableDdoS'), 'Yes'), concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('dDoSRgName'), '/providers/Microsoft.Network/ddosProtectionPlans/', variables('dDoSName')), json('null'))]"
-                                                }
+                                                "ddosProtectionPlan": "[if(equals(parameters('enableDdoS'), 'Yes'), variables('ddosProtectionPlanId'), json('null'))]"
                                             }
                                         },
                                         {
