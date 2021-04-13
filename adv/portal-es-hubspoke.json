@@ -816,7 +816,7 @@
                     {
                         "name": "esDdoS",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Enable DDoS Protection Standard ?",
+                        "label": "Enable DDoS Protection Standard",
                         "defaultValue": "Yes (recommended)",
                         "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a connectivity subscription, DDoS Protection Standard will be enabled.",
