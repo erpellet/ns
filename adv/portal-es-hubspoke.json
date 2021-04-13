@@ -816,14 +816,14 @@
                     {
                         "name": "esDdoS",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Enable DDoS Standard protection plan?",
-                        "defaultValue": "Yes",
+                        "label": "Enable DDoS Protection Standard ?",
+                        "defaultValue": "Yes (recommended)",
                         "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
-                        "toolTip": "If 'Yes' is selected when also adding a connectivity subscription, DDoS Standard protection plan will be enabled.",
+                        "toolTip": "If 'Yes' is selected when also adding a connectivity subscription, DDoS Protection Standard will be enabled.",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes",
+                                    "label": "Yes (recommended)",
                                     "value": "Yes"
                                 },
                                 {

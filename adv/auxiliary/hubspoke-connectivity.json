@@ -121,6 +121,16 @@
         }
     },
     "variables": {
+        "policyDefinitions": {
+            "dDoSPolicyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d"
+        },
+        "policyAssignmentNames": {
+            "deployDdoS": "Enable-DDoS-NW"
+        },
+        "roleAssignmentNames": {
+            "deployDdoS": "[guid(concat(parameters('toplevelManagementGroupPrefix'),variables('policyAssignmentNames').deployDdoS))]"
+        },
+        "policyRbac": "4d97b98b-1d4f-4787-a291-c67834d212e7",
         "vpngwname": "[concat(parameters('topLevelManagementGroupPrefix'), '-vpngw-', parameters('location'))]",
         "erGwName": "[concat(parameters('topLevelManagementGroupPrefix'), '-ergw-', parameters('location'))]",
         "rgName": "[concat(parameters('topLevelManagementGroupPrefix'), '-connectivity')]",
@@ -176,6 +186,43 @@
         }
     },
     "resources": [
+        {
+            "condition": "[and(equals(parameters('enableDdoS'), 'Yes'), equals(parameters('enableHub'), 'Yes'))]",
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2019-09-01",
+            "name": "[variables('policyAssignmentNames').deployDdoS]",
+            "location": "[deployment().location]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "description": "[variables('policyAssignmentNames').deployDdoS]",
+                "displayName": "[variables('policyAssignmentNames').deployDdoS]",
+                "policyDefinitionId": "[variables('policyDefinitions').dDoSPolicyDefinitionId]",
+                "parameters": {
+                    "ddosPlan": {
+                        "value": "[variables('dDoSName')]"
+                    },
+                    "effect": {
+                        "value": "Modify"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[and(equals(parameters('enableDdoS'), 'Yes'), equals(parameters('enableHub'), 'Yes'))]",
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[variables('roleAssignmentNames').deployDdoS]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Authorization/policyAssignments', variables('policyAssignmentNames').deployDdoS)]"
+            ],
+            "properties": {
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('policyRbac'))]",
+                "principalId": "[if(and(equals(parameters('enableDdoS'), 'Yes'), equals(parameters('enableHub'), 'Yes')), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployDdoS), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
+            }
+        },
         {
             // Conditionally enable DDoS Protection plan
             "condition": "[and(equals(parameters('enableDdoS'), 'Yes'), equals(parameters('enableHub'), 'Yes'))]",
