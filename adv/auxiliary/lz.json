@@ -203,7 +203,8 @@
             "deployDdOsConnectivityMg": "[guid(concat(parameters('topLevelManagementGroupPrefix'), '-connectivity'))]"
         },
         "dDoSRgName": "[concat(parameters('topLevelManagementGroupPrefix'), '-ddos')]",
-        "dDoSName": "[concat(parameters('topLevelManagementGroupPrefix'), '-ddos-', parameters('location'))]"
+        "dDoSName": "[concat(parameters('topLevelManagementGroupPrefix'), '-ddos-', parameters('location'))]",
+        "rbacDeploymentToConnectivity": "[concat('EntScale-', 'rbac', variables('roleAssignmentNames').deployDdOsConnectivityMg)]"
         //"blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}"
     },
     "resources": [
@@ -246,17 +247,34 @@
         },
         {
             "condition": "[and(equals(parameters('enableLzDdoS'), 'Yes'), not(empty(parameters('connectivitySubscriptionId'))))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-connectivity')]",
-            "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
-            "name": "[variables('roleAssignmentNames').deployDdOsConnectivityMg]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Authorization/policyAssignments', variables('policyAssignmentNames').deployDdoS)]"
-            ],
+            "name": "[variables('rbacDeploymentToConnectivity')]",
+            "location": "[deployment().location]",
             "properties": {
-                "principalType": "ServicePrincipal",
-                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacNetworkContributor'))]",
-                "principalId": "[if(and(equals(parameters('enableLzDdoS'), 'Yes'), not(empty(parameters('connectivitySubscriptionId')))), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployDdoS), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Authorization/roleAssignments",
+                            "apiVersion": "2019-04-01-preview",
+                            "name": "[variables('roleAssignmentNames').deployDdOsConnectivityMg]",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Authorization/policyAssignments', variables('policyAssignmentNames').deployDdoS)]"
+                            ],
+                            "properties": {
+                                "principalType": "ServicePrincipal",
+                                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacNetworkContributor'))]",
+                                "principalId": "[if(and(equals(parameters('enableLzDdoS'), 'Yes'), not(empty(parameters('connectivitySubscriptionId')))), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployDdoS), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
+                            }
+                        }
+                    ],
+                    "outputs": {}
+                }
             }
         },
         {
