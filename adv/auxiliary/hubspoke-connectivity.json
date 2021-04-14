@@ -125,7 +125,7 @@
             "dDoSPolicyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/94de2ad3-e0c1-4caf-ad78-5d47bbc83d3d"
         },
         "policyAssignmentNames": {
-            "deployDdoS": "Enable-DDoS-NW"
+            "deployDdoS": "Enable-DDoS-Network"
         },
         "roleAssignmentNames": {
             "deployDdoS": "[guid(concat(parameters('toplevelManagementGroupPrefix'),variables('policyAssignmentNames').deployDdoS))]"
