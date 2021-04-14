@@ -252,6 +252,9 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-connectivity')]",
             "name": "[variables('rbacDeploymentToConnectivity')]",
             "location": "[deployment().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Authorization/policyAssignments', variables('policyAssignmentNames').deployDdoS)]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -263,9 +266,7 @@
                             "type": "Microsoft.Authorization/roleAssignments",
                             "apiVersion": "2019-04-01-preview",
                             "name": "[variables('roleAssignmentNames').deployDdOsConnectivityMg]",
-                            "dependsOn": [
-                                "[resourceId('Microsoft.Authorization/policyAssignments', variables('policyAssignmentNames').deployDdoS)]"
-                            ],
+                            "dependsOn": [],
                             "properties": {
                                 "principalType": "ServicePrincipal",
                                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacNetworkContributor'))]",
