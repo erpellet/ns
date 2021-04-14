@@ -361,6 +361,14 @@
                 "No"
             ]
         },
+        "enableLzDdoS": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
         "denyIpForwarding": {
             "type": "string",
             "defaultValue": "No",
@@ -831,6 +839,15 @@
                     },
                     "denySubnetWithoutNsg": {
                         "value": "[parameters('denySubnetWithoutNsg')]"
+                    },
+                    "connectivitySubscriptionId": {
+                        "value": "[parameters('connectivitySubscriptionId')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "enableLzDdoS": {
+                        "value": "[parameters('enableLzDdoS')]"
                     }
                 }
             }

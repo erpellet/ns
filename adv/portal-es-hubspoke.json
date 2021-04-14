@@ -1337,6 +1337,26 @@
                         }
                     },
                     {
+                        "name": "esLzDdoS",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable DDoS Protection Standard for virtual networks",
+                        "defaultValue": "Yes (recommended)",
+                        "visible": "[and(equals(steps('esConnectivityGoalState').esHub, 'Yes'), equals(steps('esConnectivityGoalState').esDdoS, 'Yes'))]",
+                        "toolTip": "If 'Yes' is selected when also adding a connectivity subscription earlier, DDoS Protection Standard will be enabled.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },   
+                    {
                         "name": "esVmMonitoring",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Ensure Azure VMs (Windows & Linux) are being monitored",
@@ -1663,6 +1683,7 @@
             "enableSqlAudit": "[steps('lzGoalState').esSqlAudit]",
             "enableSqlEncryption": "[steps('lzGoalState').esSqlEncryption]",
             "enableVmBackup": "[steps('lzGoalState').esAzBackup]",
+			"enableLzDdoS": "[steps('lzGoalState').esLzDdoS]",
             "enableAksPolicy": "[steps('lzGoalState').esAksPolicy]",
             "denyAksPrivileged": "[steps('lzGoalState').esAksPriv]",
             "denyAksPrivilegedEscalation": "[steps('lzGoalState').esAksNoPriv]",
