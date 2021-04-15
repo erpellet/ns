@@ -318,7 +318,7 @@
                     "resources": [
                         {
                             "type": "Microsoft.Authorization/policyAssignments",
-                            "apiVersion": "2019-09-01",
+                            "apiVersion": "2018-05-01",
                             "name": "[variables('policyAssignmentNames').deployDdoS]",
                             "location": "[deployment().location]",
                             "identity": {
@@ -357,7 +357,7 @@
             }
         },
         {
-            // Conditionally assign RBAC for the 
+            // Conditionally assign RBAC for the DDoS policy to have access to the connectivity management group
             "condition": "[and(equals(parameters('enableLzDdoS'), 'Yes'), not(empty(parameters('connectivitySubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",

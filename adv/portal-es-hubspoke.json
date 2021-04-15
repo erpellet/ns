@@ -1362,7 +1362,7 @@
                         "label": "Prevent usage of Public Endpoints for PaaS services in corp connected landing zones",
                         "defaultValue": "Yes (recommended)",
                         "visible": "[and(equals(steps('esConnectivityGoalState').esHub, 'Yes'), equals(steps('esConnectivityGoalState').esDdoS, 'Yes'))]",
-                        "toolTip": "If 'Yes' is selected when also adding a connectivity subscription earlier, DDoS Protection Standard will be enabled.",
+                        "toolTip": "If 'Yes' is selected then Azure Policy will prevent PaaS resources to use public endpoints.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -1382,7 +1382,7 @@
                         "label": "Ensure encryption in transit is enabled for PaaS services",
                         "defaultValue": "Yes (recommended)",
                         "visible": "[and(equals(steps('esConnectivityGoalState').esHub, 'Yes'), equals(steps('esConnectivityGoalState').esDdoS, 'Yes'))]",
-                        "toolTip": "If 'Yes' is selected when also adding a connectivity subscription earlier, DDoS Protection Standard will be enabled.",
+                        "toolTip": "If 'Yes' is selected then Azure Policy will ensure PaaS resources uses TLS and SSL.",
                         "constraints": {
                             "allowedValues": [
                                 {
