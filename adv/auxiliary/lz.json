@@ -382,7 +382,7 @@
                             "properties": {
                                 "principalType": "ServicePrincipal",
                                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacNetworkContributor'))]",
-                                "principalId": "[if(and(equals(parameters('enableLzDdoS'), 'Yes'), not(empty(parameters('connectivitySubscriptionId')))), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployDdoS), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
+                                "principalId": "[if(and(equals(parameters('enableLzDdoS'), 'Yes'), not(empty(parameters('connectivitySubscriptionId')))), toLower(reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupprefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployDdoS), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
                             }
                         }
                     ],
