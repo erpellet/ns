@@ -11,13 +11,15 @@ param (
  [string]$AzureTenantId,
  [string]$AzureSubscriptionId,
  [string]$EnterpriseScalePrefix,
- [string]$NewRepositoryName
+ [string]$NewRepositoryName,
+ [string]$ESLZTemplateGitHubOrg = "Azure",
+ [string]$ESLZTemplateRepository = "AzOps-Accelerator"
 )
 
 $DeploymentScriptOutputs = @{}
 
-$ESLZGitHubOrg = "Azure"
-$ESLZRepository = "AzOps-Accelerator"
+$ESLZGitHubOrg = $ESLZTemplateGitHubOrg
+$ESLZRepository = $ESLZTemplateRepository
 $NewESLZRepository = $NewRepositoryName
 $DeploymentScriptOutputs['New Repository'] = $NewRepositoryName
 
